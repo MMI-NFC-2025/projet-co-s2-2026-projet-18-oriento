@@ -16,7 +16,7 @@
 
 | Étudiants    | Prénom NOM  |
 | :----------- | :---------- |
-| Étudiant 1   | à compléter |
-| Étudiant 2   | à compléter |
-| Étudiant 3   | à compléter |
+| Étudiant 1   | Virgile Esnaux |
+| Étudiant 2   | Titouan Perros |
+| Étudiant 3   | Evan Gichetnaere |
 | (Étudiant 4) | à compléter |
