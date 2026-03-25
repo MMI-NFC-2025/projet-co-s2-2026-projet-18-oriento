@@ -19,4 +19,3 @@
 | Étudiant 1   | Virgile Esnaux |
 | Étudiant 2   | Titouan Perros |
 | Étudiant 3   | Evan Gichetnaere |
-| (Étudiant 4) | à compléter |
