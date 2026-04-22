@@ -1,12 +1,26 @@
 ---
-import Welcome from '../components/Welcome.astro';
+import { Image } from 'astro:assets';
+import Header from '../components/Header.astro';
 import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import illustration from '../assets/illustration.avif';
 ---
-<h1>Astro Basics hsdhcfisdhfiusdhfishdfihd</h1>
+
 <Layout>
-	<Welcome />
-	<p>bonjour, monde!</p>
+	<Header />
+	<main class="home">
+		<section class="content">
+			<div class="title">
+				<img src="/logo_oriento_blancgros.svg" alt="Logo Oriento" class="logo" />
+				<span class="riento">RIENTO</span>
+			</div>
+			<div class="illustration">
+				<Image src={illustration} alt="Illustration" />
+			</div>
+			<div class="description">
+				<p>Avec Oriento les démarches deviennent plus simples</p>
+			</div>
+		</section>
+	</main>
 </Layout>
+
+
