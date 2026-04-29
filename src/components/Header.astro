@@ -1,0 +1,152 @@
+---
+const navLinks = [
+    { label: "Accueil", href: "/accueil" },
+    { label: "Se loger", href: "/loger" },
+    { label: "Impôts", href: "/impots" },
+    { label: "Etudes", href: "/etudes" },
+    { label: "Assurances", href: "/assurances" },
+    { label: "Contact", href: "/contact" },
+];
+---
+
+<header
+    class="site-header fixed top-0 left-0 right-0 z-[100] py-4 border-b border-transparent"
+    role="banner"
+>
+    <div
+        class="w-full max-w-[1200px] mx-auto px-5 md:px-8 flex items-center justify-between gap-6"
+    >
+        <!-- Logo dark (sur fond jaune) -->
+        <a
+            href="/accueil"
+            class="flex-shrink-0 flex items-center"
+            aria-label="Oriento – Retour à l'accueil"
+        >
+            <img
+                src="/src/assets/img/logo_complet_blanc.avif"
+                alt="Logo Oriento"
+                class="header-logo-light hidden h-8 w-auto"
+                width="140"
+                height="40"
+                loading="eager"
+                decoding="async"
+            />
+            <img
+                src="/src/assets/img/logo_noir.avif"
+                alt="Logo Oriento"
+                class="header-logo-dark h-8 w-auto"
+                width="140"
+                height="40"
+                loading="eager"
+                decoding="async"
+            />
+        </a>
+
+        <!-- Nav desktop -->
+        <nav
+            class="hidden lg:flex flex-1 mx-8"
+            aria-label="Navigation principale"
+        >
+            <ul role="list" class="flex items-center gap-6">
+                {
+                    navLinks.map((link) => (
+                        <li>
+                            <a
+                                href={link.href}
+                                class="desktop-nav-link text-sm font-medium text-[#0F0F0E]/70 hover:text-[#0F0F0E] no-underline transition-colors duration-200"
+                            >
+                                {link.label}
+                            </a>
+                        </li>
+                    ))
+                }
+            </ul>
+        </nav>
+
+        <!-- Auth desktop -->
+        <div class="hidden lg:flex items-center gap-3 flex-shrink-0">
+            <a
+                href="/connexion"
+                class="btn-ghost inline-flex items-center justify-center px-5 py-2 text-sm font-semibold text-[#0F0F0E]/70 border border-[#0F0F0E]/20 rounded-full min-h-[40px] no-underline hover:border-[#0F0F0E] hover:text-[#0F0F0E] transition-all duration-200"
+            >
+                Connexion
+            </a>
+            <a
+                href="/inscription"
+                class="btn-primary inline-flex items-center justify-center px-5 py-2 text-sm font-semibold bg-[#0F0F0E] text-white rounded-full min-h-[40px] no-underline hover:opacity-80 transition-opacity duration-200"
+            >
+                Inscription
+            </a>
+        </div>
+
+        <!-- Hamburger -->
+        <button
+            class="hamburger lg:hidden flex flex-col justify-center items-end gap-[5px] w-11 h-11 p-2 bg-transparent border-none cursor-pointer"
+            id="menu-toggle"
+            type="button"
+            aria-expanded="false"
+            aria-controls="mobile-menu"
+            aria-label="Ouvrir le menu de navigation"
+        >
+            <span
+                class="ham-bar block h-[1.5px] w-6 bg-[#0F0F0E] rounded-full transition-all duration-[350ms]"
+                aria-hidden="true"></span>
+            <span
+                class="ham-bar block h-[1.5px] w-[18px] bg-[#0F0F0E] rounded-full transition-all duration-[350ms]"
+                aria-hidden="true"></span>
+            <span
+                class="ham-bar block h-[1.5px] w-6 bg-[#0F0F0E] rounded-full transition-all duration-[350ms]"
+                aria-hidden="true"></span>
+        </button>
+    </div>
+</header>
+
+<script>
+    const header = document.querySelector(".site-header") as HTMLElement;
+    const toggle = document.getElementById("menu-toggle") as HTMLButtonElement;
+    const menu = document.getElementById("mobile-menu") as HTMLElement;
+
+    // Scroll → header becomes dark
+    window.addEventListener(
+        "scroll",
+        () => {
+            header?.classList.toggle("scrolled", window.scrollY > 60);
+        },
+        { passive: true },
+    );
+
+    function openMenu() {
+        toggle.setAttribute("aria-expanded", "true");
+        toggle.setAttribute("aria-label", "Fermer le menu de navigation");
+        menu.setAttribute("aria-hidden", "false");
+        menu.classList.add("is-open");
+        document.body.classList.add("menu-open");
+        const first = menu.querySelector<HTMLAnchorElement>("a[href]");
+        if (first) setTimeout(() => first.focus(), 50);
+    }
+
+    function closeMenu() {
+        toggle.setAttribute("aria-expanded", "false");
+        toggle.setAttribute("aria-label", "Ouvrir le menu de navigation");
+        menu.setAttribute("aria-hidden", "true");
+        menu.classList.remove("is-open");
+        document.body.classList.remove("menu-open");
+        toggle.focus();
+    }
+
+    toggle?.addEventListener("click", () => {
+        toggle.getAttribute("aria-expanded") === "true"
+            ? closeMenu()
+            : openMenu();
+    });
+
+    document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && menu?.classList.contains("is-open"))
+            closeMenu();
+    });
+
+    menu?.addEventListener("click", (e) => {
+        if ((e.target as HTMLElement).classList.contains("menu-backdrop"))
+            closeMenu();
+    });
+</script>
