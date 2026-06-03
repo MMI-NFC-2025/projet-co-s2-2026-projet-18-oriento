@@ -1,0 +1,500 @@
+---
+import Layout from "../layouts/Layout.astro";
+import CardAvance from "../components/CardAvance.astro";
+import CardSection from "../components/CardSection.astro";
+import DocumentsSection from "../components/DocumentsSection.astro";
+import QuestionsSection from "../components/QuestionsSection.astro";
+import Img1 from "../assets/Oriento_img/impot_img.avif";
+import logoCompletBlanc from "../assets/Oriento_img/logo_complet_blanc.avif";
+
+const parcours = [
+    "Comprendre si je dois déclarer",
+    "Créer mon espace fiscal",
+    "Faire ma déclaration",
+];
+---
+
+<Layout title="Se loger — Oriento" heroSection={true}>
+    <div class="page-wrapper">
+        <section class="hero-section" aria-label="Présentation">
+            <div class="hero-inner">
+                <div class="hero-logo-wrap">
+                    <img
+                        src={logoCompletBlanc.src}
+                        alt="Oriento"
+                        width="800"
+                        height="250"
+                        class="hero-logo-img"
+                        loading="eager"
+                        fetchpriority="high"
+                    />
+                </div>
+                <div class="hero-texte"><p>Impôts</p></div>
+                <div class="hero-img-wrap">
+                    <img
+                        src={Img1.src}
+                        alt="Étudiant cherchant un logement"
+                        width="900"
+                        height="600"
+                        class="hero-img"
+                        loading="eager"
+                        fetchpriority="high"
+                    />
+                </div>
+            </div>
+        </section>
+
+        <section class="intro-section" aria-label="Introduction">
+            <div class="intro-inner">
+                <h1 class="intro-h1">Impôts</h1>
+                <h2 class="intro-h2">
+                    Comprends tes obligations fiscales et fais tes démarches
+                    facilement !
+                </h2>
+                <p class="intro-texte">
+                    Les démarches fiscales peuvent sembler compliquées, surtout
+                    lorsqu’on est étudiant ou jeune actif. Cette page te guide
+                    pour comprendre si tu dois déclarer tes revenus, créer ton
+                    espace fiscal et faire ta déclaration.
+                </p>
+            </div>
+        </section>
+
+        <section class="parcours-section" aria-label="Parcours logement">
+            <div
+                class="parcours-card"
+                role="region"
+                aria-label="Suivi de progression"
+            >
+                <div class="parcours-barres" aria-hidden="true">
+                    {
+                        parcours.map((_, i) => (
+                            <div class="parcours-barre" data-barre={i} />
+                        ))
+                    }
+                </div>
+                <p class="parcours-titre" id="parcours-label">
+                    Ton parcours fiscal
+                </p>
+                <ul
+                    class="parcours-liste"
+                    role="list"
+                    aria-labelledby="parcours-label"
+                >
+                    {
+                        parcours.map((etape, i) => (
+                            <li class="parcours-etape" data-index={i}>
+                                <button
+                                    class="parcours-check"
+                                    type="button"
+                                    aria-pressed="false"
+                                    aria-label={`Marquer "${etape}" comme complété`}
+                                    data-step={i}
+                                >
+                                    <svg
+                                        viewBox="0 0 12 12"
+                                        fill="none"
+                                        aria-hidden="true"
+                                    >
+                                        <polyline
+                                            points="2,6 5,9 10,3"
+                                            stroke="white"
+                                            stroke-width="2"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                        />
+                                    </svg>
+                                </button>
+                                <span class="parcours-label">{etape}</span>
+                            </li>
+                        ))
+                    }
+                </ul>
+            </div>
+        </section>
+
+        <section class="avance-section" aria-label="Thématiques logement">
+            <div class="avance-grid">
+                <CardAvance
+                    titre="Astuce fiscale"
+                    texte=" Petites infos pratiques pour comprendre ses droits et optimiser sa déclaration."
+                    href="/logement/recherche"
+                />
+                <CardAvance
+                    titre="Simulateur"
+                    texte="Estimez vos impôts en quelques clics ! Entrez votre revenu et vos déductions pour savoir ce que vous devrez payer."
+                    href="/logement/entretien"
+                />
+                <CardAvance
+                    titre="Glossaire"
+                    texte="Revenu imposable : somme de vos revenus après déductions et abattements.
+Déduction : montant que vous pouvez soustraire de vos revenus imposables.
+Crédit d’impôt : somme déduite directement de l’impôt à payer."
+                    href="/logement/arnaques"
+                />
+            </div>
+        </section>
+
+        <section class="dynamique-section" aria-label="Ressources logement">
+            <h2 class="dynamique-titre">Ressources</h2>
+            <div class="dynamique-grid">
+                <CardSection
+                    titre="Dois je déclarer mes revenus ?"
+                    texte="Tu es étudiant et tu te demandes si tu dois déclarer tes revenus ? Découvre rapidement si cela te concerne !"
+                    href="/impots/comprendre"
+                    btnLabel="Comprendre ma situation"
+                    side="right"
+                />
+                <CardSection
+                    titre="Créer son espace fiscal"
+                    texte="Pas encore d’espace fiscal ? 
+Apprends à le créer en quelques étapes !"
+                    href="/impots/espace"
+                    btnLabel="Créer mon espace"
+                    side="left"
+                />
+                <CardSection
+                    titre="Faire sa déclaration de revenus"
+                    texte="Tu dois déclarer tes revenus ? 
+Découvre comment faire ta déclaration facilement !"
+                    href="/impots/declarer"
+                    btnLabel="Faire ma déclaration"
+                    side="right"
+                />
+            </div>
+        </section>
+
+        <DocumentsSection />
+        <QuestionsSection href="/a-propos" />
+    </div>
+</Layout>
+
+<style>
+    .page-wrapper {
+        background: var(--color-blue-light);
+    }
+
+    /* HERO */
+    .hero-section {
+        background: var(--color-yellow);
+        min-height: calc(100svh - 5rem);
+        display: flex;
+        align-items: stretch;
+    }
+    .hero-inner {
+        width: 100%;
+        max-width: 1152px;
+        margin: 0 auto;
+        padding: var(--space-l) var(--space-sm);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        flex: 1;
+        gap: var(--space-sm);
+    }
+    .hero-logo-wrap {
+        width: 100%;
+        display: flex;
+        justify-content: flex-start;
+    }
+    .hero-logo-img {
+        height: clamp(6rem, 28vw, 9rem);
+        width: auto;
+    }
+    .hero-img-wrap {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+    }
+    .hero-img {
+        width: 100%;
+        max-width: 480px;
+        height: auto;
+        object-fit: contain;
+        object-position: bottom;
+    }
+    .hero-texte {
+        width: 100%;
+        padding: var(--space-m) 0;
+    }
+    .hero-texte p {
+        font-family: var(--font-body);
+        font-size: var(--text-5xl);
+        font-weight: var(--weight-bold);
+        color: var(--color-dark);
+        line-height: 1.1;
+    }
+
+    /* INTRO */
+    .intro-section {
+        padding: var(--space-2xl) var(--space-sm) var(--space-l);
+    }
+    .intro-inner {
+        max-width: 720px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-m);
+        align-items: center;
+    }
+    .intro-h1 {
+        font-family: var(--font-body);
+        font-size: var(--text-4xl);
+        font-weight: var(--weight-black);
+        color: var(--color-white);
+        text-align: center;
+        line-height: 1.05;
+        -webkit-font-smoothing: auto;
+    }
+    .intro-h2 {
+        font-family: var(--font-body);
+        font-size: clamp(var(--text-xl), 4vw, var(--text-3xl));
+        font-weight: var(--weight-black);
+        color: var(--color-white);
+        line-height: 1.15;
+        -webkit-font-smoothing: auto;
+    }
+    .intro-texte {
+        font-family: var(--font-body);
+        font-size: clamp(var(--text-sm), 2.5vw, var(--text-m));
+        color: rgba(255, 255, 255, 0.85);
+        line-height: 1.7;
+        max-width: 62ch;
+    }
+
+    /* PARCOURS */
+    .parcours-section {
+        padding: 0 var(--space-sm) var(--space-2xl);
+    }
+    .parcours-card {
+        max-width: 520px;
+        margin: 0 auto;
+        background: var(--color-white);
+        border-radius: var(--radius-m);
+        overflow: hidden;
+        box-shadow: var(--shadow-m);
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-m);
+        padding-bottom: var(--space-l);
+    }
+    .parcours-barres {
+        display: flex;
+        gap: 6px;
+        padding: var(--space-m) var(--space-l) 0;
+    }
+    .parcours-barre {
+        flex: 1;
+        height: 5px;
+        border-radius: 9999px;
+        background: #e0e0e0;
+        transition: background 0.3s;
+    }
+    .parcours-barre.done {
+        background: var(--color-blue-light);
+    }
+    .parcours-titre {
+        font-family: var(--font-body);
+        font-size: var(--text-m);
+        font-weight: var(--weight-bold);
+        color: var(--color-dark);
+        padding: 0 var(--space-l);
+    }
+    .parcours-liste {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-l);
+        list-style: none;
+        padding: 0 var(--space-l);
+        margin: 0;
+    }
+    .parcours-etape {
+        display: flex;
+        align-items: center;
+        gap: var(--space-m);
+    }
+    .parcours-check {
+        flex-shrink: 0;
+        width: 14px;
+        height: 14px;
+        border: 2px solid #d0d0d0;
+        border-radius: 3px;
+        background: transparent;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 15px;
+        margin: -15px;
+        box-sizing: content-box;
+        transition:
+            background 0.2s,
+            border-color 0.2s;
+    }
+    .parcours-check svg {
+        width: 8px;
+        height: 8px;
+        opacity: 0;
+        transition: opacity 0.15s;
+        pointer-events: none;
+    }
+    .parcours-check[aria-pressed="true"] {
+        background: var(--color-blue-light);
+        border-color: var(--color-blue-light);
+    }
+    .parcours-check[aria-pressed="true"] svg {
+        opacity: 1;
+    }
+    .parcours-label {
+        font-family: var(--font-body);
+        font-size: var(--text-m);
+        color: var(--color-dark);
+        transition: opacity 0.2s;
+    }
+    .parcours-etape.done .parcours-label {
+        opacity: 0.4;
+        text-decoration: line-through;
+    }
+
+    /* CARDS AVANCÉES */
+    .avance-section {
+        padding: var(--space-xl) var(--space-sm);
+    }
+    .avance-grid {
+        max-width: 960px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: var(--space-m);
+    }
+
+    /* CARDS RESSOURCES */
+    .dynamique-titre {
+        font-family: var(--font-body);
+        font-size: clamp(var(--text-2xl), 5vw, var(--text-4xl));
+        font-weight: var(--weight-black);
+        color: var(--color-white);
+        text-align: center;
+        -webkit-font-smoothing: auto;
+    }
+    .dynamique-section {
+        padding: var(--space-xl) 0 var(--space-2xl);
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-l);
+        align-items: center;
+    }
+
+    .dynamique-grid {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-l);
+    }
+
+    /* BESOIN D'AIDE */
+    .aide-section {
+        padding: var(--space-2xl) var(--space-sm) 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: var(--space-l);
+    }
+    .aide-titre {
+        font-family: var(--font-body);
+        font-size: clamp(var(--text-5xl), 18vw, var(--text-7xl));
+        font-weight: var(--weight-black);
+        text-transform: uppercase;
+        color: var(--color-white);
+        line-height: 0.95;
+        text-align: center;
+        width: 100%;
+        -webkit-font-smoothing: auto;
+    }
+    .aide-img {
+        width: 100%;
+        max-width: 640px;
+        height: auto;
+        object-fit: cover;
+        border-radius: var(--radius-l) var(--radius-l) 0 0;
+    }
+
+    /* RESPONSIVE */
+    @media (min-width: 640px) {
+        .avance-grid,
+        .dynamique-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+    @media (min-width: 768px) {
+        .intro-texte {
+            font-size: var(--text-xl);
+            font-weight: 600;
+        }
+        .hero-logo-wrap {
+            justify-content: center;
+        }
+        .hero-logo-img {
+            height: clamp(5rem, 12vw, 9rem);
+        }
+        .hero-img {
+            max-width: 100%;
+        }
+        .hero-texte p {
+            font-size: 7rem;
+        }
+        .aide-titre {
+            font-size: clamp(var(--text-5xl), 10vw, var(--text-7xl));
+        }
+        .aide-img {
+            max-width: 900px;
+        }
+        .avance-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+</style>
+
+<script>
+    const barres = Array.from(
+        document.querySelectorAll<HTMLElement>(".parcours-barre"),
+    );
+    const boutons = Array.from(
+        document.querySelectorAll<HTMLButtonElement>(".parcours-check"),
+    );
+    const etapes = Array.from(
+        document.querySelectorAll<HTMLElement>(".parcours-etape"),
+    );
+    const total = barres.length;
+    const etat: boolean[] = new Array(total).fill(false);
+
+    function render() {
+        let prog = 0;
+        while (prog < total && etat[prog]) prog++;
+        barres.forEach((b, i) => b.classList.toggle("done", i < prog));
+        boutons.forEach((btn, i) => {
+            btn.setAttribute("aria-pressed", String(etat[i]));
+            btn.setAttribute(
+                "aria-label",
+                (etat[i] ? "Décocher" : "Marquer") +
+                    ` "${etapes[i].querySelector(".parcours-label")?.textContent}" comme complété`,
+            );
+        });
+        etapes.forEach((li, i) => li.classList.toggle("done", etat[i]));
+    }
+
+    boutons.forEach((btn, i) => {
+        btn.addEventListener("click", () => {
+            if (!etat[i]) {
+                for (let j = 0; j <= i; j++) etat[j] = true;
+            } else {
+                for (let j = i; j < total; j++) etat[j] = false;
+            }
+            render();
+        });
+    });
+
+    render();
+</script>

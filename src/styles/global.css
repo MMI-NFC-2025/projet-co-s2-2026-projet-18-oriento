@@ -1,0 +1,235 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Raleway:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap');
+
+/* ——— Couleurs ——— */
+:root {
+    --color-yellow: #FEDC29;
+    --color-blue: #3D60FE;
+    --color-blue-light: #5A78FF;
+    --color-dark: #171717;
+    --color-white: #ffffff;
+
+    /* Variantes utiles */
+    --color-dark-60: rgba(23, 23, 23, 0.6);
+    --color-dark-10: rgba(23, 23, 23, 0.1);
+    --color-white-80: rgba(255, 255, 255, 0.8);
+    --color-white-50: rgba(255, 255, 255, 0.5);
+    --color-white-25: rgba(255, 255, 255, 0.25);
+    --color-dark-blue: rgb(62, 72, 180);
+
+    /* ——— Typographie — familles ——— */
+    --font-card: 'Manrope', sans-serif;
+    /* cards */
+    --font-body: 'Raleway', sans-serif;
+    /* corps de texte, titres */
+    --font-footer: 'Inter', sans-serif;
+    /* footer */
+
+    /* ——— Typographie — tailles ——— */
+    --text-xxs: 0.625rem;
+    /* 10px */
+    --text-xs: 0.75rem;
+    /* 12px */
+    --text-s: 0.825rem;
+    /* 13px */
+    --text-sm: 0.875rem;
+    /* 14px */
+    --text-m: 1rem;
+    /* 16px */
+    --text-l: 1.125rem;
+    /* 18px */
+    --text-xl: 1.25rem;
+    /* 20px */
+    --text-2xl: 1.5rem;
+    /* 24px */
+    --text-3xl: 1.875rem;
+    /* 30px */
+    --text-4xl: 2.25rem;
+    /* 36px */
+    --text-5xl: 3rem;
+    /* 48px */
+    --text-6xl: 3.75rem;
+    /* 60px */
+    --text-7xl: 4.5rem;
+    /* 72px */
+
+    /* ——— Typographie — poids ——— */
+    --weight-regular: 400;
+    --weight-medium: 500;
+    --weight-semi: 600;
+    --weight-bold: 700;
+    --weight-black: 900;
+
+    /* ——— Espacement ——— */
+    --space-xxs: 0.25rem;
+    /* 4px */
+    --space-xs: 0.5rem;
+    /* 8px */
+    --space-s: 0.75rem;
+    /* 12px */
+    --space-sm: 1rem;
+    /* 16px */
+    --space-m: 1.5rem;
+    /* 24px */
+    --space-l: 2rem;
+    /* 32px */
+    --space-xl: 3rem;
+    /* 48px */
+    --space-2xl: 4rem;
+    /* 64px */
+    --space-3xl: 6rem;
+    /* 96px */
+
+    /* ——— Border radius ——— */
+    --radius-s: 0.5rem;
+    --radius-m: 1rem;
+    --radius-l: 1.5rem;
+    --radius-full: 9999px;
+
+    /* ——— Ombres ——— */
+    --shadow-s: 0 2px 8px rgba(0, 0, 0, 0.08);
+    --shadow-m: 0 4px 16px rgba(0, 0, 0, 0.12);
+    --shadow-l: 0 12px 32px rgba(0, 0, 0, 0.16);
+    --shadow-xl: 0 20px 48px rgba(0, 0, 0, 0.2);
+
+    /* ——— Transitions ——— */
+    --transition-fast: 0.15s ease;
+    --transition-normal: 0.2s ease;
+    --transition-slow: 0.3s ease;
+}
+
+/* ——— Reset ——— */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    font-family: var(--font-body);
+    font-size: var(--text-m);
+    color: var(--color-dark);
+    background: var(--color-white);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    line-height: 1.6;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+}
+
+a {
+    color: inherit;
+}
+
+/* ——— Focus visible global ——— */
+:focus-visible {
+    outline: 2px solid var(--color-blue);
+    outline-offset: 4px;
+    border-radius: 2px;
+}
+
+/* ——— Classes utilitaires texte ——— */
+.text-xxs {
+    font-size: var(--text-xxs);
+}
+
+.text-xs {
+    font-size: var(--text-xs);
+}
+
+.text-s {
+    font-size: var(--text-s);
+}
+
+.text-sm {
+    font-size: var(--text-sm);
+}
+
+.text-m {
+    font-size: var(--text-m);
+}
+
+.text-l {
+    font-size: var(--text-l);
+}
+
+.text-xl {
+    font-size: var(--text-xl);
+}
+
+.text-2xl {
+    font-size: var(--text-2xl);
+}
+
+.text-3xl {
+    font-size: var(--text-3xl);
+}
+
+.text-4xl {
+    font-size: var(--text-4xl);
+}
+
+.text-5xl {
+    font-size: var(--text-5xl);
+}
+
+.text-6xl {
+    font-size: var(--text-6xl);
+}
+
+.text-7xl {
+    font-size: var(--text-7xl);
+}
+
+.font-card {
+    font-family: var(--font-card);
+}
+
+.font-body {
+    font-family: var(--font-body);
+}
+
+.font-footer {
+    font-family: var(--font-footer);
+}
+
+.font-regular {
+    font-weight: var(--weight-regular);
+}
+
+.font-medium {
+    font-weight: var(--weight-medium);
+}
+
+.font-semi {
+    font-weight: var(--weight-semi);
+}
+
+.font-bold {
+    font-weight: var(--weight-bold);
+}
+
+.font-black {
+    font-weight: var(--weight-black);
+}
+
+.uppercase {
+    text-transform: uppercase;
+}
+
+.tracking-wide {
+    letter-spacing: 0.08em;
+}
+
+.tracking-wider {
+    letter-spacing: 0.12em;
+}

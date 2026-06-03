@@ -1,0 +1,619 @@
+---
+import Layout from "../layouts/Layout-landingpage.astro";
+import logoCompletBlanc from "../assets/Oriento_img/logo_complet_blanc.avif";
+import heroBg from "../assets/Oriento_img/hero_landingpage.avif";
+import LandingTexte from "../assets/Oriento_img/Landingpage_texte_img.avif";
+import Home1 from "../assets/Oriento_img/Home_img1.avif";
+import logementIcone from "../assets/Oriento_img/logement_icone.svg";
+import impotIcone from "../assets/Oriento_img/impot_icone.svg";
+import etudeIcone from "../assets/Oriento_img/etude_icone.svg";
+import assuIcone from "../assets/Oriento_img/assu_icone.svg";
+import flecheDroit from "../assets/Oriento_img/fleche-droit.svg";
+---
+
+<Layout title="Oriento — Simplifie tes démarches étudiantes">
+    <div class="page-wrapper">
+        <section class="hero" aria-label="Hero">
+            <div class="hero-logo-wrap">
+                <img
+                    src={logoCompletBlanc.src}
+                    alt="Oriento"
+                    width="800"
+                    height="250"
+                    class="hero-logo"
+                    loading="eager"
+                    fetchpriority="high"
+                />
+            </div>
+            <div class="hero-img-wrap">
+                <img
+                    src={heroBg.src}
+                    alt="Illustration Oriento"
+                    width="1600"
+                    height="900"
+                    class="hero-img"
+                    loading="eager"
+                    fetchpriority="high"
+                />
+            </div>
+        </section>
+
+        <section class="hero-texte-section" aria-label="Introduction">
+            <div class="hero-texte-inner">
+                <div class="hero-text">
+                    <h1 class="hero-titre">
+                        L'application tout-en-un pour simplifier tes démarches
+                        étudiantes
+                    </h1>
+                    <p class="hero-sous-titre">
+                        Rejoins Oriento et accède gratuitement à tous les outils
+                        nécessaires pour gérer ton logement, tes finances, tes
+                        études et plus encore !
+                    </p>
+                    <a href="/inscription" class="btn-primary"
+                        >Commencer gratuitement</a
+                    >
+                </div>
+                <div class="hero-texte-img-wrap">
+                    <img
+                        src={LandingTexte.src}
+                        alt="Illustration démarches"
+                        width="600"
+                        height="500"
+                        class="hero-texte-img"
+                        loading="eager"
+                    />
+                </div>
+            </div>
+        </section>
+
+        <section class="categories" aria-label="Catégories">
+            <div class="categories-inner">
+                <div class="categories-grid">
+                    <a href="/logement" class="categorie-item">
+                        <img
+                            src={logementIcone.src}
+                            alt="Logement"
+                            width="40"
+                            height="40"
+                        />
+                        <span class="categorie-label">Logement</span>
+                        <span class="categorie-desc"
+                            >Où trouver toutes les démarches pour trouver et
+                            gérer son logement.</span
+                        >
+                    </a>
+                    <a href="/impots" class="categorie-item">
+                        <img
+                            src={impotIcone.src}
+                            alt="Impôts"
+                            width="40"
+                            height="40"
+                        />
+                        <span class="categorie-label">Impôts</span>
+                        <span class="categorie-desc"
+                            >Comprends les démarches fiscales et tes les
+                            démarches facilement.</span
+                        >
+                    </a>
+                    <a href="/etudes" class="categorie-item">
+                        <img
+                            src={etudeIcone.src}
+                            alt="Études"
+                            width="40"
+                            height="40"
+                        />
+                        <span class="categorie-label">Études</span>
+                        <span class="categorie-desc"
+                            >Toutes les démarches importantes pour réussir et
+                            gérer ta vie étudiante.</span
+                        >
+                    </a>
+                    <a href="/assurance" class="categorie-item">
+                        <img
+                            src={assuIcone.src}
+                            alt="Assurances"
+                            width="40"
+                            height="40"
+                        />
+                        <span class="categorie-label">Assurances</span>
+                        <span class="categorie-desc"
+                            >Comprends les assurances importantes et protège-toi
+                            facilement.</span
+                        >
+                    </a>
+                </div>
+                <p class="categories-mention">
+                    Gratuit et <strong>sécurisé</strong> · les informations sont protégées
+                </p>
+            </div>
+        </section>
+
+        <section class="pourquoi" aria-label="Pourquoi choisir Oriento">
+            <div class="section-inner">
+                <div class="pourquoi-card">
+                    <div class="pourquoi-text">
+                        <h2 class="section-titre">
+                            Pourquoi choisir Oriento ?
+                        </h2>
+                        <p class="section-desc">
+                            Oriento centralise toutes les démarches étudiantes
+                            dans une seule application !
+                        </p>
+                        <ul class="pourquoi-liste">
+                            <li>
+                                <img
+                                    src={flecheDroit.src}
+                                    alt=""
+                                    width="16"
+                                    height="16"
+                                /> Démarches simples
+                            </li>
+                            <li>
+                                <img
+                                    src={flecheDroit.src}
+                                    alt=""
+                                    width="16"
+                                    height="16"
+                                /> Infos fiables
+                            </li>
+                            <li>
+                                <img
+                                    src={flecheDroit.src}
+                                    alt=""
+                                    width="16"
+                                    height="16"
+                                /> Repères clairs
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="pourquoi-img-wrap">
+                        <img
+                            src={Home1.src}
+                            alt="Illustration pourquoi Oriento"
+                            width="600"
+                            height="500"
+                            class="pourquoi-img"
+                            loading="lazy"
+                        />
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="etapes" aria-label="Comment ça marche">
+            <div class="section-inner">
+                <h2 class="section-titre blanc">Comment ça marche ?</h2>
+                <p class="section-sous-titre">
+                    Simplifiez vos démarches en 3 étapes
+                </p>
+                <div class="etapes-grid">
+                    <div class="etape-card">
+                        <span class="etape-num">1</span>
+                        <h3 class="etape-label">Créer un compte</h3>
+                        <p class="etape-desc">
+                            Inscris-toi gratuitement et accède à tous les
+                            outils.
+                        </p>
+                    </div>
+                    <div class="etape-card">
+                        <span class="etape-num">2</span>
+                        <h3 class="etape-label">Choisir une démarche</h3>
+                        <p class="etape-desc">
+                            Logement, impôts, études... Suis la démarche selon
+                            ton besoin.
+                        </p>
+                    </div>
+                    <div class="etape-card">
+                        <span class="etape-num">3</span>
+                        <h3 class="etape-label">Suivre les étapes</h3>
+                        <p class="etape-desc">
+                            Oriento vous guide pas à pas. Rien de compliqué,
+                            tout est expliqué.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="pour-qui" aria-label="Pour qui">
+            <div class="section-inner">
+                <div class="pour-qui-card">
+                    <div class="pour-qui-intro">
+                        <h2 class="section-titre">Pour qui ?</h2>
+                        <p class="section-desc">
+                            Oriento accompagne les étudiants à chaque étape de
+                            leur parcours en simplifiant les démarches
+                            administratives du quotidien.
+                        </p>
+                    </div>
+                    <div class="pour-qui-grid">
+                        <div class="pour-qui-item">
+                            <h3>Nouveaux étudiants</h3>
+                            <p>
+                                Vous commencez vos études ? Oriento vous aide à
+                                comprendre les démarches essentielles et à vous
+                                installer sereinement.
+                            </p>
+                        </div>
+                        <div class="pour-qui-item">
+                            <h3>Étudiants avec un job ou en alternance</h3>
+                            <p>
+                                Apprenez à gérer vos revenus, votre fiscalité et
+                                vos droits spécifiques en tant qu'étudiant
+                                actif.
+                            </p>
+                        </div>
+                        <div class="pour-qui-item">
+                            <h3>Étudiants en recherche de logement</h3>
+                            <p>
+                                Préparez votre dossier pour obtenir un logement
+                                rapidement et dans les meilleures conditions.
+                            </p>
+                        </div>
+                        <div class="pour-qui-item">
+                            <h3>Étudiants internationaux</h3>
+                            <p>
+                                Retrouvez toutes les informations pour vous
+                                installer en France et comprendre le système
+                                administratif local.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta" aria-label="Appel à l'action">
+            <div class="section-inner">
+                <h2 class="cta-titre">
+                    Prêt à simplifier tes démarches étudiantes ?
+                </h2>
+                <p class="cta-desc">
+                    Rejoins Oriento gratuitement et accède à tous les outils
+                    pour gérer ta vie étudiante !
+                </p>
+                <a href="/inscription" class="btn-primary"
+                    >Commencer gratuitement</a
+                >
+            </div>
+        </section>
+    </div>
+
+    <style>
+        .page-wrapper {
+            background: var(--color-blue-light);
+            overflow-x: hidden;
+        }
+
+        /* HERO */
+        .hero {
+            background: var(--color-blue-light);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: var(--space-xl);
+        }
+        .hero-logo-wrap {
+            display: flex;
+            justify-content: center;
+            padding: 0 var(--space-sm);
+            width: 100%;
+        }
+        .hero-logo {
+            height: clamp(15rem, 15vw, 15rem);
+            width: auto;
+        }
+        .hero-img-wrap {
+            width: 100%;
+            margin-top: var(--space-xl);
+            line-height: 0;
+            aspect-ratio: 16 / 7;
+            overflow: hidden;
+        }
+        .hero-img {
+            width: 100%;
+            height: 100%;
+            display: block;
+            object-fit: cover;
+            object-position: top;
+        }
+
+        /* TEXTE HERO */
+        .hero-texte-section {
+            background: var(--color-white);
+            padding: var(--space-2xl) var(--space-2xl);
+        }
+        .hero-texte-inner {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2xl);
+        }
+        .hero-text {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-m);
+        }
+        .hero-titre {
+            font-size: clamp(var(--text-2xl), 4vw, 3.5rem);
+            font-weight: var(--weight-black);
+            color: var(--color-dark);
+            line-height: 1.1;
+        }
+        .hero-sous-titre {
+            font-size: clamp(var(--text-m), 1.5vw, var(--text-l));
+            color: var(--color-dark);
+            line-height: 1.6;
+            opacity: 0.75;
+        }
+        .hero-texte-img-wrap {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+        }
+        .hero-texte-img {
+            width: 100%;
+            max-width: 520px;
+            height: auto;
+        }
+
+        /* BOUTON */
+        .btn-primary {
+            display: inline-block;
+            background: var(--color-yellow);
+            color: var(--color-dark);
+            font-size: var(--text-l);
+            font-weight: var(--weight-bold);
+            padding: var(--space-s) var(--space-xl);
+            border-radius: var(--radius-full);
+            text-decoration: none;
+            transition: opacity 0.2s;
+        }
+        .btn-primary:hover {
+            opacity: 0.85;
+        }
+
+        /* CATEGORIES */
+        .categories {
+            background: var(--color-white);
+            padding: var(--space-l) var(--space-2xl) var(--space-xl);
+        }
+        .categories-inner {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-m);
+        }
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--space-m);
+            border-radius: var(--radius-m);
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+            padding: var(--space-xl);
+        }
+        .categorie-item {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-xs);
+            text-decoration: none;
+            padding: var(--space-s);
+            border-radius: var(--radius-s);
+            transition: background 0.2s;
+        }
+        .categorie-item:hover {
+            background: rgba(0, 0, 0, 0.04);
+        }
+        .categorie-label {
+            font-size: var(--text-m);
+            font-weight: var(--weight-bold);
+            color: var(--color-dark);
+        }
+        .categorie-desc {
+            font-size: var(--text-m);
+            color: var(--color-dark);
+            line-height: 1.4;
+            opacity: 0.65;
+        }
+        .categories-mention {
+            text-align: center;
+            font-size: var(--text-m);
+            color: var(--color-dark);
+            opacity: 0.55;
+        }
+
+        /* SECTIONS COMMUNES */
+        .section-inner {
+            padding: var(--space-xl) var(--space-2xl);
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-l);
+            align-items: center;
+        }
+        .section-titre {
+            font-size: clamp(var(--text-xl), 2.5vw, var(--text-3xl));
+            font-weight: var(--weight-black);
+            color: var(--color-dark);
+            line-height: 1.1;
+            align-self: flex-start;
+        }
+        .section-titre.blanc {
+            color: var(--color-white);
+            align-self: center;
+        }
+        .section-desc {
+            font-size: var(--text-m);
+            color: var(--color-dark);
+            line-height: 1.6;
+        }
+        .section-sous-titre {
+            font-size: var(--text-m);
+            color: rgba(255, 255, 255, 0.8);
+            text-align: center;
+            margin-top: calc(-1 * var(--space-m));
+        }
+
+        /* POURQUOI */
+        .pourquoi {
+            background: var(--color-blue-light);
+        }
+        .pourquoi-card {
+            background: var(--color-white);
+            border-radius: var(--radius-m);
+            padding: var(--space-xl);
+            display: flex;
+            gap: var(--space-2xl);
+            align-items: center;
+            width: 100%;
+        }
+        .pourquoi-text {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-m);
+        }
+        .pourquoi-liste {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-s);
+        }
+        .pourquoi-liste li {
+            display: flex;
+            align-items: center;
+            gap: var(--space-xs);
+            font-size: var(--text-m);
+            font-weight: var(--weight-bold);
+            color: var(--color-dark);
+        }
+        .pourquoi-img-wrap {
+            flex: 1;
+            display: flex;
+            justify-content: flex-end;
+        }
+        .pourquoi-img {
+            width: 100%;
+            max-width: 420px;
+            height: auto;
+        }
+
+        /* ETAPES */
+        .etapes {
+            background: var(--color-blue-light);
+        }
+        .etapes-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-l);
+            width: 100%;
+        }
+        .etape-card {
+            background: var(--color-dark-blue);
+            border-radius: var(--radius-m);
+            padding: var(--space-xl);
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-s);
+        }
+        .etape-num {
+            font-size: var(--text-3xl);
+            font-weight: var(--weight-black);
+            color: var(--color-yellow);
+        }
+        .etape-label {
+            font-size: var(--text-l);
+            font-weight: var(--weight-bold);
+            color: var(--color-white);
+        }
+        .etape-desc {
+            font-size: var(--text-m);
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.5;
+        }
+
+        /* POUR QUI */
+        .pour-qui {
+            background: var(--color-blue-light);
+        }
+        .pour-qui-card {
+            background: var(--color-white);
+            border-radius: var(--radius-m);
+            padding: var(--space-xl);
+            display: flex;
+            gap: var(--space-2xl);
+            align-items: flex-start;
+            width: 100%;
+        }
+        .pour-qui-intro {
+            flex: 0 0 320px;
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-m);
+        }
+        .pour-qui-grid {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--space-l);
+        }
+        .pour-qui-item h3 {
+            font-size: var(--text-m);
+            font-weight: var(--weight-bold);
+            color: var(--color-dark);
+            margin-bottom: var(--space-xs);
+        }
+        .pour-qui-item p {
+            font-size: var(--text-m);
+            color: var(--color-dark);
+            line-height: 1.5;
+            opacity: 0.75;
+        }
+
+        /* CTA */
+        .cta {
+            background: var(--color-blue-light);
+        }
+        .cta .section-inner {
+            align-items: flex-start;
+        }
+        .cta-titre {
+            font-size: clamp(var(--text-2xl), 4vw, var(--text-5xl));
+            font-weight: var(--weight-black);
+            color: var(--color-white);
+            line-height: 1.1;
+        }
+        .cta-desc {
+            font-size: var(--text-m);
+            color: rgba(255, 255, 255, 0.85);
+            line-height: 1.6;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .hero-texte-section,
+            .categories,
+            .section-inner {
+                padding-left: var(--space-m);
+                padding-right: var(--space-m);
+            }
+            .hero-texte-inner,
+            .pourquoi-card,
+            .pour-qui-card {
+                flex-direction: column;
+            }
+            .pour-qui-intro {
+                flex: none;
+                width: 100%;
+            }
+            .etapes-grid,
+            .categories-grid {
+                grid-template-columns: 1fr;
+            }
+            .categories-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</Layout>

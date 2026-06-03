@@ -1,0 +1,279 @@
+---
+import logoNoir from "../assets/Oriento_img/logo_noir.avif";
+import searchIcon from "../assets/Oriento_img/search.svg";
+
+const pages = [
+    { label: "Accueil", url: "/landing-page" },
+    { label: "Notre équipe", url: "/equipe" },
+    { label: "Contact", url: "/contact" },
+    { label: "Logement", url: "/logement" },
+    { label: "Impôts", url: "/impots" },
+    { label: "Études", url: "/etudes" },
+    { label: "Assurance", url: "/assurance" },
+    { label: "À propos", url: "/a-propos" },
+];
+---
+
+<header class="site-header" role="banner">
+    <div class="header-inner">
+        <a
+            href="/landing-page"
+            aria-label="Oriento — retour à l'accueil"
+            class="header-logo"
+        >
+            <img
+                src={logoNoir.src}
+                alt="Oriento"
+                width="63"
+                height="63"
+                class="logo-img"
+                loading="eager"
+                fetchpriority="high"
+            />
+        </a>
+
+        <nav
+            class="desktop-nav"
+            role="navigation"
+            aria-label="Navigation principale"
+        >
+            <a href="/landing-page" class="nav-lien">Accueil</a>
+            <a href="/equipe" class="nav-lien">Notre équipe</a>
+            <a href="/contact" class="nav-lien">Contact</a>
+        </nav>
+
+        <div class="search-wrap" id="search-wrap">
+            <input
+                type="text"
+                id="search-input"
+                class="search-input"
+                placeholder="Rechercher..."
+                autocomplete="off"
+                aria-label="Rechercher une page"
+            />
+            <button
+                class="search-btn"
+                id="search-toggle"
+                aria-label="Rechercher"
+            >
+                <img src={searchIcon.src} alt="" width="22" height="22" />
+            </button>
+            <ul class="search-suggestions" id="search-suggestions"></ul>
+        </div>
+    </div>
+</header>
+
+<div aria-hidden="true" class="header-spacer"></div>
+
+<script define:vars={{ pages }}>
+    const toggle = document.getElementById("search-toggle");
+    const wrap = document.getElementById("search-wrap");
+    const input = document.getElementById("search-input");
+    const suggestions = document.getElementById("search-suggestions");
+    let isOpen = false;
+
+    toggle.addEventListener("click", () => {
+        isOpen = !isOpen;
+        wrap.classList.toggle("is-open", isOpen);
+        if (isOpen) {
+            setTimeout(() => input.focus(), 300);
+            renderSuggestions("");
+        } else {
+            input.value = "";
+            suggestions.innerHTML = "";
+            suggestions.style.display = "none";
+        }
+    });
+
+    input.addEventListener("input", () => renderSuggestions(input.value));
+
+    input.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+            const first = suggestions.querySelector("a");
+            if (first) window.location.href = first.href;
+        }
+        if (e.key === "Escape") closeSearch();
+    });
+
+    document.addEventListener("click", (e) => {
+        if (!wrap.contains(e.target)) closeSearch();
+    });
+
+    function closeSearch() {
+        isOpen = false;
+        wrap.classList.remove("is-open");
+        input.value = "";
+        suggestions.innerHTML = "";
+        suggestions.style.display = "none";
+    }
+
+    function renderSuggestions(query) {
+        const q = query.trim().toLowerCase();
+        const filtered =
+            q === ""
+                ? pages
+                : pages.filter((p) => p.label.toLowerCase().includes(q));
+        if (!filtered.length) {
+            suggestions.style.display = "none";
+            return;
+        }
+        suggestions.innerHTML = filtered
+            .map(
+                (p) =>
+                    `<li><a href="${p.url}" class="suggestion-link">${p.label}</a></li>`,
+            )
+            .join("");
+        suggestions.style.display = "block";
+    }
+</script>
+
+<style>
+    .site-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 50;
+        background: rgba(255, 255, 255, 0.55);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    }
+    .header-inner {
+        max-width: 1152px;
+        margin: 0 auto;
+        padding: 0 1.5rem;
+        height: 6.25rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .header-spacer {
+        height: 6.25rem;
+    }
+
+    .header-logo {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+    }
+    .logo-img {
+        height: 3.2rem;
+        width: auto;
+        display: block;
+    }
+
+    .desktop-nav {
+        display: flex;
+        align-items: center;
+        gap: 2.5rem;
+    }
+    .nav-lien {
+        font-size: 0.9rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        text-decoration: none;
+        color: #171717;
+        padding: 0.25rem 0;
+        border-bottom: 2px solid transparent;
+        transition: border-color 0.2s;
+    }
+    .nav-lien:hover {
+        border-bottom-color: #171717;
+    }
+
+    /* SEARCH WRAP */
+    .search-wrap {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+    }
+
+    .search-input {
+        width: 0;
+        opacity: 0;
+        padding: 0;
+        border: none;
+        background: transparent;
+        font-size: 0.95rem;
+        font-weight: 500;
+        color: #171717;
+        outline: none;
+        transition:
+            width 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+            opacity 0.25s ease,
+            padding 0.3s ease;
+        pointer-events: none;
+    }
+    .search-wrap.is-open .search-input {
+        width: 280px;
+        opacity: 1;
+        padding: 0.5rem 1rem;
+        pointer-events: all;
+        background: rgba(255, 255, 255, 0.95);
+        border: 2px solid #fedc29;
+        border-radius: 2rem 0 0 2rem;
+        border-right: none;
+    }
+
+    .search-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #fedc29;
+        color: #171717;
+        border: none;
+        cursor: pointer;
+        width: 3.1rem;
+        height: 3.1rem;
+        border-radius: 9999px;
+        transition:
+            border-radius 0.3s ease,
+            opacity 0.2s;
+        flex-shrink: 0;
+        z-index: 1;
+    }
+    .search-wrap.is-open .search-btn {
+        border-radius: 0 2rem 2rem 0;
+    }
+    .search-btn:hover {
+        opacity: 0.85;
+    }
+
+    /* SUGGESTIONS */
+    .search-suggestions {
+        display: none;
+        position: absolute;
+        top: calc(100% + 0.5rem);
+        right: 0;
+        width: calc(280px + 3.1rem);
+        background: white;
+        border-radius: 1rem;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+        list-style: none;
+        margin: 0;
+        padding: 0.5rem;
+        z-index: 60;
+    }
+    .suggestion-link {
+        display: block;
+        padding: 0.6rem 0.9rem;
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: #171717;
+        text-decoration: none;
+        border-radius: 0.5rem;
+        transition: background 0.15s;
+    }
+    .suggestion-link:hover {
+        background: #fedc29;
+    }
+
+    :focus-visible {
+        outline: 2px solid #3d60fe;
+        outline-offset: 4px;
+        border-radius: 2px;
+    }
+</style>

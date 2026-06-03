@@ -1,0 +1,249 @@
+---
+import logoCompletBlanc from "../assets/Oriento_img/logo_complet_blanc.avif";
+
+const themes = [
+    ["Études", "/etudes"],
+    ["Logement", "/logement"],
+    ["Assurance", "/assurance"],
+    ["Impôts", "/impots"],
+];
+const liens = [
+    ["Accueil", "/"],
+    ["À propos", "/a-propos"],
+    ["Contact", "/contact"],
+];
+const reseaux = [
+    ["Instagram", "https://instagram.com"],
+    ["Behance", "https://behance.net"],
+    ["LinkedIn", "https://linkedin.com"],
+];
+---
+
+<footer class="footer" role="contentinfo">
+    <div class="footer-inner">
+        <!-- ——— LIGNE HAUTE ——— -->
+        <div class="footer-top">
+            <!-- Logo + baseline -->
+            <div class="footer-brand">
+                <img
+                    src={logoCompletBlanc.src}
+                    alt="Oriento"
+                    width="160"
+                    height="42"
+                    class="footer-logo"
+                    loading="lazy"
+                />
+                <p class="footer-baseline">
+                    Vos démarches en seulement<br />quelques clics !
+                </p>
+            </div>
+
+            <!-- Nav principale -->
+            <nav class="footer-nav-main" aria-label="Navigation principale">
+                {
+                    liens.map(([label, href]) => (
+                        <a
+                            href={href}
+                            class="footer-nav-link footer-nav-link--big"
+                        >
+                            {label}
+                        </a>
+                    ))
+                }
+            </nav>
+
+            <!-- Réseaux -->
+            <nav class="footer-nav-social" aria-label="Réseaux sociaux">
+                {
+                    reseaux.map(([label, href]) => (
+                        <a
+                            href={href}
+                            class="footer-nav-link"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            {label}
+                        </a>
+                    ))
+                }
+            </nav>
+        </div>
+
+        <!-- ——— DIVIDER ——— -->
+        <div class="footer-divider"></div>
+
+        <!-- ——— INFOS CONTACT ——— -->
+        <div class="footer-contact">
+            <p class="footer-phone">(099) 791-00-75</p>
+            <a href="mailto:Oriento@gmail.com" class="footer-email"
+                >Oriento@gmail.com</a
+            >
+            <p class="footer-address">
+                France, Paris,<br />
+                Str. Believein Yourself 29<br />
+                App. 390
+            </p>
+        </div>
+
+        <!-- ——— BARRE BASSE ——— -->
+        <div class="footer-bottom">
+            <p class="footer-copy">
+                © {new Date().getFullYear()} Oriento. Tous droits réservés.
+            </p>
+        </div>
+    </div>
+</footer>
+
+<style>
+    .footer {
+        background: #171717;
+        color: var(--color-white);
+        font-family: var(--font-footer);
+    }
+
+    .footer-inner {
+        max-width: 1152px;
+        margin: 0 auto;
+        padding: var(--space-2xl) var(--space-m) var(--space-l);
+    }
+
+    /* ——— TOP ——— */
+    .footer-top {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-xl);
+    }
+
+    /* ——— BRAND ——— */
+    .footer-logo {
+        height: 2rem;
+        width: auto;
+        display: block;
+        margin-bottom: var(--space-m);
+    }
+
+    .footer-baseline {
+        font-size: var(--text-m);
+        font-weight: var(--weight-bold);
+        color: var(--color-white);
+        line-height: 1.5;
+    }
+
+    /* ——— NAV PRINCIPALE ——— */
+    .footer-nav-main {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-s);
+    }
+
+    .footer-nav-link {
+        font-size: var(--text-xs);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: rgba(255, 255, 255, 0.5);
+        text-decoration: none;
+        transition: color var(--transition-normal);
+        width: fit-content;
+    }
+
+    .footer-nav-link:hover {
+        color: var(--color-white);
+    }
+
+    .footer-nav-link--big {
+        font-size: var(--text-2xl);
+        font-weight: var(--weight-black);
+        color: var(--color-white);
+        letter-spacing: 0;
+        text-transform: none;
+    }
+
+    .footer-nav-link--big:hover {
+        color: var(--color-yellow);
+    }
+
+    /* ——— RÉSEAUX ——— */
+    .footer-nav-social {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-s);
+    }
+
+    /* ——— DIVIDER ——— */
+    .footer-divider {
+        margin: var(--space-xl) 0;
+        height: 1px;
+        background: rgba(255, 255, 255, 0.08);
+    }
+
+    /* ——— CONTACT ——— */
+    .footer-contact {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-m);
+    }
+
+    .footer-phone {
+        font-size: var(--text-sm);
+        color: rgba(255, 255, 255, 0.5);
+    }
+
+    .footer-email {
+        font-size: var(--text-2xl);
+        font-weight: var(--weight-black);
+        color: var(--color-white);
+        text-decoration: none;
+        line-height: 1.1;
+        transition: color var(--transition-normal);
+    }
+
+    .footer-email:hover {
+        color: var(--color-yellow);
+    }
+
+    .footer-address {
+        font-size: var(--text-sm);
+        color: rgba(255, 255, 255, 0.5);
+        line-height: 1.7;
+    }
+
+    /* ——— BOTTOM ——— */
+    .footer-bottom {
+        margin-top: var(--space-xl);
+        padding-top: var(--space-l);
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: var(--space-s);
+    }
+
+    .footer-copy {
+        font-size: var(--text-xs);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: rgba(255, 255, 255, 0.2);
+    }
+
+    /* ——— DESKTOP ——— */
+    @media (min-width: 768px) {
+        .footer-top {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: var(--space-2xl);
+            align-items: start;
+        }
+
+        .footer-nav-link--big {
+            font-size: var(--text-3xl);
+        }
+
+        .footer-email {
+            font-size: var(--text-4xl);
+        }
+
+        .footer-baseline {
+            font-size: var(--text-2xl);
+        }
+    }
+</style>
