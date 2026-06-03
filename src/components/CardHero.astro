@@ -1,0 +1,62 @@
+---
+interface Props {
+    quote?: string;
+    text?: string;
+}
+const { quote = "Avec Oriento les démarches deviennent plus simples", text } =
+    Astro.props;
+---
+
+<div class="card-hero" role="complementary" aria-label="Message Oriento">
+    <span class="card-hero__quote" aria-hidden="true">❝</span>
+    <p class="card-hero__text">{quote}</p>
+    {text && <p class="card-hero__sub">{text}</p>}
+</div>
+
+<style>
+    .card-hero {
+        font-family: var(--font-card);
+        background: rgba(0, 0, 0, 0.45);
+        backdrop-filter: blur(3px);
+        -webkit-backdrop-filter: blur(3px);
+        border-radius: var(--radius-m);
+        padding: var(--space-sm);
+        width: 100%;
+        text-align: left;
+    }
+
+    .card-hero__quote {
+        display: block;
+        font-size: var(--text-6xl);
+        font-weight: var(--weight-black);
+        line-height: 1;
+        color: var(--color-white);
+        margin-bottom: var(--space-xs);
+    }
+
+    .card-hero__text {
+        color: var(--color-white);
+        font-size: var(--text-xl);
+        font-weight: var(--weight-bold);
+        line-height: 1.4;
+    }
+
+    .card-hero__sub {
+        color: var(--color-white-80);
+        font-size: var(--text-sm);
+        line-height: 1.5;
+        margin-top: var(--space-xs);
+    }
+
+    @media (min-width: 768px) {
+        .card-hero {
+            padding: var(--space-m);
+        }
+        .card-hero__quote {
+            font-size: var(--text-7xl);
+        }
+        .card-hero__text {
+            font-size: var(--text-3xl);
+        }
+    }
+</style>

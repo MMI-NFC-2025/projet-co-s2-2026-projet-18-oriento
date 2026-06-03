@@ -1,0 +1,124 @@
+---
+interface Props {
+    categories?: string[];
+}
+const { categories = ["Logements", "Impôts", "Etudes", "Assurances"] } =
+    Astro.props;
+---
+
+<section class="docs-section" aria-label="Mes documents">
+    <div class="docs-card">
+        <h2 class="docs-titre">Mes documents</h2>
+        <p class="docs-texte">
+            Gérer tous tes documents administratifs peut vite devenir compliqué.
+            Cette section te permet de centraliser et organiser facilement tes
+            fichiers essentiels pour tes démarches, afin de les retrouver et les
+            utiliser rapidement quand tu en as besoin.
+        </p>
+        <div class="docs-liste">
+            {
+                categories.map((cat) => (
+                    <div class="docs-item">
+                        <span>{cat}</span>
+                        <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2.5"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            aria-hidden="true"
+                        >
+                            <polyline points="6 9 12 15 18 9" />
+                        </svg>
+                    </div>
+                ))
+            }
+        </div>
+        <button class="docs-btn" type="button">Ajouter un document</button>
+    </div>
+</section>
+
+<style>
+    .docs-section {
+        padding: var(--space-xl) var(--space-sm);
+        display: flex;
+        justify-content: center;
+    }
+    .docs-card {
+        width: 100%;
+        max-width: 480px;
+        background: var(--color-blue);
+        border-radius: var(--radius-l);
+        padding: var(--space-l);
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-m);
+    }
+    .docs-titre {
+        font-family: var(--font-body);
+        font-size: var(--text-xl);
+        font-weight: var(--weight-black);
+        color: var(--color-white);
+        text-align: center;
+        -webkit-font-smoothing: auto;
+    }
+    .docs-texte {
+        font-family: var(--font-body);
+        font-size: var(--text-sm);
+        color: rgba(255, 255, 255, 0.85);
+        line-height: 1.6;
+        -webkit-font-smoothing: auto;
+        max-width: 100%;
+    }
+    .docs-liste {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-xs);
+    }
+    .docs-item {
+        background: var(--color-white);
+        border-radius: var(--radius-m);
+        padding: var(--space-s) var(--space-m);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-family: var(--font-body);
+        font-size: var(--text-sm);
+        font-weight: var(--weight-bold);
+        color: var(--color-dark);
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+    .docs-item:hover {
+        background: rgba(255, 255, 255, 0.85);
+    }
+    .docs-item svg {
+        width: 18px;
+        height: 18px;
+        color: var(--color-dark);
+        flex-shrink: 0;
+    }
+    .docs-btn {
+        align-self: center;
+        background: rgba(255, 255, 255, 0.18);
+        color: var(--color-white);
+        font-family: var(--font-body);
+        font-size: var(--text-sm);
+        font-weight: var(--weight-bold);
+        border: none;
+        border-radius: var(--radius-full);
+        padding: var(--space-s) var(--space-l);
+        cursor: pointer;
+        transition:
+            background 0.2s,
+            transform 0.2s;
+    }
+    .docs-btn:hover {
+        background: rgba(255, 255, 255, 0.28);
+        transform: translateY(-2px);
+    }
+    .docs-btn:active {
+        transform: translateY(0);
+    }
+</style>

@@ -1,0 +1,106 @@
+---
+interface Props {
+    href?: string;
+}
+const { href = "/aide" } = Astro.props;
+---
+
+<section class="questions-section" aria-label="Des questions ?">
+    <div class="questions-card">
+        <h2 class="questions-titre">Des questions ?</h2>
+        <p class="questions-texte">Nous sommes à votre écoute !</p>
+        <a href={href} class="questions-btn" aria-label="Accéder à l'aide">
+            <span class="questions-btn-label">AIDE</span>
+            <div class="questions-btn-icon" aria-hidden="true">
+                <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                >
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+            </div>
+        </a>
+    </div>
+</section>
+
+<style>
+    .questions-section {
+        padding: var(--space-xl) var(--space-sm) var(--space-2xl);
+        display: flex;
+        justify-content: center;
+    }
+    .questions-card {
+        width: 100%;
+        max-width: 480px;
+        background: var(--color-blue-light);
+        border: 2px solid var(--color-white);
+        border-radius: var(--radius-l);
+        padding: var(--space-l);
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-s);
+    }
+    .questions-titre {
+        font-family: var(--font-body);
+        font-size: var(--text-xl);
+        font-weight: var(--weight-black);
+        color: var(--color-white);
+        -webkit-font-smoothing: auto;
+    }
+    .questions-texte {
+        font-family: var(--font-body);
+        font-size: var(--text-sm);
+        font-weight: var(--weight-bold);
+        color: var(--color-white);
+        -webkit-font-smoothing: auto;
+    }
+    .questions-btn {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        text-decoration: none;
+        margin-top: var(--space-s);
+        background: var(--color-white);
+        border: none;
+        border-radius: var(--radius-full);
+        padding: var(--space-xs) var(--space-xs) var(--space-xs) var(--space-m);
+        transition: background 0.2s;
+    }
+    .questions-btn:hover {
+        background: rgba(255, 255, 255, 0.88);
+    }
+    .questions-btn-label {
+        font-family: var(--font-body);
+        font-size: var(--text-m);
+        font-weight: var(--weight-black);
+        color: var(--color-dark);
+        letter-spacing: 0.04em;
+        -webkit-font-smoothing: auto;
+    }
+    .questions-btn-icon {
+        width: 40px;
+        height: 40px;
+        background: var(--color-dark);
+        border-radius: var(--radius-full);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        transition:
+            background 0.2s,
+            transform 0.2s;
+    }
+    .questions-btn-icon svg {
+        width: 20px;
+        height: 20px;
+        color: var(--color-white);
+    }
+    .questions-btn:hover .questions-btn-icon {
+        transform: translateX(3px);
+        background: var(--color-blue);
+    }
+</style>

@@ -1,0 +1,102 @@
+---
+interface Props {
+    conseils: string;
+}
+const { conseils } = Astro.props;
+---
+
+<div class="bouton-conseil">
+    <button class="conseil-btn" type="button" aria-expanded="false">
+        <span>Conseils</span>
+        <svg
+            class="conseil-icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+        >
+            <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+    </button>
+    <div class="conseil-drawer" aria-hidden="true">
+        <div class="conseil-drawer-inner">
+            {conseils}
+        </div>
+    </div>
+</div>
+
+<style>
+    .bouton-conseil {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+    }
+    .conseil-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--space-xs);
+        background: var(--color-blue);
+        border: none;
+        border-radius: var(--radius-full, 9999px);
+        padding: var(--space-s) var(--space-l);
+        font-family: var(--font-body);
+        font-size: var(--text-sm);
+        font-weight: var(--weight-semibold);
+        color: var(--color-white);
+        cursor: pointer;
+        width: fit-content;
+        transition:
+            background 0.2s,
+            transform 0.15s;
+    }
+    .conseil-btn:hover {
+        background: var(--color-blue-light);
+        transform: translateY(-1px);
+    }
+    .conseil-btn:active {
+        transform: translateY(0);
+    }
+    .conseil-icon {
+        width: 16px;
+        height: 16px;
+        transition: transform 0.25s;
+        flex-shrink: 0;
+    }
+    .conseil-btn[aria-expanded="true"] .conseil-icon {
+        transform: rotate(180deg);
+    }
+    .conseil-drawer {
+        display: grid;
+        grid-template-rows: 0fr;
+        transition: grid-template-rows 0.3s ease;
+        overflow: hidden;
+    }
+    .conseil-drawer[aria-hidden="false"] {
+        grid-template-rows: 1fr;
+    }
+    .conseil-drawer-inner {
+        overflow: hidden;
+        padding-top: var(--space-m);
+        font-family: var(--font-body);
+        font-size: var(--text-sm);
+        color: var(--color-white);
+        line-height: 1.6;
+    }
+</style>
+
+<script>
+    document
+        .querySelectorAll<HTMLElement>(".bouton-conseil")
+        .forEach((wrap) => {
+            const btn = wrap.querySelector<HTMLButtonElement>(".conseil-btn")!;
+            const drawer = wrap.querySelector<HTMLElement>(".conseil-drawer")!;
+            btn.addEventListener("click", () => {
+                const expanded = btn.getAttribute("aria-expanded") === "true";
+                btn.setAttribute("aria-expanded", String(!expanded));
+                drawer.setAttribute("aria-hidden", String(expanded));
+            });
+        });
+</script>

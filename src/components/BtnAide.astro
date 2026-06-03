@@ -1,0 +1,105 @@
+---
+interface Props {
+    label?: string;
+    href?: string;
+}
+
+const { label = "Aide", href = "/aide" } = Astro.props;
+---
+
+<a href={href} class="btn-aide" aria-label={label}>
+    <span class="btn-aide-label">{label}</span>
+    <span class="btn-aide-icon" aria-hidden="true">
+        <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+        >
+            <path d="M9 18l6-6-6-6"></path>
+        </svg>
+    </span>
+</a>
+
+<style>
+    .btn-aide {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--space-s);
+        background: #e8e8e8;
+        border-radius: var(--radius-full);
+        padding: var(--space-xs) var(--space-xs) var(--space-xs) var(--space-m);
+        text-decoration: none;
+        width: fit-content;
+        transition:
+            transform var(--transition-fast),
+            background var(--transition-normal);
+    }
+
+    .btn-aide:hover {
+        transform: translateY(-2px);
+        background: #d4d4d4;
+    }
+
+    .btn-aide:active {
+        transform: translateY(0);
+    }
+
+    .btn-aide-label {
+        font-family: var(--font-body);
+        font-size: var(--text-m);
+        font-weight: var(--weight-black);
+        color: var(--color-dark);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        white-space: nowrap;
+    }
+
+    .btn-aide-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--color-blue);
+        color: var(--color-white);
+        border-radius: var(--radius-full);
+        width: 36px;
+        height: 36px;
+        flex-shrink: 0;
+        transition: background var(--transition-normal);
+    }
+
+    .btn-aide-icon svg {
+        width: 16px;
+        height: 16px;
+        display: block;
+    }
+
+    .btn-aide:hover .btn-aide-icon {
+        background: var(--color-blue-light);
+    }
+
+    /* ——— DESKTOP ——— */
+    @media (min-width: 768px) {
+        .btn-aide {
+            padding: var(--space-s) var(--space-s) var(--space-s) var(--space-l);
+            gap: var(--space-m);
+            width: fit-content;
+        }
+
+        .btn-aide-label {
+            font-size: var(--text-xl);
+        }
+
+        .btn-aide-icon {
+            width: 52px;
+            height: 52px;
+        }
+
+        .btn-aide-icon svg {
+            width: 22px;
+            height: 22px;
+        }
+    }
+</style>

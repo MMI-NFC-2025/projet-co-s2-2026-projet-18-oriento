@@ -1,0 +1,381 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import BoutonConseil from "../../components/BoutonConseil.astro";
+import logoCompletBlanc from "../../assets/Oriento_img/logo_complet_blanc.avif";
+import Img1 from "../../assets/Oriento_img/etude_etude_img.avif";
+
+type PageData = {
+    titre: string;
+    intro: string;
+    sections: {
+        titre: string;
+        texte?: string;
+        bullets?: string[];
+        conseils: string;
+    }[];
+};
+
+export function getStaticPaths() {
+    const pages: Record<string, PageData> = {
+        inscription: {
+            titre: "S'inscrire dans un établissement",
+            intro: "Une fois que tu as choisi ta formation, il faut finaliser ton inscription. Cela implique plusieurs étapes administratives importantes pour pouvoir commencer tes études dans de bonnes conditions.",
+            sections: [
+                {
+                    titre: "Démarches administratives",
+                    texte: "Chaque établissement peut avoir ses propres procédures, mais voici les principales étapes :",
+                    bullets: [
+                        "Remplir le dossier d'inscription formulaire en ligne ou papier, avec toutes les informations personnelles et académiques",
+                        "Fournir les documents requis : pièce d'identité, diplôme ou relevé de notes, certificat de scolarité précédent, etc.",
+                        "Valider ton inscription : l'établissement confirme que ton dossier est complet et accepté",
+                    ],
+                    conseils:
+                        "Prépare une copie numérique de tous tes documents et garde-les dans un dossier cloud accessible partout.",
+                },
+                {
+                    titre: "Paiement des frais de scolarité",
+                    texte: "Les frais de scolarité varient selon l'établissement :",
+                    bullets: [
+                        "Certaines écoles proposent des facilités de paiement ou des bourses",
+                        "Le paiement peut se faire en ligne ou via virement bancaire",
+                        "Certains établissements proposent un accompagnement pour les situations financières difficiles",
+                    ],
+                    conseils:
+                        "Renseigne-toi sur les bourses disponibles (CROUS, bourses régionales) avant de payer. Beaucoup d'étudiants y ont droit sans le savoir.",
+                },
+                {
+                    titre: "Création du compte étudiant",
+                    texte: "Ton compte étudiant te permettra d'accéder à :",
+                    bullets: [
+                        "La plateforme de cours et ressources en ligne",
+                        "L'emploi du temps",
+                        "La messagerie interne de l'établissement",
+                        "Les informations administratives et financières",
+                    ],
+                    conseils:
+                        "Active les notifications pour ne manquer aucune information importante de ton établissement.",
+                },
+                {
+                    titre: "Carte étudiante",
+                    texte: "La carte étudiante est utile pour :",
+                    bullets: [
+                        "Accéder aux bibliothèques, laboratoires et salles informatiques",
+                        "Bénéficier des tarifs réduits dans les transports ou pour des activités culturelles",
+                        "Justifier ton statut d'étudiant auprès d'organismes et administrations",
+                    ],
+                    conseils:
+                        "Ta carte étudiante te donne souvent accès à des réductions dans de nombreux commerces et services. N'oublie pas de la présenter !",
+                },
+            ],
+        },
+        orientation: {
+            titre: "Choisir son orientation",
+            intro: "Choisir sa formation est une étape clé. Il existe de nombreuses ressources pour t'aider à trouver la voie qui te correspond.",
+            sections: [
+                {
+                    titre: "Parcoursup",
+                    texte: "Parcoursup est la plateforme nationale d'admission dans l'enseignement supérieur :",
+                    bullets: [
+                        "Consulter les formations disponibles et leurs critères",
+                        "Constituer et envoyer ton dossier",
+                        "Suivre tes candidatures et répondre aux offres",
+                    ],
+                    conseils:
+                        "Candidate à des formations variées (niveau, type) pour maximiser tes chances. Ne mets pas tous tes œufs dans le même panier.",
+                },
+                {
+                    titre: "Les types de formations",
+                    texte: "Il existe plusieurs types de formations après le bac :",
+                    bullets: [
+                        "Université (licence, master, doctorat)",
+                        "BTS et BUT (formations professionnalisantes courtes)",
+                        "Classes préparatoires (CPGE)",
+                        "Écoles spécialisées (commerce, ingénierie, art...)",
+                    ],
+                    conseils:
+                        "Les BTS et BUT offrent une insertion professionnelle rapide. L'université offre plus de flexibilité pour se réorienter.",
+                },
+            ],
+        },
+        aidesetudiantes: {
+            titre: "Demander les aides étudiantes",
+            intro: "En tant qu'étudiant, tu peux bénéficier de nombreuses aides financières pour t'aider à financer tes études, ton logement ou ta vie quotidienne. Voici tout ce qu'il faut savoir pour en profiter.",
+            sections: [
+                {
+                    titre: "Bourses étudiantes",
+                    texte: "La bourse sur critères sociaux est l'aide la plus connue :",
+                    bullets: [
+                        "Attribuée par le CROUS selon les revenus de la famille et la situation personnelle",
+                        "Plusieurs échelons existent, de 0bis à 7 — plus l'échelon est élevé, plus le montant est important",
+                        "La demande se fait via le Dossier Social Étudiant (DSE) sur messervices.etudiant.gouv.fr",
+                    ],
+                    conseils:
+                        "Fais ta demande de bourse dès le mois d'avril, même si tu n'es pas encore inscrit dans une formation. Il vaut mieux anticiper : les délais peuvent être longs.",
+                },
+                {
+                    titre: "Aides au logement",
+                    texte: "Se loger est souvent le poste de dépense le plus lourd pour un étudiant :",
+                    bullets: [
+                        "L'APL (Aide Personnalisée au Logement) est versée par la CAF directement sur ton loyer",
+                        "Les résidences CROUS proposent des logements à tarifs réduits à demander sur trouvermonlogement.etudiant.gouv.fr",
+                        "Certaines régions proposent des aides complémentaires au logement étudiant",
+                    ],
+                    conseils:
+                        "Fais ta demande d'APL dès ton entrée dans le logement. Chaque mois sans demande est un mois d'aide perdu définitivement.",
+                },
+                {
+                    titre: "Aides régionales",
+                    texte: "En dehors des aides nationales, ta région peut proposer des dispositifs spécifiques :",
+                    bullets: [
+                        "Bourses régionales pour les formations non couvertes par le CROUS",
+                        "Aides à la mobilité internationale pour les séjours à l'étranger",
+                        "Aides au permis de conduire ou aux transports selon les régions",
+                    ],
+                    conseils:
+                        "Consulte le site de ta région et de ton établissement : beaucoup d'aides régionales sont méconnues et peu demandées, ce qui augmente tes chances de les obtenir.",
+                },
+                {
+                    titre: "Aides spécifiques selon ta situation",
+                    texte: "Certaines situations ouvrent droit à des aides supplémentaires :",
+                    bullets: [
+                        "Étudiant en situation de handicap : AEEH, aménagements pédagogiques, aides de la MDPH",
+                        "Étudiant isolé ou en rupture familiale : aide d'urgence du CROUS, CVEC réduite",
+                        "Étudiant salarié ou alternant : droits spécifiques à la formation et aides à l'équipement",
+                    ],
+                    conseils:
+                        "Si tu te retrouves en difficulté financière en cours d'année, contacte le service social du CROUS. Des aides d'urgence existent et peuvent être débloquées rapidement.",
+                },
+            ],
+        },
+    };
+
+    return Object.entries(pages).map(([slug, data]) => ({
+        params: { slug },
+        props: { page: data },
+    }));
+}
+
+const { page } = Astro.props as { page: PageData };
+---
+
+<Layout title={`${page.titre} — Oriento`} heroSection={true}>
+    <div class="page-wrapper">
+        <section class="hero-section" aria-label="Présentation">
+            <div class="hero-inner">
+                <div class="hero-logo-wrap">
+                    <img
+                        src={logoCompletBlanc.src}
+                        alt="Oriento"
+                        width="800"
+                        height="250"
+                        class="hero-logo-img"
+                        loading="eager"
+                        fetchpriority="high"
+                    />
+                </div>
+                <div class="hero-texte">
+                    <p>Les études</p>
+                    <div class="hero-img-wrap">
+                        <img
+                            src={Img1.src}
+                            alt="Illustration les études"
+                            width="900"
+                            height="600"
+                            class="hero-img"
+                            loading="eager"
+                            fetchpriority="high"
+                        />
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="intro-section" aria-label="Introduction">
+            <div class="intro-inner">
+                <h1 class="intro-h1">{page.titre}</h1>
+                <p class="intro-texte">{page.intro}</p>
+            </div>
+        </section>
+
+        <section class="cards-section" aria-label="Contenu">
+            <div class="cards-grid">
+                {
+                    page.sections.map((s) => (
+                        <div class="card">
+                            <h3 class="card-titre">{s.titre}</h3>
+                            {s.texte && <p class="card-texte">{s.texte}</p>}
+                            {s.bullets && s.bullets.length > 0 && (
+                                <ul class="card-bullets">
+                                    {s.bullets.map((b) => (
+                                        <li>{b}</li>
+                                    ))}
+                                </ul>
+                            )}
+                            <BoutonConseil conseils={s.conseils} />
+                        </div>
+                    ))
+                }
+            </div>
+        </section>
+    </div>
+
+    <style>
+        .page-wrapper {
+            background: var(--color-blue-light);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* HERO */
+        .hero-section {
+            background: var(--color-yellow);
+            display: flex;
+            align-items: stretch;
+        }
+        .hero-inner {
+            width: 100%;
+            max-width: 1152px;
+            margin: 0 auto;
+            padding: var(--space-l) var(--space-sm);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            gap: var(--space-sm);
+        }
+        .hero-logo-wrap {
+            width: 100%;
+            display: flex;
+            justify-content: flex-start;
+        }
+        .hero-logo-img {
+            height: clamp(6rem, 28vw, 9rem);
+            width: auto;
+        }
+        .hero-img-wrap {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+        }
+        .hero-img {
+            width: 100%;
+            max-width: 480px;
+            height: auto;
+            object-fit: contain;
+            object-position: bottom;
+        }
+        .hero-texte {
+            width: 100%;
+            padding: var(--space-m) 0;
+        }
+        .hero-texte p {
+            font-family: var(--font-body);
+            font-size: var(--text-5xl);
+            font-weight: var(--weight-bold);
+            color: var(--color-dark);
+            line-height: 1.1;
+        }
+
+        /* INTRO */
+        .intro-section {
+            padding: var(--space-2xl) var(--space-sm) var(--space-l);
+        }
+        .intro-inner {
+            max-width: 960px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-m);
+        }
+        .intro-h1 {
+            font-family: var(--font-body);
+            font-size: clamp(var(--text-2xl), 6vw, var(--text-4xl));
+            font-weight: var(--weight-black);
+            color: var(--color-white);
+            line-height: 1.1;
+            -webkit-font-smoothing: auto;
+        }
+        .intro-texte {
+            font-family: var(--font-body);
+            font-size: clamp(var(--text-sm), 2.5vw, var(--text-m));
+            color: rgba(255, 255, 255, 0.85);
+            line-height: 1.7;
+        }
+
+        /* CARDS GRID */
+        .cards-section {
+            padding: var(--space-l) var(--space-sm) var(--space-3xl);
+        }
+        .cards-grid {
+            max-width: 960px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: var(--space-m);
+            width: 100%;
+        }
+        .card {
+            background: var(--color-dark-blue);
+            border-radius: var(--radius-m);
+            padding: var(--space-l);
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-m);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+            min-width: 0;
+            overflow: hidden;
+        }
+        .card-titre {
+            font-family: var(--font-body);
+            font-size: var(--text-m);
+            font-weight: var(--weight-bold);
+            color: var(--color-white);
+            -webkit-font-smoothing: auto;
+        }
+        .card-texte {
+            font-family: var(--font-body);
+            font-size: var(--text-sm);
+            font-weight: var(--weight-bold);
+            color: var(--color-white);
+            line-height: 1.6;
+        }
+        .card-bullets {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-xs);
+            padding-left: var(--space-m);
+            margin: 0;
+        }
+        .card-bullets li {
+            font-family: var(--font-body);
+            font-size: var(--text-sm);
+            font-weight: var(--weight-regular, 400);
+            color: var(--color-white);
+            line-height: 1.5;
+            word-break: break-word;
+            overflow-wrap: break-word;
+        }
+
+        @media (min-width: 640px) {
+            .cards-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (min-width: 768px) {
+            .hero-logo-wrap {
+                justify-content: center;
+            }
+            .hero-logo-img {
+                height: clamp(5rem, 12vw, 9rem);
+            }
+            .hero-img {
+                max-width: 100%;
+            }
+            .hero-texte p {
+                font-size: 7rem;
+            }
+        }
+    </style>
+</Layout>

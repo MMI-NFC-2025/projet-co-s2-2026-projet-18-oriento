@@ -1,0 +1,85 @@
+---
+interface Props {
+    titre: string;
+    texte: string;
+    href: string;
+    tag?: string;
+}
+const { titre, texte, href, tag } = Astro.props;
+---
+
+<article class="card-dynamique">
+    {tag && <span class="card-dynamique-tag">{tag}</span>}
+    <div class="card-dynamique-body">
+        <h3 class="card-dynamique-titre">{titre}</h3>
+        <p class="card-dynamique-texte">{texte}</p>
+    </div>
+    <a href={href} class="card-dynamique-btn">En savoir +</a>
+</article>
+
+<style>
+    .card-dynamique {
+        background: var(--color-white);
+        border-radius: var(--radius-m);
+        padding: var(--space-l);
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-m);
+        box-shadow: var(--shadow-s);
+    }
+    .card-dynamique-tag {
+        display: inline-block;
+        align-self: flex-start;
+        font-family: var(--font-body);
+        font-size: var(--text-xs);
+        font-weight: var(--weight-bold);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: #5a78ff;
+        background: rgba(90, 120, 255, 0.1);
+        padding: 2px var(--space-xs);
+        border-radius: var(--radius-full);
+    }
+    .card-dynamique-body {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-xs);
+        flex: 1;
+    }
+    .card-dynamique-titre {
+        font-family: var(--font-body);
+        font-size: var(--text-lg);
+        font-weight: var(--weight-bold);
+        color: var(--color-dark);
+        line-height: 1.2;
+    }
+    .card-dynamique-texte {
+        font-family: var(--font-body);
+        font-size: var(--text-sm);
+        color: var(--color-dark);
+        line-height: 1.6;
+        opacity: 0.75;
+    }
+    .card-dynamique-btn {
+        display: inline-block;
+        align-self: flex-start;
+        background: var(--color-dark);
+        color: var(--color-white);
+        font-family: var(--font-body);
+        font-size: var(--text-sm);
+        font-weight: var(--weight-bold);
+        text-decoration: none;
+        padding: var(--space-xs) var(--space-m);
+        border-radius: var(--radius-full);
+        transition:
+            background 0.2s,
+            transform 0.2s;
+    }
+    .card-dynamique-btn:hover {
+        background: #3d60fe;
+        transform: translateY(-2px);
+    }
+    .card-dynamique-btn:active {
+        transform: translateY(0);
+    }
+</style>

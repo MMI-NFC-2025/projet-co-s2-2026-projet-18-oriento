@@ -1,152 +1,513 @@
 ---
-const navLinks = [
-    { label: "Accueil", href: "/accueil" },
-    { label: "Se loger", href: "/loger" },
-    { label: "Impôts", href: "/impots" },
-    { label: "Etudes", href: "/etudes" },
-    { label: "Assurances", href: "/assurances" },
-    { label: "Contact", href: "/contact" },
-];
+import logoBlanc from "../assets/Oriento_img/logo_blanc.avif";
+import logoNoir from "../assets/Oriento_img/logo_noir.avif";
+import menuImg from "../assets/Oriento_img/Menu_img.avif";
+
+interface Props {
+    heroSection?: boolean;
+}
+const { heroSection = false } = Astro.props;
 ---
 
 <header
-    class="site-header fixed top-0 left-0 right-0 z-[100] py-4 border-b border-transparent"
+    id="site-header"
     role="banner"
+    class={`site-header ${heroSection ? "is-hero" : "is-default"}`}
 >
-    <div
-        class="w-full max-w-[1200px] mx-auto px-5 md:px-8 flex items-center justify-between gap-6"
-    >
-        <!-- Logo dark (sur fond jaune) -->
+    <div class="header-inner">
+        <!-- Logo -->
         <a
-            href="/accueil"
-            class="flex-shrink-0 flex items-center"
-            aria-label="Oriento – Retour à l'accueil"
+            href="/"
+            aria-label="Oriento — retour à l'accueil"
+            class="header-logo"
         >
             <img
-                src="/src/assets/img/logo_complet_blanc.avif"
-                alt="Logo Oriento"
-                class="header-logo-light hidden h-8 w-auto"
-                width="140"
-                height="40"
+                id="logo-blanc"
+                src={logoBlanc.src}
+                alt="Oriento"
+                width="42"
+                height="42"
+                class="logo-img"
+                style={`display:${heroSection ? "block" : "none"}`}
                 loading="eager"
-                decoding="async"
+                fetchpriority="high"
             />
             <img
-                src="/src/assets/img/logo_noir.avif"
-                alt="Logo Oriento"
-                class="header-logo-dark h-8 w-auto"
-                width="140"
-                height="40"
+                id="logo-noir"
+                src={logoNoir.src}
+                alt="Oriento"
+                width="42"
+                height="42"
+                class="logo-img"
+                style={`display:${heroSection ? "none" : "block"}`}
                 loading="eager"
-                decoding="async"
             />
         </a>
 
         <!-- Nav desktop -->
         <nav
-            class="hidden lg:flex flex-1 mx-8"
+            id="desktop-nav"
+            class="desktop-nav"
+            role="navigation"
             aria-label="Navigation principale"
         >
-            <ul role="list" class="flex items-center gap-6">
-                {
-                    navLinks.map((link) => (
-                        <li>
-                            <a
-                                href={link.href}
-                                class="desktop-nav-link text-sm font-medium text-[#0F0F0E]/70 hover:text-[#0F0F0E] no-underline transition-colors duration-200"
-                            >
-                                {link.label}
-                            </a>
-                        </li>
-                    ))
-                }
-            </ul>
+            <a href="/etudes" class="nav-lien">Études</a>
+            <a href="/logement" class="nav-lien">Logement</a>
+            <a href="/assurance" class="nav-lien">Assurance</a>
+            <a href="/impots" class="nav-lien">Impôts</a>
+            <a href="/a-propos" class="nav-lien">À propos</a>
+            <a href="/contact" class="nav-cta">Contact</a>
         </nav>
 
-        <!-- Auth desktop -->
-        <div class="hidden lg:flex items-center gap-3 flex-shrink-0">
-            <a
-                href="/connexion"
-                class="btn-ghost inline-flex items-center justify-center px-5 py-2 text-sm font-semibold text-[#0F0F0E]/70 border border-[#0F0F0E]/20 rounded-full min-h-[40px] no-underline hover:border-[#0F0F0E] hover:text-[#0F0F0E] transition-all duration-200"
-            >
-                Connexion
-            </a>
-            <a
-                href="/inscription"
-                class="btn-primary inline-flex items-center justify-center px-5 py-2 text-sm font-semibold bg-[#0F0F0E] text-white rounded-full min-h-[40px] no-underline hover:opacity-80 transition-opacity duration-200"
-            >
-                Inscription
-            </a>
-        </div>
-
-        <!-- Hamburger -->
+        <!-- Burger -->
         <button
-            class="hamburger lg:hidden flex flex-col justify-center items-end gap-[5px] w-11 h-11 p-2 bg-transparent border-none cursor-pointer"
-            id="menu-toggle"
+            id="burger"
             type="button"
+            aria-label="Ouvrir le menu"
             aria-expanded="false"
             aria-controls="mobile-menu"
-            aria-label="Ouvrir le menu de navigation"
+            class="burger"
         >
-            <span
-                class="ham-bar block h-[1.5px] w-6 bg-[#0F0F0E] rounded-full transition-all duration-[350ms]"
-                aria-hidden="true"></span>
-            <span
-                class="ham-bar block h-[1.5px] w-[18px] bg-[#0F0F0E] rounded-full transition-all duration-[350ms]"
-                aria-hidden="true"></span>
-            <span
-                class="ham-bar block h-[1.5px] w-6 bg-[#0F0F0E] rounded-full transition-all duration-[350ms]"
-                aria-hidden="true"></span>
+            <span id="bl1" aria-hidden="true"></span>
+            <span id="bl2" aria-hidden="true"></span>
+            <span id="bl3" aria-hidden="true"></span>
         </button>
     </div>
 </header>
 
-<script>
-    const header = document.querySelector(".site-header") as HTMLElement;
-    const toggle = document.getElementById("menu-toggle") as HTMLButtonElement;
-    const menu = document.getElementById("mobile-menu") as HTMLElement;
+<!-- Spacer -->
+<div aria-hidden="true" class="header-spacer"></div>
 
-    // Scroll → header becomes dark
-    window.addEventListener(
-        "scroll",
-        () => {
-            header?.classList.toggle("scrolled", window.scrollY > 60);
-        },
-        { passive: true },
-    );
+<!-- ——— MENU MOBILE OVERLAY ——— -->
+<div
+    id="mobile-menu"
+    class="mobile-overlay"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Menu de navigation"
+    aria-hidden="true"
+>
+    <div class="mobile-overlay-inner">
+        <!-- Header du menu -->
+        <div class="mobile-header">
+            <a href="/" class="mobile-logo" aria-label="Oriento — accueil">
+                <img
+                    src={logoBlanc.src}
+                    alt="Oriento"
+                    width="42"
+                    height="42"
+                    class="logo-img"
+                    loading="eager"
+                />
+            </a>
+            <button
+                id="close-menu"
+                type="button"
+                aria-label="Fermer le menu"
+                class="close-btn"
+            >
+                <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                >
+                    <path d="M18 6L6 18M6 6l12 12"></path>
+                </svg>
+            </button>
+        </div>
 
-    function openMenu() {
-        toggle.setAttribute("aria-expanded", "true");
-        toggle.setAttribute("aria-label", "Fermer le menu de navigation");
-        menu.setAttribute("aria-hidden", "false");
-        menu.classList.add("is-open");
-        document.body.classList.add("menu-open");
-        const first = menu.querySelector<HTMLAnchorElement>("a[href]");
-        if (first) setTimeout(() => first.focus(), 50);
+        <!-- Liens -->
+        <nav class="mobile-nav" aria-label="Menu mobile">
+            <a href="/" class="mobile-lien">Accueil</a>
+            <a href="/logement" class="mobile-lien">Se loger</a>
+            <a href="/impots" class="mobile-lien">Impôts</a>
+            <a href="/etudes" class="mobile-lien">Etudes</a>
+            <a href="/assurance" class="mobile-lien">Assurances</a>
+            <a href="/contact" class="mobile-lien">Contact</a>
+            <a href="/a-propos" class="mobile-lien">À propos</a>
+            <a href="/connexion" class="mobile-lien">Connexion</a>
+            <a href="/inscription" class="mobile-lien">Inscription</a>
+        </nav>
+
+        <!-- Réseaux -->
+        <div class="mobile-reseaux">
+            <a
+                href="https://instagram.com"
+                class="mobile-reseau"
+                target="_blank"
+                rel="noopener noreferrer">Instagram</a
+            >
+            <a
+                href="https://behance.net"
+                class="mobile-reseau"
+                target="_blank"
+                rel="noopener noreferrer">Behance</a
+            >
+            <a
+                href="https://linkedin.com"
+                class="mobile-reseau"
+                target="_blank"
+                rel="noopener noreferrer">LinkedIn</a
+            >
+        </div>
+
+        <!-- Illustration -->
+        <div class="mobile-illus">
+            <img
+                src={menuImg.src}
+                alt=""
+                aria-hidden="true"
+                width="340"
+                height="240"
+                loading="lazy"
+            />
+        </div>
+    </div>
+</div>
+
+<style>
+    /* ——— HEADER ——— */
+    .site-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 50;
+        transition:
+            background-color 0.3s ease,
+            box-shadow 0.3s ease;
+    }
+    .is-hero {
+        background-color: #fedc29;
+    }
+    .is-default {
+        background-color: #ffffff;
+        box-shadow: 0 1px 6px rgba(0, 0, 0, 0.08);
     }
 
-    function closeMenu() {
-        toggle.setAttribute("aria-expanded", "false");
-        toggle.setAttribute("aria-label", "Ouvrir le menu de navigation");
-        menu.setAttribute("aria-hidden", "true");
-        menu.classList.remove("is-open");
-        document.body.classList.remove("menu-open");
-        toggle.focus();
+    .header-inner {
+        max-width: 1152px;
+        margin: 0 auto;
+        padding: 0 1.25rem;
+        height: 5rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
     }
 
-    toggle?.addEventListener("click", () => {
-        toggle.getAttribute("aria-expanded") === "true"
-            ? closeMenu()
-            : openMenu();
+    .header-spacer {
+        height: 5rem;
+    }
+
+    /* ——— LOGOS ——— */
+    .header-logo {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        flex-shrink: 0;
+    }
+    .logo-img {
+        height: 2.625rem;
+        width: auto;
+        display: block;
+    }
+
+    /* ——— BURGER ——— */
+    .burger {
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0.25rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 6px;
+        width: 2.5rem;
+        height: 2.5rem;
+        outline-offset: 4px;
+    }
+    #bl1,
+    #bl2,
+    #bl3 {
+        display: block;
+        width: 1.75rem;
+        height: 3px;
+        background: #ffffff;
+        border-radius: 0;
+        transform-origin: center;
+        transition:
+            transform 0.3s ease,
+            opacity 0.3s ease,
+            background 0.3s ease;
+    }
+
+    /* ——— NAV DESKTOP ——— */
+    .desktop-nav {
+        display: none;
+        align-items: center;
+        gap: 2rem;
+    }
+    .nav-lien {
+        font-size: 0.7rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        text-decoration: none;
+        color: #171717;
+        padding: 0.25rem 0;
+        border-bottom: 2px solid transparent;
+        transition:
+            border-color 0.2s,
+            color 0.2s;
+    }
+    .nav-lien:hover {
+        border-bottom-color: #171717;
+    }
+    .nav-cta {
+        display: inline-block;
+        background: #171717;
+        color: #fedc29;
+        font-weight: 900;
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        padding: 0.5rem 1.5rem;
+        border-radius: 9999px;
+        text-decoration: none;
+        transition:
+            background 0.2s,
+            color 0.2s;
+    }
+    .nav-cta:hover {
+        background: #3d60fe;
+        color: #ffffff;
+    }
+
+    @media (min-width: 768px) {
+        .desktop-nav {
+            display: flex;
+        }
+        .burger {
+            display: none;
+        }
+    }
+
+    /* ——— OVERLAY MENU MOBILE ——— */
+    .mobile-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 100;
+        background: #171717;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+    }
+    .mobile-overlay.is-open {
+        opacity: 1;
+        pointer-events: all;
+    }
+
+    .mobile-overlay-inner {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        padding: 0 1.5rem 1.5rem;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+    }
+    .mobile-overlay-inner::-webkit-scrollbar {
+        display: none;
+    }
+
+    .mobile-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 5rem;
+        flex-shrink: 0;
+    }
+    .mobile-logo {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+    }
+
+    .close-btn {
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: #ffffff;
+        width: 2.5rem;
+        height: 2.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+        outline-offset: 4px;
+    }
+    .close-btn svg {
+        width: 28px;
+        height: 28px;
+    }
+
+    /* ——— LIENS ——— */
+    .mobile-nav {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        justify-content: center;
+        gap: 0.1rem;
+    }
+    .mobile-lien {
+        font-family: var(--font-body);
+        font-size: var(--text-2xl);
+        font-weight: var(--weight-regular);
+        color: #ffffff;
+        text-decoration: none;
+        padding: 0.15rem 0;
+        line-height: 1.25;
+        transition: color 0.2s;
+        display: block;
+    }
+    .mobile-lien:hover {
+        color: #fedc29;
+    }
+
+    /* ——— RÉSEAUX ——— */
+    .mobile-reseaux {
+        display: flex;
+        gap: 2rem;
+        padding-top: 1rem;
+        flex-shrink: 0;
+    }
+    .mobile-reseau {
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: rgba(255, 255, 255, 0.4);
+        text-decoration: none;
+        transition: color 0.2s;
+    }
+    .mobile-reseau:hover {
+        color: #ffffff;
+    }
+
+    /* ——— ILLUSTRATION ——— */
+    .mobile-illus {
+        flex-shrink: 0;
+        margin-top: 1rem;
+        display: flex;
+        justify-content: flex-start;
+    }
+    .mobile-illus img {
+        width: auto;
+        max-width: 100%;
+        height: 160px;
+        object-fit: contain;
+        object-position: left bottom;
+        display: block;
+    }
+
+    :focus-visible {
+        outline: 2px solid #3d60fe;
+        outline-offset: 4px;
+        border-radius: 2px;
+    }
+</style>
+
+<script define:vars={{ heroSection }}>
+    const header = document.getElementById("site-header");
+    const logoBlanc = document.getElementById("logo-blanc");
+    const logoNoir = document.getElementById("logo-noir");
+    const desktopNav = document.getElementById("desktop-nav");
+    const burger = document.getElementById("burger");
+    const mobileMenu = document.getElementById("mobile-menu");
+    const closeBtn = document.getElementById("close-menu");
+    const bl1 = document.getElementById("bl1");
+    const bl2 = document.getElementById("bl2");
+    const bl3 = document.getElementById("bl3");
+
+    const mq = window.matchMedia("(min-width: 768px)");
+    function applyMq(e) {
+        desktopNav.style.display = e.matches ? "flex" : "none";
+        burger.style.display = e.matches ? "none" : "flex";
+        if (e.matches) closeMobileMenu();
+    }
+    mq.addEventListener("change", applyMq);
+    applyMq(mq);
+
+    function updateScroll() {
+        if (!heroSection) return;
+        const scrolled = window.scrollY > 60;
+        header.style.backgroundColor = scrolled ? "#ffffff" : "#FEDC29";
+        header.style.boxShadow = scrolled
+            ? "0 1px 6px rgba(0,0,0,0.08)"
+            : "none";
+        logoBlanc.style.display = scrolled ? "none" : "block";
+        logoNoir.style.display = scrolled ? "block" : "none";
+        const barColor = scrolled ? "#171717" : "#ffffff";
+        bl1.style.background = barColor;
+        bl2.style.background = barColor;
+        bl3.style.background = barColor;
+    }
+    if (heroSection) {
+        window.addEventListener("scroll", updateScroll, { passive: true });
+        updateScroll();
+    } else {
+        logoBlanc.style.display = "none";
+        logoNoir.style.display = "block";
+        bl1.style.background = "#171717";
+        bl2.style.background = "#171717";
+        bl3.style.background = "#171717";
+    }
+
+    let savedBarColor = null;
+
+    function openMobileMenu() {
+        savedBarColor =
+            bl1.style.background || (heroSection ? "#ffffff" : "#171717");
+        bl1.style.background = "#ffffff";
+        bl2.style.background = "#ffffff";
+        bl3.style.background = "#ffffff";
+        mobileMenu.classList.add("is-open");
+        mobileMenu.setAttribute("aria-hidden", "false");
+        burger.setAttribute("aria-expanded", "true");
+        document.body.style.overflow = "hidden";
+    }
+
+    function closeMobileMenu() {
+        mobileMenu.classList.remove("is-open");
+        mobileMenu.setAttribute("aria-hidden", "true");
+        burger.setAttribute("aria-expanded", "false");
+        document.body.style.overflow = "";
+        if (savedBarColor) {
+            bl1.style.background = savedBarColor;
+            bl2.style.background = savedBarColor;
+            bl3.style.background = savedBarColor;
+        }
+    }
+
+    burger.addEventListener("click", openMobileMenu);
+    closeBtn.addEventListener("click", () => {
+        closeMobileMenu();
+        burger.focus();
     });
-
+    mobileMenu
+        .querySelectorAll("a.mobile-lien")
+        .forEach((l) => l.addEventListener("click", closeMobileMenu));
     document.addEventListener("keydown", (e) => {
-        if (e.key === "Escape" && menu?.classList.contains("is-open"))
-            closeMenu();
-    });
-
-    menu?.addEventListener("click", (e) => {
-        if ((e.target as HTMLElement).classList.contains("menu-backdrop"))
-            closeMenu();
+        if (e.key === "Escape" && mobileMenu.classList.contains("is-open")) {
+            closeMobileMenu();
+            burger.focus();
+        }
     });
 </script>
