@@ -1,0 +1,84 @@
+---
+interface Props {
+    titre: string;
+    texte: string;
+    symbole: string; // contenu SVG inline
+    lettre: string; // lettre décorative de fond
+}
+const { titre, texte, symbole, lettre } = Astro.props;
+---
+
+<div class="card-accueil">
+    <!-- Lettre décorative fond droit -->
+    <span class="card-accueil__lettre" aria-hidden="true">{lettre}</span>
+
+    <!-- Icône SVG -->
+    <div class="card-accueil__icone" aria-hidden="true" set:html={symbole} />
+
+    <!-- Contenu -->
+    <h3 class="card-accueil__titre">{titre}</h3>
+    <p class="card-accueil__texte">{texte}</p>
+</div>
+
+<style is:global>
+    .card-accueil {
+        position: relative;
+        overflow: hidden;
+        background: var(--color-white);
+        border-radius: var(--radius-m);
+        padding: var(--space-l) var(--space-m);
+        box-shadow: var(--shadow-m);
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-s);
+    }
+
+    /* Lettre décorative */
+    .card-accueil__lettre {
+        position: absolute;
+        right: -0.25rem;
+        bottom: -1rem;
+        font-family: var(--font-body);
+        font-size: 7rem;
+        font-weight: var(--weight-black);
+        color: var(--color-dark-10);
+        line-height: 1;
+        pointer-events: none;
+        user-select: none;
+    }
+
+    /* Icône SVG */
+    .card-accueil__icone {
+        width: 2.5rem;
+        height: 2.5rem;
+        color: var(--color-blue);
+        flex-shrink: 0;
+    }
+    .card-accueil__icone svg {
+        width: 100%;
+        height: 100%;
+        stroke: currentColor;
+        fill: none;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
+
+    .card-accueil__titre {
+        font-family: var(--font-body);
+        font-size: var(--text-l);
+        font-weight: var(--weight-black);
+        color: var(--color-dark);
+        text-transform: uppercase;
+        line-height: 1.1;
+    }
+
+    .card-accueil__texte {
+        font-family: var(--font-body);
+        font-size: var(--text-m);
+        color: var(--color-dark-60);
+        line-height: 1.6;
+        position: relative; /* passe devant la lettre */
+        z-index: 1;
+    }
+</style>

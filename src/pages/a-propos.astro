@@ -1,0 +1,213 @@
+---
+import Layout from "../layouts/Layout.astro";
+import logoCompletBlanc from "../assets/Oriento_img/logo_complet_blanc.avif";
+import Img1 from "../assets/Oriento_img/propos_img.avif";
+
+const sections = [
+    {
+        titre: "Notre mission",
+        texte: "Oriento a pour mission d'accompagner chaque étudiant dans ses démarches administratives et quotidiennes. Nous rendons accessibles les informations essentielles pour que tu puisses te concentrer sur l'essentiel : tes études.",
+    },
+    {
+        titre: "Pourquoi nous ?",
+        texte: "Nous savons que jongler entre cours, examens et vie quotidienne peut être stressant. Notre application vous guide pas à pas pour gagner du temps et éviter les erreurs.",
+    },
+    {
+        titre: "Ce que vous trouverez ici",
+        texte: "Des guides clairs sur les études, le logement, les assurances, les impôts et bien plus encore. Chaque contenu est pensé pour être simple, pratique et directement actionnable.",
+    },
+    {
+        titre: "Notre engagement",
+        texte: "Nous mettons tout en œuvre pour vous fournir des informations fiables, claires et accessibles. Votre tranquillité d'esprit est notre priorité.",
+    },
+];
+---
+
+<Layout title="À propos — Oriento" heroSection={true}>
+    <div class="page-wrapper">
+        <section class="hero-section" aria-label="Présentation">
+            <div class="hero-inner">
+                <div class="hero-logo-wrap">
+                    <img
+                        src={logoCompletBlanc.src}
+                        alt="Oriento"
+                        width="800"
+                        height="250"
+                        class="hero-logo-img"
+                        loading="eager"
+                        fetchpriority="high"
+                    />
+                </div>
+                <div class="hero-texte">
+                    <p>À propos</p>
+                    <div class="hero-img-wrap">
+                        <img
+                            src={Img1.src}
+                            alt="Illustration à propos"
+                            width="900"
+                            height="600"
+                            class="hero-img"
+                            loading="eager"
+                            fetchpriority="high"
+                        />
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="intro-section" aria-label="Introduction">
+            <div class="intro-inner">
+                <h1 class="intro-h1">À propos d'Oriento</h1>
+            </div>
+        </section>
+
+        <section class="cards-section" aria-label="Contenu">
+            <div class="cards-grid">
+                {
+                    sections.map((s) => (
+                        <div class="card">
+                            <h3 class="card-titre">{s.titre}</h3>
+                            {s.texte && <p class="card-texte">{s.texte}</p>}
+                        </div>
+                    ))
+                }
+            </div>
+        </section>
+    </div>
+
+    <style>
+        .page-wrapper {
+            background: var(--color-blue-light);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .hero-section {
+            background: var(--color-yellow);
+            display: flex;
+            align-items: stretch;
+        }
+        .hero-inner {
+            width: 100%;
+            max-width: 1152px;
+            margin: 0 auto;
+            padding: var(--space-l) var(--space-sm);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            gap: var(--space-sm);
+        }
+        .hero-logo-wrap {
+            width: 100%;
+            display: flex;
+            justify-content: flex-start;
+        }
+        .hero-logo-img {
+            height: clamp(6rem, 28vw, 9rem);
+            width: auto;
+        }
+        .hero-img-wrap {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+        }
+        .hero-img {
+            width: 100%;
+            max-width: 480px;
+            height: auto;
+            object-fit: contain;
+            object-position: bottom;
+        }
+        .hero-texte {
+            width: 100%;
+            padding: var(--space-m) 0;
+        }
+        .hero-texte p {
+            font-family: var(--font-body);
+            font-size: var(--text-5xl);
+            font-weight: var(--weight-bold);
+            color: var(--color-dark);
+            line-height: 1.1;
+        }
+
+        .intro-section {
+            padding: var(--space-2xl) var(--space-sm) var(--space-l);
+        }
+        .intro-inner {
+            max-width: 960px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-m);
+        }
+        .intro-h1 {
+            font-family: var(--font-body);
+            font-size: clamp(var(--text-2xl), 6vw, var(--text-4xl));
+            font-weight: var(--weight-black);
+            color: var(--color-white);
+            line-height: 1.1;
+            -webkit-font-smoothing: auto;
+        }
+
+        .cards-section {
+            padding: var(--space-l) var(--space-sm) var(--space-3xl);
+        }
+        .cards-grid {
+            max-width: 960px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: var(--space-m);
+            width: 100%;
+        }
+        .card {
+            background: var(--color-dark-blue);
+            border-radius: var(--radius-m);
+            padding: var(--space-l);
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-m);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+            min-width: 0;
+            overflow: hidden;
+        }
+        .card-titre {
+            font-family: var(--font-body);
+            font-size: var(--text-l);
+            font-weight: var(--weight-bold);
+            color: var(--color-white);
+            -webkit-font-smoothing: auto;
+            text-align: center;
+        }
+        .card-texte {
+            font-family: var(--font-body);
+            font-size: var(--text-m);
+            font-weight: 400;
+            color: var(--color-white);
+            line-height: 1.6;
+        }
+
+        @media (min-width: 640px) {
+            .cards-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (min-width: 768px) {
+            .hero-logo-wrap {
+                justify-content: center;
+            }
+            .hero-logo-img {
+                height: clamp(5rem, 12vw, 9rem);
+            }
+            .hero-img {
+                max-width: 100%;
+            }
+            .hero-texte p {
+                font-size: 7rem;
+            }
+        }
+    </style>
+</Layout>

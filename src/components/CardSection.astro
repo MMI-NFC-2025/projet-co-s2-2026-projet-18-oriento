@@ -1,0 +1,145 @@
+---
+interface Props {
+    tag?: string;
+    titre: string;
+    texte: string;
+    href: string;
+    btnLabel?: string;
+    ariaLabel?: string;
+    bullets?: string[];
+    side?: "left" | "right";
+}
+const {
+    tag,
+    titre,
+    texte,
+    href,
+    btnLabel = "En savoir +",
+    ariaLabel,
+    bullets,
+    side = "left",
+} = Astro.props;
+const btnAriaLabel =
+    ariaLabel ??
+    (btnLabel === "En savoir +" ? `En savoir plus sur ${titre}` : btnLabel);
+---
+
+<div class={`card-section card-section--${side}`}>
+    {tag && <span class="card-section__tag">{tag}</span>}
+    <h2 class="card-section__title">{titre}</h2>
+    <p class="card-section__text">{texte}</p>
+    {
+        bullets && bullets.length > 0 && (
+            <ul class="card-section__bullets">
+                {bullets.map((b) => (
+                    <li>{b}</li>
+                ))}
+            </ul>
+        )
+    }
+    <slot />
+    <div class="card-section__btn-wrap">
+        <a href={href} class="card-section__btn" aria-label={btnAriaLabel}>
+            {btnLabel}
+        </a>
+    </div>
+</div>
+
+<style is:global>
+    .card-section {
+        background: var(--color-blue);
+        color: var(--color-white);
+        font-family: var(--font-body);
+        padding: var(--space-m) var(--space-l);
+        max-width: 600px;
+        width: 88%;
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-xs);
+    }
+    .card-section--left {
+        border-radius: 0 var(--radius-l) var(--radius-l) 0;
+        margin-right: auto;
+    }
+    .card-section--right {
+        border-radius: var(--radius-l) 0 0 var(--radius-l);
+        margin-left: auto;
+    }
+    .card-section__tag {
+        display: inline-block;
+        font-size: var(--text-xxs);
+        font-weight: var(--weight-bold);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: var(--color-yellow);
+    }
+    .card-section__title {
+        font-size: clamp(var(--text-2xl), 5vw, var(--text-5xl));
+        font-weight: var(--weight-black);
+        text-transform: uppercase;
+        line-height: 1.05;
+        margin-bottom: var(--space-s);
+        -webkit-font-smoothing: auto;
+    }
+    .card-section__text {
+        font-size: var(--text-m);
+        font-weight: var(--weight-bold);
+        line-height: 1.4;
+        color: var(--color-white);
+        -webkit-font-smoothing: auto;
+    }
+    .card-section__bullets {
+        padding-left: var(--space-m);
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+    }
+    .card-section__bullets li {
+        font-size: var(--text-sm);
+        color: rgba(255, 255, 255, 0.85);
+        line-height: 1.5;
+    }
+    .card-section__btn-wrap {
+        display: flex;
+        justify-content: center;
+        margin-top: var(--space-s);
+    }
+    .card-section__btn {
+        display: inline-block;
+        background: var(--color-white);
+        color: var(--color-dark);
+        font-family: var(--font-body);
+        font-size: var(--text-sm);
+        font-weight: var(--weight-bold);
+        text-decoration: none;
+        padding: var(--space-xs) var(--space-m);
+        border-radius: var(--radius-full);
+        transition:
+            background 0.2s,
+            transform 0.2s,
+            box-shadow 0.2s;
+    }
+    .card-section__btn:hover {
+        background: var(--color-yellow);
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+    }
+    .card-section__btn:active {
+        transform: translateY(0);
+        box-shadow: none;
+    }
+
+    @media (min-width: 768px) {
+        .card-section {
+            padding: var(--space-2xl);
+            width: 100%;
+        }
+        .card-section__title {
+            font-size: clamp(var(--text-3xl), 5vw, var(--text-5xl));
+            margin-bottom: var(--space-m);
+        }
+        .card-section__text {
+            font-size: var(--text-xl);
+        }
+    }
+</style>
