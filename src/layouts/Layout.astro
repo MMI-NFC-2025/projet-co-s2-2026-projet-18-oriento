@@ -2,6 +2,7 @@
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import "../styles/global.css";
+import logoBlanc from "../assets/Oriento_img/logo_blanc.avif";
 
 interface Props {
 	title: string;
@@ -20,7 +21,7 @@ const { title, heroSection = false } = Astro.props;
 			content="Oriento — Le guide étudiant pour bien démarrer"
 		/>
 		<title>{title}</title>
-		<link rel="icon" href="/favicon.ico" />
+		<link rel="icon" type="image/avif" href={logoBlanc.src} />
 	</head>
 
 	<body>

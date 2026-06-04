@@ -4,6 +4,11 @@ import BoutonConseil from "../../components/BoutonConseil.astro";
 import logoCompletBlanc from "../../assets/Oriento_img/logo_complet_blanc.avif";
 import Img1 from "../../assets/Oriento_img/logement_logement_img.avif";
 
+type Lien = {
+    label: string;
+    url: string;
+};
+
 type PageData = {
     titre: string;
     intro: string;
@@ -12,6 +17,7 @@ type PageData = {
         texte?: string;
         bullets?: string[];
         conseils: string;
+        liens?: Lien[];
     }[];
 };
 
@@ -26,18 +32,36 @@ export function getStaticPaths() {
                     texte: "Carte d'identité, passeport ou titre de séjour valide.",
                     conseils:
                         "Scanne ta pièce d'identité en haute résolution et garde-la toujours prête en PDF. Certaines agences refusent les photos floues ou recadrées.",
+                    liens: [
+                        {
+                            label: "Service-public.fr — Documents autorisés pour la location",
+                            url: "https://www.service-public.fr/particuliers/vosdroits/F1169",
+                        },
+                    ],
                 },
                 {
                     titre: "Justificatif étudiant",
                     texte: "Carte étudiante, certificat de scolarité ou attestation d'inscription dans votre établissement.",
                     conseils:
                         "Télécharge ton certificat de scolarité depuis ton ENT dès la rentrée. Il est souvent disponible en quelques clics et accepté par tous les bailleurs.",
+                    liens: [
+                        {
+                            label: "messervices.etudiant.gouv.fr — Certificat de scolarité",
+                            url: "https://www.messervices.etudiant.gouv.fr",
+                        },
+                    ],
                 },
                 {
                     titre: "Justificatif de revenus",
                     texte: "Bulletins de salaire, contrat d'alternance, attestation de bourse ou tout document prouvant vos ressources.",
                     conseils:
                         "Si tu n'as pas de revenus propres, une attestation de bourse ou une lettre de tes parents indiquant qu'ils prennent en charge ton loyer peut suffire.",
+                    liens: [
+                        {
+                            label: "Service-public.fr — Pièces justificatives demandées par le bailleur",
+                            url: "https://www.service-public.fr/particuliers/vosdroits/F1169",
+                        },
+                    ],
                 },
                 {
                     titre: "Garant (si demandé)",
@@ -49,6 +73,16 @@ export function getStaticPaths() {
                     ],
                     conseils:
                         "Si tu n'as pas de garant physique, tu peux utiliser le dispositif Visale (gratuit, proposé par Action Logement) qui se porte garant à ta place auprès du propriétaire.",
+                    liens: [
+                        {
+                            label: "visale.fr — Garantie locative gratuite Visale",
+                            url: "https://www.visale.fr",
+                        },
+                        {
+                            label: "Service-public.fr — Se porter garant pour un locataire",
+                            url: "https://www.service-public.fr/particuliers/vosdroits/F31267",
+                        },
+                    ],
                 },
                 {
                     titre: "Conseils pratiques",
@@ -59,6 +93,12 @@ export function getStaticPaths() {
                     ],
                     conseils:
                         "Crée un dossier de location sur DossierFacile.fr, le service gratuit de l'État. Il certifie ton dossier et rassure les propriétaires, ce qui peut faire la différence face à d'autres candidats.",
+                    liens: [
+                        {
+                            label: "DossierFacile.fr — Dossier de location certifié par l'État",
+                            url: "https://www.dossierfacile.logement.gouv.fr",
+                        },
+                    ],
                 },
             ],
         },
@@ -76,6 +116,16 @@ export function getStaticPaths() {
                     ],
                     conseils:
                         "Pour un logement étudiant, préfère un bail meublé ou mobilité. Ils sont plus courts et plus flexibles si tu changes de ville ou de formation.",
+                    liens: [
+                        {
+                            label: "Service-public.fr — Bail meublé étudiant (9 mois)",
+                            url: "https://www.service-public.fr/particuliers/vosdroits/F31723",
+                        },
+                        {
+                            label: "Service-public.fr — Bail mobilité",
+                            url: "https://www.service-public.fr/particuliers/vosdroits/F34038",
+                        },
+                    ],
                 },
                 {
                     titre: "Les clauses importantes",
@@ -87,6 +137,16 @@ export function getStaticPaths() {
                     ],
                     conseils:
                         "Tout ce qui n'est pas écrit dans le bail n'a pas de valeur légale. Si ton propriétaire te promet quelque chose verbalement, demande-lui de l'écrire dans le contrat ou dans un avenant.",
+                    liens: [
+                        {
+                            label: "Service-public.fr — Contenu obligatoire du bail",
+                            url: "https://www.service-public.fr/particuliers/vosdroits/F920",
+                        },
+                        {
+                            label: "ANIL — Dépôt de garantie : règles et restitution",
+                            url: "https://www.anil.org/votre-projet/vous-etes-locataire/entree-dans-les-lieux/depot-de-garantie/",
+                        },
+                    ],
                 },
                 {
                     titre: "L'état des lieux",
@@ -98,6 +158,16 @@ export function getStaticPaths() {
                     ],
                     conseils:
                         "Prends des photos de chaque pièce le jour de l'état des lieux d'entrée et envoie-les par e-mail à ton propriétaire. Elles serviront de preuve en cas de litige à la sortie.",
+                    liens: [
+                        {
+                            label: "Service-public.fr — État des lieux d'entrée",
+                            url: "https://www.service-public.fr/particuliers/vosdroits/F31269",
+                        },
+                        {
+                            label: "Service-public.fr — État des lieux de sortie",
+                            url: "https://www.service-public.fr/particuliers/vosdroits/F31270",
+                        },
+                    ],
                 },
                 {
                     titre: "Tes droits en tant que locataire",
@@ -109,6 +179,16 @@ export function getStaticPaths() {
                     ],
                     conseils:
                         "En cas de litige avec ton propriétaire, contacte l'ADIL (Agence Départementale d'Information sur le Logement) de ta ville. La consultation est gratuite et les conseils sont juridiquement fiables.",
+                    liens: [
+                        {
+                            label: "Service-public.fr — Droits et obligations du locataire",
+                            url: "https://www.service-public.fr/particuliers/vosdroits/F1699",
+                        },
+                        {
+                            label: "ANIL — Trouver l'ADIL de votre département",
+                            url: "https://www.anil.org/lanil-et-les-adil/votre-adil/",
+                        },
+                    ],
                 },
             ],
         },
@@ -126,6 +206,16 @@ export function getStaticPaths() {
                     ],
                     conseils:
                         "Fais ta demande d'APL sur caf.fr dès que tu signes ton bail. Chaque mois de retard est une aide perdue définitivement.",
+                    liens: [
+                        {
+                            label: "CAF.fr — Faire une demande d'aide au logement",
+                            url: "https://www.caf.fr/allocataires/droits-et-prestations/s-informer-sur-les-aides/logement-et-cadre-de-vie/l-aide-au-logement",
+                        },
+                        {
+                            label: "Service-public.fr — APL, ALS, ALF : aide au logement étudiant",
+                            url: "https://www.service-public.fr/particuliers/vosdroits/F1563",
+                        },
+                    ],
                 },
                 {
                     titre: "Les résidences CROUS",
@@ -137,6 +227,16 @@ export function getStaticPaths() {
                     ],
                     conseils:
                         "Ne compte pas uniquement sur une place en CROUS. Les demandes sont nombreuses et les places limitées. Prépare un plan B avec des logements privés en parallèle.",
+                    liens: [
+                        {
+                            label: "trouvermonlogement.etudiant.gouv.fr — Demander un logement CROUS",
+                            url: "https://trouvermonlogement.etudiant.gouv.fr",
+                        },
+                        {
+                            label: "messervices.etudiant.gouv.fr — Dossier Social Étudiant (logement)",
+                            url: "https://www.messervices.etudiant.gouv.fr",
+                        },
+                    ],
                 },
                 {
                     titre: "Le dispositif Visale",
@@ -148,6 +248,16 @@ export function getStaticPaths() {
                     ],
                     conseils:
                         "Obtiens ton visa Visale avant même de commencer à chercher un logement. Certains propriétaires l'acceptent plus facilement qu'un garant physique.",
+                    liens: [
+                        {
+                            label: "visale.fr — Obtenir sa garantie Visale",
+                            url: "https://www.visale.fr",
+                        },
+                        {
+                            label: "Service-public.fr — Visale, caution locative étudiante",
+                            url: "https://www.service-public.fr/particuliers/vosdroits/F34002",
+                        },
+                    ],
                 },
                 {
                     titre: "Autres aides disponibles",
@@ -159,6 +269,20 @@ export function getStaticPaths() {
                     ],
                     conseils:
                         "Consulte le site de ta région et de ton CROUS local. Beaucoup d'aides sont peu connues et donc peu demandées, ce qui augmente tes chances de les obtenir.",
+                    liens: [
+                        {
+                            label: "actionlogement.fr — Locapass et aides au logement",
+                            url: "https://www.actionlogement.fr/le-locapass",
+                        },
+                        {
+                            label: "Service-public.fr — Aides d'urgence CROUS",
+                            url: "https://www.service-public.fr/particuliers/vosdroits/F1024",
+                        },
+                        {
+                            label: "1jeune1solution.gouv.fr — Aides logement jeunes",
+                            url: "https://www.1jeune1solution.gouv.fr/logement",
+                        },
+                    ],
                 },
             ],
         },
@@ -227,6 +351,53 @@ const { page } = Astro.props as { page: PageData };
                                 </ul>
                             )}
                             <BoutonConseil conseils={s.conseils} />
+                            {s.liens && s.liens.length > 0 && (
+                                <div class="card-liens">
+                                    <p class="card-liens-titre">
+                                        Sources officielles
+                                    </p>
+                                    <ul class="card-liens-liste">
+                                        {s.liens.map((lien) => (
+                                            <li>
+                                                <a
+                                                    href={lien.url}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    class="card-lien"
+                                                >
+                                                    <svg
+                                                        viewBox="0 0 16 16"
+                                                        fill="none"
+                                                        aria-hidden="true"
+                                                        class="lien-icon"
+                                                    >
+                                                        <path
+                                                            d="M6 3H3a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1v-3"
+                                                            stroke="currentColor"
+                                                            stroke-width="1.5"
+                                                            stroke-linecap="round"
+                                                        />
+                                                        <path
+                                                            d="M9 2h5v5"
+                                                            stroke="currentColor"
+                                                            stroke-width="1.5"
+                                                            stroke-linecap="round"
+                                                            stroke-linejoin="round"
+                                                        />
+                                                        <path
+                                                            d="M14 2 8 8"
+                                                            stroke="currentColor"
+                                                            stroke-width="1.5"
+                                                            stroke-linecap="round"
+                                                        />
+                                                    </svg>
+                                                    {lien.label}
+                                                </a>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            )}
                         </div>
                     ))
                 }
@@ -371,6 +542,54 @@ const { page } = Astro.props as { page: PageData };
             line-height: 1.5;
             word-break: break-word;
             overflow-wrap: break-word;
+        }
+
+        /* LIENS OFFICIELS */
+        .card-liens {
+            border-top: 1px solid rgba(255, 255, 255, 0.12);
+            padding-top: var(--space-m);
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-s);
+        }
+        .card-liens-titre {
+            font-family: var(--font-body);
+            font-size: var(--text-xs);
+            font-weight: var(--weight-bold);
+            color: rgba(255, 255, 255, 0.5);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin: 0;
+        }
+        .card-liens-liste {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-xs);
+        }
+        .card-lien {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-xs);
+            font-family: var(--font-body);
+            font-size: var(--text-sm);
+            color: var(--color-yellow);
+            text-decoration: none;
+            font-weight: var(--weight-medium);
+            transition: opacity 0.15s;
+            word-break: break-word;
+        }
+        .card-lien:hover {
+            opacity: 0.75;
+            text-decoration: underline;
+        }
+        .lien-icon {
+            width: 13px;
+            height: 13px;
+            flex-shrink: 0;
+            opacity: 0.8;
         }
 
         @media (min-width: 640px) {

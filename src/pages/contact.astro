@@ -97,11 +97,11 @@ const coordonnees = [
             >
                 <div class="formulaire-card">
                     <h2 class="formulaire-titre">Formulaire de contact</h2>
-                    <form class="formulaire" novalidate>
+                    <form class="formulaire" id="contact-form" novalidate>
                         <div class="form-group">
-                            <label class="form-label" for="nom"
-                                >Nom complet</label
-                            >
+                            <label class="form-label" for="nom">
+                                Nom complet
+                            </label>
                             <input
                                 class="form-input"
                                 type="text"
@@ -136,9 +136,9 @@ const coordonnees = [
                             />
                         </div>
                         <div class="form-group">
-                            <label class="form-label" for="message"
-                                >Message</label
-                            >
+                            <label class="form-label" for="message">
+                                Message
+                            </label>
                             <textarea
                                 class="form-textarea"
                                 id="message"
@@ -148,7 +148,11 @@ const coordonnees = [
                                 required></textarea>
                         </div>
                         <div class="form-submit-wrap">
-                            <button class="form-btn" type="submit">
+                            <button
+                                class="form-btn"
+                                type="submit"
+                                id="form-btn"
+                            >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     width="18"
@@ -160,13 +164,19 @@ const coordonnees = [
                                     stroke-linecap="round"
                                     stroke-linejoin="round"
                                     aria-hidden="true"
-                                    ><path d="M22 2 11 13"></path><path
-                                        d="m22 2-7 20-4-9-9-4 20-7z"
-                                    ></path></svg
                                 >
+                                    <path d="M22 2 11 13"></path>
+                                    <path d="m22 2-7 20-4-9-9-4 20-7z"></path>
+                                </svg>
                                 Envoyer
                             </button>
                         </div>
+                        <p
+                            class="form-statut"
+                            id="form-statut"
+                            aria-live="polite"
+                        >
+                        </p>
                     </form>
                 </div>
             </section>
@@ -388,6 +398,23 @@ const coordonnees = [
         .form-btn:active {
             transform: translateY(0);
         }
+        .form-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .form-statut {
+            font-family: var(--font-body);
+            font-size: var(--text-xs);
+            text-align: center;
+            min-height: 1.2em;
+        }
+        .form-statut.succes {
+            color: #bbf7d0;
+        }
+        .form-statut.erreur {
+            color: #fca5a5;
+        }
 
         /* RESPONSIVE */
         @media (min-width: 768px) {
@@ -418,3 +445,85 @@ const coordonnees = [
         }
     </style>
 </Layout>
+
+<script>
+    import PocketBase from "pocketbase";
+    const pb = new PocketBase("http://127.0.0.1:8090");
+
+    const form = document.getElementById("contact-form") as HTMLFormElement;
+    const btn = document.getElementById("form-btn") as HTMLButtonElement;
+    const statut = document.getElementById("form-statut")!;
+
+    const SVG_ENVOYER = `
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+            viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            aria-hidden="true">
+            <path d="M22 2 11 13"></path>
+            <path d="m22 2-7 20-4-9-9-4 20-7z"></path>
+        </svg>
+        Envoyer
+    `;
+
+    function setStatut(msg: string, type: "succes" | "erreur" | "") {
+        statut.textContent = msg;
+        statut.className = "form-statut" + (type ? ` ${type}` : "");
+    }
+
+    form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        setStatut("", "");
+
+        const nom = (
+            form.querySelector("#nom") as HTMLInputElement
+        ).value.trim();
+        const email = (
+            form.querySelector("#email") as HTMLInputElement
+        ).value.trim();
+        const sujet = (
+            form.querySelector("#sujet") as HTMLInputElement
+        ).value.trim();
+        const message = (
+            form.querySelector("#message") as HTMLTextAreaElement
+        ).value.trim();
+
+        // Validation
+        if (!nom || !email || !message) {
+            setStatut("Remplis tous les champs obligatoires.", "erreur");
+            return;
+        }
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            setStatut("Adresse email invalide.", "erreur");
+            return;
+        }
+
+        btn.disabled = true;
+        btn.textContent = "Envoi en cours...";
+
+        try {
+            await pb.collection("contact").create({
+                nom,
+                email,
+                sujet: sujet || "",
+                message,
+                lu: false,
+            });
+
+            setStatut(
+                "✓ Message envoyé ! Nous te répondrons rapidement.",
+                "succes",
+            );
+            form.reset();
+        } catch (err: any) {
+            console.error(err);
+            setStatut(
+                err?.data?.message ?? "Erreur lors de l'envoi. Réessaie.",
+                "erreur",
+            );
+        } finally {
+            btn.disabled = false;
+            btn.innerHTML = SVG_ENVOYER;
+        }
+    });
+</script>

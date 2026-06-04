@@ -5,6 +5,7 @@ interface Props {
     texte: string;
     href: string;
     btnLabel?: string;
+    ariaLabel?: string;
     bullets?: string[];
     side?: "left" | "right";
 }
@@ -14,9 +15,13 @@ const {
     texte,
     href,
     btnLabel = "En savoir +",
+    ariaLabel,
     bullets,
     side = "left",
 } = Astro.props;
+const btnAriaLabel =
+    ariaLabel ??
+    (btnLabel === "En savoir +" ? `En savoir plus sur ${titre}` : btnLabel);
 ---
 
 <div class={`card-section card-section--${side}`}>
@@ -34,7 +39,9 @@ const {
     }
     <slot />
     <div class="card-section__btn-wrap">
-        <a href={href} class="card-section__btn">{btnLabel}</a>
+        <a href={href} class="card-section__btn" aria-label={btnAriaLabel}>
+            {btnLabel}
+        </a>
     </div>
 </div>
 

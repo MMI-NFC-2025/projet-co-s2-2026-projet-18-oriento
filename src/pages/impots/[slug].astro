@@ -4,6 +4,11 @@ import BoutonConseil from "../../components/BoutonConseil.astro";
 import logoCompletBlanc from "../../assets/Oriento_img/logo_complet_blanc.avif";
 import Img1 from "../../assets/Oriento_img/impot_impot_img.avif";
 
+type Lien = {
+    label: string;
+    url: string;
+};
+
 type PageData = {
     titre: string;
     intro: string;
@@ -12,6 +17,7 @@ type PageData = {
         texte?: string;
         bullets?: string[];
         conseils: string;
+        liens?: Lien[];
     }[];
 };
 
@@ -31,6 +37,16 @@ export function getStaticPaths() {
                     ],
                     conseils:
                         "En tant qu'étudiant avec de petits revenus, tu seras souvent non imposable. Mais déclarer reste obligatoire dès que tu as des revenus, même faibles.",
+                    liens: [
+                        {
+                            label: "impots.gouv.fr — Comment fonctionne l'impôt sur le revenu",
+                            url: "https://www.impots.gouv.fr/particulier/questions/comment-est-calcule-limpot-sur-le-revenu",
+                        },
+                        {
+                            label: "Service-public.fr — Impôt sur le revenu : principes",
+                            url: "https://www.service-public.fr/particuliers/vosdroits/F1419",
+                        },
+                    ],
                 },
                 {
                     titre: "Le foyer fiscal",
@@ -42,6 +58,16 @@ export function getStaticPaths() {
                     ],
                     conseils:
                         "Compare les deux situations avec un simulateur sur impots.gouv.fr. Parfois, se détacher du foyer parental est plus avantageux pour bénéficier de certaines aides.",
+                    liens: [
+                        {
+                            label: "Service-public.fr — Rattachement d'un enfant majeur au foyer fiscal",
+                            url: "https://www.service-public.fr/particuliers/vosdroits/F2(3)",
+                        },
+                        {
+                            label: "impots.gouv.fr — Simulateur de calcul d'impôt",
+                            url: "https://www.impots.gouv.fr/simulateur/calcul-impot",
+                        },
+                    ],
                 },
                 {
                     titre: "Le prélèvement à la source",
@@ -53,6 +79,16 @@ export function getStaticPaths() {
                     ],
                     conseils:
                         "Si ton taux de prélèvement te semble trop élevé, tu peux le modifier directement depuis ton espace personnel sur impots.gouv.fr.",
+                    liens: [
+                        {
+                            label: "impots.gouv.fr — Prélèvement à la source",
+                            url: "https://www.impots.gouv.fr/particulier/le-prelevement-a-la-source",
+                        },
+                        {
+                            label: "Service-public.fr — Taux neutre de prélèvement",
+                            url: "https://www.service-public.fr/particuliers/vosdroits/F34732",
+                        },
+                    ],
                 },
                 {
                     titre: "Les revenus non imposables",
@@ -64,6 +100,16 @@ export function getStaticPaths() {
                     ],
                     conseils:
                         "Même si tes revenus sont exonérés, il peut être utile de les déclarer pour établir ton historique fiscal et accéder à certaines aides sociales.",
+                    liens: [
+                        {
+                            label: "Service-public.fr — Revenus exonérés d'impôt",
+                            url: "https://www.service-public.fr/particuliers/vosdroits/F2273",
+                        },
+                        {
+                            label: "impots.gouv.fr — Indemnités de stage et imposition",
+                            url: "https://www.impots.gouv.fr/particulier/questions/les-indemnites-de-stage-sont-elles-imposables",
+                        },
+                    ],
                 },
             ],
         },
@@ -81,6 +127,16 @@ export function getStaticPaths() {
                     ],
                     conseils:
                         "Ton numéro fiscal est personnel et ne change jamais. Note-le dans un endroit sûr dès ta première connexion.",
+                    liens: [
+                        {
+                            label: "impots.gouv.fr — Créer son espace particulier",
+                            url: "https://www.impots.gouv.fr/accueil",
+                        },
+                        {
+                            label: "Service-public.fr — Numéro fiscal : comment l'obtenir",
+                            url: "https://www.service-public.fr/particuliers/vosdroits/F32457",
+                        },
+                    ],
                 },
                 {
                     titre: "Les fonctionnalités principales",
@@ -93,6 +149,12 @@ export function getStaticPaths() {
                     ],
                     conseils:
                         "L'avis d'imposition est un document officiel très souvent demandé pour les dossiers de location, les bourses ou les aides sociales. Télécharge-le et garde-le à portée de main.",
+                    liens: [
+                        {
+                            label: "impots.gouv.fr — Espace particulier",
+                            url: "https://www.impots.gouv.fr/particulier",
+                        },
+                    ],
                 },
                 {
                     titre: "Déclarer en ligne facilement",
@@ -104,6 +166,16 @@ export function getStaticPaths() {
                     ],
                     conseils:
                         "Ne saute pas l'étape de vérification des cases pré-remplies. Une erreur de l'administration peut passer inaperçue si tu valides sans lire.",
+                    liens: [
+                        {
+                            label: "impots.gouv.fr — Déclarer mes revenus en ligne",
+                            url: "https://www.impots.gouv.fr/particulier/declarer-mes-revenus",
+                        },
+                        {
+                            label: "Service-public.fr — Déclaration de revenus en ligne",
+                            url: "https://www.service-public.fr/particuliers/vosdroits/F357",
+                        },
+                    ],
                 },
                 {
                     titre: "Les délais à respecter",
@@ -115,6 +187,16 @@ export function getStaticPaths() {
                     ],
                     conseils:
                         "Active les alertes e-mail sur impots.gouv.fr pour être notifié à l'ouverture de la campagne et ne jamais rater la date limite.",
+                    liens: [
+                        {
+                            label: "impots.gouv.fr — Calendrier fiscal",
+                            url: "https://www.impots.gouv.fr/particulier/calendrier",
+                        },
+                        {
+                            label: "Service-public.fr — Dates limites de déclaration",
+                            url: "https://www.service-public.fr/particuliers/actualites/A14745",
+                        },
+                    ],
                 },
             ],
         },
@@ -127,6 +209,16 @@ export function getStaticPaths() {
                     texte: "Si tu as moins de 25 ans et que tu es étudiant, tu peux rester rattaché au foyer fiscal de tes parents. Dans ce cas, ce sont généralement eux qui déclarent tes revenus avec les leurs.",
                     conseils:
                         "Discute avec tes parents de la situation la plus avantageuse. Le rattachement leur permet de bénéficier d'une demi-part supplémentaire, ce qui peut réduire leur impôt.",
+                    liens: [
+                        {
+                            label: "Service-public.fr — Rattachement enfant majeur étudiant",
+                            url: "https://www.service-public.fr/particuliers/vosdroits/F2(3)",
+                        },
+                        {
+                            label: "impots.gouv.fr — Simulateur foyer fiscal",
+                            url: "https://www.impots.gouv.fr/simulateur/calcul-impot",
+                        },
+                    ],
                 },
                 {
                     titre: "Si vous faites votre propre déclaration",
@@ -138,6 +230,16 @@ export function getStaticPaths() {
                     ],
                     conseils:
                         "Même si tu n'es pas imposable, faire ta déclaration te permet d'obtenir un avis de non-imposition, souvent indispensable pour les dossiers de bourse ou de logement.",
+                    liens: [
+                        {
+                            label: "impots.gouv.fr — Déclarer mes revenus",
+                            url: "https://www.impots.gouv.fr/particulier/declarer-mes-revenus",
+                        },
+                        {
+                            label: "Service-public.fr — Étudiant et déclaration de revenus",
+                            url: "https://www.service-public.fr/particuliers/vosdroits/F1564",
+                        },
+                    ],
                 },
                 {
                     titre: "Les revenus étudiants sont parfois exonérés",
@@ -147,12 +249,32 @@ export function getStaticPaths() {
                     ],
                     conseils:
                         "Consulte le simulateur sur impots.gouv.fr pour savoir exactement si tu es imposable selon tes revenus. C'est gratuit, rapide et sans engagement.",
+                    liens: [
+                        {
+                            label: "impots.gouv.fr — Simulateur d'impôt sur le revenu",
+                            url: "https://www.impots.gouv.fr/simulateur/calcul-impot",
+                        },
+                        {
+                            label: "Service-public.fr — Exonération jobs étudiants",
+                            url: "https://www.service-public.fr/particuliers/vosdroits/F1563",
+                        },
+                    ],
                 },
                 {
                     titre: "Conseil",
                     texte: "Si tu as un doute, il est recommandé de faire une simulation ou de consulter les informations officielles pour connaître ta situation.",
                     conseils:
                         "N'hésite pas à contacter directement le centre des impôts de ta ville. Les agents fiscaux sont habitués aux questions des étudiants et peuvent t'orienter gratuitement.",
+                    liens: [
+                        {
+                            label: "impots.gouv.fr — Contacter les impôts",
+                            url: "https://www.impots.gouv.fr/contacts",
+                        },
+                        {
+                            label: "Service-public.fr — Trouver son centre des finances publiques",
+                            url: "https://www.service-public.fr/particuliers/vosdroits/R19755",
+                        },
+                    ],
                 },
             ],
         },
@@ -221,6 +343,53 @@ const { page } = Astro.props as { page: PageData };
                                 </ul>
                             )}
                             <BoutonConseil conseils={s.conseils} />
+                            {s.liens && s.liens.length > 0 && (
+                                <div class="card-liens">
+                                    <p class="card-liens-titre">
+                                        Sources officielles
+                                    </p>
+                                    <ul class="card-liens-liste">
+                                        {s.liens.map((lien) => (
+                                            <li>
+                                                <a
+                                                    href={lien.url}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    class="card-lien"
+                                                >
+                                                    <svg
+                                                        viewBox="0 0 16 16"
+                                                        fill="none"
+                                                        aria-hidden="true"
+                                                        class="lien-icon"
+                                                    >
+                                                        <path
+                                                            d="M6 3H3a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1v-3"
+                                                            stroke="currentColor"
+                                                            stroke-width="1.5"
+                                                            stroke-linecap="round"
+                                                        />
+                                                        <path
+                                                            d="M9 2h5v5"
+                                                            stroke="currentColor"
+                                                            stroke-width="1.5"
+                                                            stroke-linecap="round"
+                                                            stroke-linejoin="round"
+                                                        />
+                                                        <path
+                                                            d="M14 2 8 8"
+                                                            stroke="currentColor"
+                                                            stroke-width="1.5"
+                                                            stroke-linecap="round"
+                                                        />
+                                                    </svg>
+                                                    {lien.label}
+                                                </a>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            )}
                         </div>
                     ))
                 }
@@ -365,6 +534,54 @@ const { page } = Astro.props as { page: PageData };
             line-height: 1.5;
             word-break: break-word;
             overflow-wrap: break-word;
+        }
+
+        /* LIENS OFFICIELS */
+        .card-liens {
+            border-top: 1px solid rgba(255, 255, 255, 0.12);
+            padding-top: var(--space-m);
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-s);
+        }
+        .card-liens-titre {
+            font-family: var(--font-body);
+            font-size: var(--text-xs);
+            font-weight: var(--weight-bold);
+            color: rgba(255, 255, 255, 0.5);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin: 0;
+        }
+        .card-liens-liste {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-xs);
+        }
+        .card-lien {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-xs);
+            font-family: var(--font-body);
+            font-size: var(--text-sm);
+            color: var(--color-yellow);
+            text-decoration: none;
+            font-weight: var(--weight-medium);
+            transition: opacity 0.15s;
+            word-break: break-word;
+        }
+        .card-lien:hover {
+            opacity: 0.75;
+            text-decoration: underline;
+        }
+        .lien-icon {
+            width: 13px;
+            height: 13px;
+            flex-shrink: 0;
+            opacity: 0.8;
         }
 
         @media (min-width: 640px) {

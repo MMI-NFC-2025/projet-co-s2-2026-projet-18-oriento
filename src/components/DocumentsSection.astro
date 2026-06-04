@@ -15,31 +15,129 @@ const { categories = ["Logements", "Impôts", "Etudes", "Assurances"] } =
             fichiers essentiels pour tes démarches, afin de les retrouver et les
             utiliser rapidement quand tu en as besoin.
         </p>
-        <div class="docs-liste">
+
+        <!-- Liste des catégories avec compteur -->
+        <div class="docs-liste" id="docs-liste">
             {
                 categories.map((cat) => (
-                    <div class="docs-item">
+                    <div
+                        class="docs-item"
+                        data-categorie={cat}
+                        role="button"
+                        tabindex="0"
+                        aria-expanded="false"
+                    >
                         <span>{cat}</span>
-                        <svg
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2.5"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            aria-hidden="true"
-                        >
-                            <polyline points="6 9 12 15 18 9" />
-                        </svg>
+                        <div class="docs-item-right">
+                            <span class="docs-count" data-count={cat}>0</span>
+                            <svg
+                                class="docs-chevron"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2.5"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                aria-hidden="true"
+                            >
+                                <polyline points="6 9 12 15 18 9" />
+                            </svg>
+                        </div>
                     </div>
+                    <ul class="docs-sous-liste" data-sous-liste={cat} hidden>
+                    </ul>
                 ))
             }
         </div>
-        <button class="docs-btn" type="button">Ajouter un document</button>
+
+        <button
+            class="docs-btn"
+            type="button"
+            id="docs-ouvrir-modal"
+            aria-label="Ajouter un document administratif"
+        >
+            + Ajouter un document
+        </button>
     </div>
 </section>
 
+<!-- MODALE UPLOAD -->
+<div
+    class="docs-modal-overlay"
+    id="docs-modal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="modal-titre"
+    hidden
+>
+    <div class="docs-modal">
+        <div class="modal-header">
+            <h3 class="modal-titre" id="modal-titre">Ajouter un document</h3>
+            <button
+                class="modal-fermer"
+                id="docs-fermer-modal"
+                type="button"
+                aria-label="Fermer"
+            >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+                    <line x1="18" y1="6" x2="6" y2="18" />
+                    <line x1="6" y1="6" x2="18" y2="18" />
+                </svg>
+            </button>
+        </div>
+
+        <form class="modal-form" id="docs-form" novalidate>
+            <div class="form-group">
+                <label class="form-label" for="doc-nom">Nom du document</label>
+                <input
+                    type="text"
+                    id="doc-nom"
+                    class="form-input"
+                    placeholder="Ex : Attestation CAF 2025"
+                    required
+                />
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="doc-categorie">Catégorie</label>
+                <select id="doc-categorie" class="form-input" required>
+                    {categories.map((cat) => <option value={cat}>{cat}</option>)}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="doc-fichier">Fichier</label>
+                <label class="form-dropzone" for="doc-fichier" id="dropzone">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true" class="dropzone-icon">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                        <polyline points="17 8 12 3 7 8" />
+                        <line x1="12" y1="3" x2="12" y2="15" />
+                    </svg>
+                    <span class="dropzone-texte" id="dropzone-texte">
+                        Clique ou glisse un fichier ici
+                    </span>
+                    <span class="dropzone-sous" id="dropzone-sous">PDF, image, Word — max 10 Mo</span>
+                    <input
+                        type="file"
+                        id="doc-fichier"
+                        class="form-input-file"
+                        accept=".pdf,.jpg,.jpeg,.png,.doc,.docx"
+                        required
+                    />
+                </label>
+            </div>
+
+            <p class="modal-statut" id="modal-statut" aria-live="polite"></p>
+
+            <button type="submit" class="modal-submit" id="modal-submit-btn">
+                Enregistrer
+            </button>
+        </form>
+    </div>
+</div>
+
 <style>
+    /* ── SECTION ── */
     .docs-section {
         padding: var(--space-xl) var(--space-sm);
         display: flex;
@@ -68,9 +166,10 @@ const { categories = ["Logements", "Impôts", "Etudes", "Assurances"] } =
         font-size: var(--text-sm);
         color: rgba(255, 255, 255, 0.85);
         line-height: 1.6;
-        -webkit-font-smoothing: auto;
         max-width: 100%;
     }
+
+    /* ── LISTE ── */
     .docs-liste {
         display: flex;
         flex-direction: column;
@@ -89,16 +188,87 @@ const { categories = ["Logements", "Impôts", "Etudes", "Assurances"] } =
         color: var(--color-dark);
         cursor: pointer;
         transition: background 0.2s;
+        user-select: none;
     }
     .docs-item:hover {
         background: rgba(255, 255, 255, 0.85);
     }
-    .docs-item svg {
+    .docs-item-right {
+        display: flex;
+        align-items: center;
+        gap: var(--space-s);
+    }
+    .docs-count {
+        font-size: var(--text-xs);
+        font-weight: var(--weight-bold);
+        background: var(--color-blue-light);
+        color: var(--color-white);
+        border-radius: 9999px;
+        padding: 2px 8px;
+        min-width: 22px;
+        text-align: center;
+    }
+    .docs-chevron {
         width: 18px;
         height: 18px;
         color: var(--color-dark);
         flex-shrink: 0;
+        transition: transform 0.25s;
     }
+    .docs-item[aria-expanded="true"] .docs-chevron {
+        transform: rotate(180deg);
+    }
+
+    /* Sous-liste des fichiers */
+    .docs-sous-liste {
+        list-style: none;
+        padding: 0 var(--space-xs);
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
+    .docs-sous-liste[hidden] {
+        display: none;
+    }
+    .docs-fichier-item {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: var(--radius-m);
+        padding: var(--space-xs) var(--space-m);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--space-s);
+    }
+    .docs-fichier-nom {
+        font-family: var(--font-body);
+        font-size: var(--text-xs);
+        color: var(--color-white);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        flex: 1;
+    }
+    .docs-fichier-actions {
+        display: flex;
+        gap: var(--space-xs);
+        flex-shrink: 0;
+    }
+    .docs-fichier-btn {
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 4px;
+        color: rgba(255,255,255,0.65);
+        transition: color 0.15s;
+        display: flex;
+        align-items: center;
+    }
+    .docs-fichier-btn:hover { color: var(--color-white); }
+    .docs-fichier-btn.suppr:hover { color: #f87171; }
+    .docs-fichier-btn svg { width: 14px; height: 14px; }
+
+    /* ── BOUTON ── */
     .docs-btn {
         align-self: center;
         background: rgba(255, 255, 255, 0.18);
@@ -110,15 +280,369 @@ const { categories = ["Logements", "Impôts", "Etudes", "Assurances"] } =
         border-radius: var(--radius-full);
         padding: var(--space-s) var(--space-l);
         cursor: pointer;
-        transition:
-            background 0.2s,
-            transform 0.2s;
+        transition: background 0.2s, transform 0.2s;
     }
     .docs-btn:hover {
         background: rgba(255, 255, 255, 0.28);
         transform: translateY(-2px);
     }
-    .docs-btn:active {
-        transform: translateY(0);
+    .docs-btn:active { transform: translateY(0); }
+
+    /* ── MODALE ── */
+    .docs-modal-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.55);
+        backdrop-filter: blur(4px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+        padding: var(--space-m);
     }
+    .docs-modal-overlay[hidden] {
+        display: none;
+    }
+    .docs-modal {
+        background: var(--color-white);
+        border-radius: var(--radius-l);
+        padding: var(--space-l);
+        width: 100%;
+        max-width: 440px;
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-m);
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+        animation: modalEntrer 0.2s ease;
+    }
+    @keyframes modalEntrer {
+        from { opacity: 0; transform: scale(0.96) translateY(8px); }
+        to   { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    .modal-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .modal-titre {
+        font-family: var(--font-body);
+        font-size: var(--text-m);
+        font-weight: var(--weight-black);
+        color: var(--color-dark);
+    }
+    .modal-fermer {
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 4px;
+        color: var(--color-dark);
+        opacity: 0.5;
+        transition: opacity 0.15s;
+        display: flex;
+    }
+    .modal-fermer:hover { opacity: 1; }
+    .modal-fermer svg { width: 20px; height: 20px; }
+
+    /* ── FORM ── */
+    .modal-form {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-m);
+    }
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-xs);
+    }
+    .form-label {
+        font-family: var(--font-body);
+        font-size: var(--text-xs);
+        font-weight: var(--weight-bold);
+        color: var(--color-dark);
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+    }
+    .form-input {
+        font-family: var(--font-body);
+        font-size: var(--text-sm);
+        color: var(--color-dark);
+        background: #f5f5f7;
+        border: 1.5px solid transparent;
+        border-radius: var(--radius-m);
+        padding: var(--space-s) var(--space-m);
+        outline: none;
+        transition: border-color 0.2s;
+        width: 100%;
+    }
+    .form-input:focus {
+        border-color: var(--color-blue-light);
+    }
+
+    /* Dropzone */
+    .form-dropzone {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: var(--space-xs);
+        background: #f5f5f7;
+        border: 2px dashed #d0d0d8;
+        border-radius: var(--radius-m);
+        padding: var(--space-l) var(--space-m);
+        cursor: pointer;
+        transition: border-color 0.2s, background 0.2s;
+        text-align: center;
+    }
+    .form-dropzone:hover,
+    .form-dropzone.dragover {
+        border-color: var(--color-blue-light);
+        background: #eef2ff;
+    }
+    .dropzone-icon {
+        width: 32px;
+        height: 32px;
+        color: var(--color-blue-light);
+    }
+    .dropzone-texte {
+        font-family: var(--font-body);
+        font-size: var(--text-sm);
+        font-weight: var(--weight-bold);
+        color: var(--color-dark);
+    }
+    .dropzone-sous {
+        font-family: var(--font-body);
+        font-size: var(--text-xs);
+        color: rgba(0, 0, 0, 0.45);
+    }
+    .form-input-file {
+        display: none;
+    }
+
+    .modal-statut {
+        font-family: var(--font-body);
+        font-size: var(--text-xs);
+        min-height: 1.2em;
+        text-align: center;
+    }
+    .modal-statut.succes { color: #16a34a; }
+    .modal-statut.erreur { color: #dc2626; }
+
+    .modal-submit {
+        background: var(--color-blue-light);
+        color: var(--color-white);
+        font-family: var(--font-body);
+        font-size: var(--text-sm);
+        font-weight: var(--weight-bold);
+        border: none;
+        border-radius: var(--radius-full);
+        padding: var(--space-m) var(--space-l);
+        cursor: pointer;
+        transition: opacity 0.2s, transform 0.15s;
+    }
+    .modal-submit:hover { opacity: 0.88; transform: translateY(-1px); }
+    .modal-submit:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
 </style>
+
+<script>
+    import PocketBase from "pocketbase";
+    const pb = new PocketBase("http://127.0.0.1:8090");
+
+    // ── Éléments ──────────────────────────────────────────────
+    const modal       = document.getElementById("docs-modal")!;
+    const btnOuvrir   = document.getElementById("docs-ouvrir-modal")!;
+    const btnFermer   = document.getElementById("docs-fermer-modal")!;
+    const form        = document.getElementById("docs-form") as HTMLFormElement;
+    const inputNom    = document.getElementById("doc-nom") as HTMLInputElement;
+    const inputCat    = document.getElementById("doc-categorie") as HTMLSelectElement;
+    const inputFile   = document.getElementById("doc-fichier") as HTMLInputElement;
+    const statut      = document.getElementById("modal-statut")!;
+    const submitBtn   = document.getElementById("modal-submit-btn") as HTMLButtonElement;
+    const dropzone    = document.getElementById("dropzone")!;
+    const dropTexte   = document.getElementById("dropzone-texte")!;
+    const dropSous    = document.getElementById("dropzone-sous")!;
+
+    // ── Modale ────────────────────────────────────────────────
+    function ouvrirModal() {
+        modal.removeAttribute("hidden");
+        inputNom.focus();
+    }
+    function fermerModal() {
+        modal.setAttribute("hidden", "");
+        form.reset();
+        dropTexte.textContent = "Clique ou glisse un fichier ici";
+        dropSous.textContent  = "PDF, image, Word — max 10 Mo";
+        setStatut("", "");
+    }
+
+    btnOuvrir.addEventListener("click", ouvrirModal);
+    btnFermer.addEventListener("click", fermerModal);
+    modal.addEventListener("click", (e) => {
+        if (e.target === modal) fermerModal();
+    });
+    document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && !modal.hasAttribute("hidden")) fermerModal();
+    });
+
+    // ── Dropzone drag & drop ──────────────────────────────────
+    dropzone.addEventListener("dragover", (e) => {
+        e.preventDefault();
+        dropzone.classList.add("dragover");
+    });
+    dropzone.addEventListener("dragleave", () => dropzone.classList.remove("dragover"));
+    dropzone.addEventListener("drop", (e) => {
+        e.preventDefault();
+        dropzone.classList.remove("dragover");
+        const files = e.dataTransfer?.files;
+        if (files?.length) {
+            const dt = new DataTransfer();
+            dt.items.add(files[0]);
+            inputFile.files = dt.files;
+            afficherNomFichier(files[0].name);
+        }
+    });
+    inputFile.addEventListener("change", () => {
+        if (inputFile.files?.[0]) afficherNomFichier(inputFile.files[0].name);
+    });
+
+    function afficherNomFichier(nom: string) {
+        dropTexte.textContent = nom;
+        dropSous.textContent  = "Fichier sélectionné ✓";
+    }
+
+    // ── Statut ────────────────────────────────────────────────
+    function setStatut(msg: string, type: "succes" | "erreur" | "") {
+        statut.textContent = msg;
+        statut.className   = "modal-statut" + (type ? ` ${type}` : "");
+    }
+
+    // ── Upload PocketBase ─────────────────────────────────────
+    form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        if (!pb.authStore.isValid) {
+            setStatut("Connecte-toi pour ajouter un document.", "erreur");
+            return;
+        }
+
+        const fichier = inputFile.files?.[0];
+        if (!fichier) {
+            setStatut("Sélectionne un fichier.", "erreur");
+            return;
+        }
+        if (fichier.size > 10 * 1024 * 1024) {
+            setStatut("Fichier trop volumineux (max 10 Mo).", "erreur");
+            return;
+        }
+
+        submitBtn.disabled  = true;
+        submitBtn.textContent = "Envoi en cours...";
+        setStatut("", "");
+
+        try {
+            const formData = new FormData();
+            formData.append("user",       pb.authStore.model!.id);
+            formData.append("nom",        inputNom.value.trim());
+            formData.append("categorie",  inputCat.value);
+            formData.append("fichier",    fichier);
+
+            await pb.collection("documents").create(formData);
+
+            setStatut("✓ Document ajouté avec succès !", "succes");
+            setTimeout(() => {
+                fermerModal();
+                chargerDocuments();
+            }, 1200);
+        } catch (err: any) {
+            console.error(err);
+            setStatut(
+                err?.data?.message ?? "Erreur lors de l'envoi. Réessaie.",
+                "erreur",
+            );
+        } finally {
+            submitBtn.disabled    = false;
+            submitBtn.textContent = "Enregistrer";
+        }
+    });
+
+    // ── Charger & afficher les documents ──────────────────────
+    async function chargerDocuments() {
+        if (!pb.authStore.isValid) return;
+
+        try {
+            const records = await pb.collection("documents").getFullList({
+                filter: `user = "${pb.authStore.model!.id}"`,
+                sort: "-created",
+            });
+
+            // Reset compteurs
+            document.querySelectorAll<HTMLElement>("[data-count]").forEach((el) => {
+                el.textContent = "0";
+            });
+            document.querySelectorAll<HTMLElement>("[data-sous-liste]").forEach((el) => {
+                el.innerHTML = "";
+            });
+
+            records.forEach((doc) => {
+                // Compteur
+                const countEl = document.querySelector<HTMLElement>(`[data-count="${doc.categorie}"]`);
+                if (countEl) countEl.textContent = String(Number(countEl.textContent) + 1);
+
+                // Sous-liste
+                const sousListe = document.querySelector<HTMLElement>(`[data-sous-liste="${doc.categorie}"]`);
+                if (sousListe) {
+                    const fileUrl = pb.files.getUrl(doc, doc.fichier as string);
+                    const li = document.createElement("li");
+                    li.className = "docs-fichier-item";
+                    li.innerHTML = `
+                        <span class="docs-fichier-nom" title="${doc.nom}">${doc.nom}</span>
+                        <div class="docs-fichier-actions">
+                            <a href="${fileUrl}" target="_blank" rel="noopener noreferrer" class="docs-fichier-btn" aria-label="Télécharger ${doc.nom}">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                    <polyline points="7 10 12 15 17 10"/>
+                                    <line x1="12" y1="15" x2="12" y2="3"/>
+                                </svg>
+                            </a>
+                            <button class="docs-fichier-btn suppr" type="button" data-id="${doc.id}" aria-label="Supprimer ${doc.nom}">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <polyline points="3 6 5 6 21 6"/>
+                                    <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
+                                    <path d="M10 11v6M14 11v6"/>
+                                </svg>
+                            </button>
+                        </div>
+                    `;
+                    // Bouton supprimer
+                    li.querySelector<HTMLButtonElement>(".suppr")?.addEventListener("click", async () => {
+                        if (!confirm(`Supprimer « ${doc.nom} » ?`)) return;
+                        await pb.collection("documents").delete(doc.id);
+                        chargerDocuments();
+                    });
+                    sousListe.appendChild(li);
+                }
+            });
+        } catch (e) {
+            console.error("Impossible de charger les documents :", e);
+        }
+    }
+
+    // ── Accordéon catégories ──────────────────────────────────
+    document.querySelectorAll<HTMLElement>(".docs-item").forEach((item) => {
+        const cat = item.dataset.categorie!;
+        const sousListe = document.querySelector<HTMLElement>(`[data-sous-liste="${cat}"]`);
+
+        item.addEventListener("click", () => {
+            const ouvert = item.getAttribute("aria-expanded") === "true";
+            item.setAttribute("aria-expanded", String(!ouvert));
+            if (sousListe) sousListe.hidden = ouvert;
+        });
+        item.addEventListener("keydown", (e) => {
+            if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                item.click();
+            }
+        });
+    });
+
+    // ── Init ──────────────────────────────────────────────────
+    chargerDocuments();
+</script>

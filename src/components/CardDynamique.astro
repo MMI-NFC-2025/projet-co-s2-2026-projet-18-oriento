@@ -14,7 +14,13 @@ const { titre, texte, href, tag } = Astro.props;
         <h3 class="card-dynamique-titre">{titre}</h3>
         <p class="card-dynamique-texte">{texte}</p>
     </div>
-    <a href={href} class="card-dynamique-btn">En savoir +</a>
+    <a
+        href={href}
+        class="card-dynamique-btn"
+        aria-label={`En savoir plus sur ${titre}`}
+    >
+        En savoir +
+    </a>
 </article>
 
 <style>

@@ -103,7 +103,11 @@ const services = [
 			<div class="services-grid">
 				{
 					services.map((s) => (
-						<a href={s.href} class="card-link">
+						<a
+							href={s.href}
+							class="card-link"
+							aria-label={`Consulter la rubrique ${s.titre}`}
+						>
 							<CardAccueil
 								lettre={s.lettre}
 								titre={s.titre}

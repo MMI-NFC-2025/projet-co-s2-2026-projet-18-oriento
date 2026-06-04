@@ -4,6 +4,11 @@ import BoutonConseil from "../../components/BoutonConseil.astro";
 import logoCompletBlanc from "../../assets/Oriento_img/logo_complet_blanc.avif";
 import Img1 from "../../assets/Oriento_img/etude_etude_img.avif";
 
+type Lien = {
+    label: string;
+    url: string;
+};
+
 type PageData = {
     titre: string;
     intro: string;
@@ -12,6 +17,7 @@ type PageData = {
         texte?: string;
         bullets?: string[];
         conseils: string;
+        liens?: Lien[];
     }[];
 };
 
@@ -31,6 +37,16 @@ export function getStaticPaths() {
                     ],
                     conseils:
                         "Prépare une copie numérique de tous tes documents et garde-les dans un dossier cloud accessible partout.",
+                    liens: [
+                        {
+                            label: "Service-public.fr — S'inscrire dans l'enseignement supérieur",
+                            url: "https://www.service-public.fr/particuliers/vosdroits/F2865",
+                        },
+                        {
+                            label: "Service-public.fr — Pièces justificatives courantes",
+                            url: "https://www.service-public.fr/particuliers/vosdroits/F1168",
+                        },
+                    ],
                 },
                 {
                     titre: "Paiement des frais de scolarité",
@@ -42,6 +58,16 @@ export function getStaticPaths() {
                     ],
                     conseils:
                         "Renseigne-toi sur les bourses disponibles (CROUS, bourses régionales) avant de payer. Beaucoup d'étudiants y ont droit sans le savoir.",
+                    liens: [
+                        {
+                            label: "Service-public.fr — Frais d'inscription dans le supérieur",
+                            url: "https://www.service-public.fr/particuliers/vosdroits/F2865",
+                        },
+                        {
+                            label: "messervices.etudiant.gouv.fr — Demander une bourse (DSE)",
+                            url: "https://www.messervices.etudiant.gouv.fr",
+                        },
+                    ],
                 },
                 {
                     titre: "Création du compte étudiant",
@@ -54,6 +80,12 @@ export function getStaticPaths() {
                     ],
                     conseils:
                         "Active les notifications pour ne manquer aucune information importante de ton établissement.",
+                    liens: [
+                        {
+                            label: "messervices.etudiant.gouv.fr — Espace étudiant",
+                            url: "https://www.messervices.etudiant.gouv.fr",
+                        },
+                    ],
                 },
                 {
                     titre: "Carte étudiante",
@@ -65,6 +97,12 @@ export function getStaticPaths() {
                     ],
                     conseils:
                         "Ta carte étudiante te donne souvent accès à des réductions dans de nombreux commerces et services. N'oublie pas de la présenter !",
+                    liens: [
+                        {
+                            label: "Service-public.fr — Carte d'étudiant des métiers",
+                            url: "https://www.service-public.fr/particuliers/vosdroits/F15984",
+                        },
+                    ],
                 },
             ],
         },
@@ -82,6 +120,16 @@ export function getStaticPaths() {
                     ],
                     conseils:
                         "Candidate à des formations variées (niveau, type) pour maximiser tes chances. Ne mets pas tous tes œufs dans le même panier.",
+                    liens: [
+                        {
+                            label: "Parcoursup — Plateforme officielle",
+                            url: "https://www.parcoursup.gouv.fr",
+                        },
+                        {
+                            label: "Service-public.fr — Parcoursup, comment ça marche",
+                            url: "https://www.service-public.fr/particuliers/vosdroits/F23476",
+                        },
+                    ],
                 },
                 {
                     titre: "Les types de formations",
@@ -94,6 +142,16 @@ export function getStaticPaths() {
                     ],
                     conseils:
                         "Les BTS et BUT offrent une insertion professionnelle rapide. L'université offre plus de flexibilité pour se réorienter.",
+                    liens: [
+                        {
+                            label: "Onisep — Explorer les formations",
+                            url: "https://www.onisep.fr/formation",
+                        },
+                        {
+                            label: "orientation.gouv.fr — Choisir son orientation",
+                            url: "https://www.orientation.gouv.fr",
+                        },
+                    ],
                 },
             ],
         },
@@ -111,6 +169,16 @@ export function getStaticPaths() {
                     ],
                     conseils:
                         "Fais ta demande de bourse dès le mois d'avril, même si tu n'es pas encore inscrit dans une formation. Il vaut mieux anticiper : les délais peuvent être longs.",
+                    liens: [
+                        {
+                            label: "messervices.etudiant.gouv.fr — Constituer son DSE",
+                            url: "https://www.messervices.etudiant.gouv.fr",
+                        },
+                        {
+                            label: "Service-public.fr — Bourse sur critères sociaux",
+                            url: "https://www.service-public.fr/particuliers/vosdroits/F12216",
+                        },
+                    ],
                 },
                 {
                     titre: "Aides au logement",
@@ -122,6 +190,20 @@ export function getStaticPaths() {
                     ],
                     conseils:
                         "Fais ta demande d'APL dès ton entrée dans le logement. Chaque mois sans demande est un mois d'aide perdu définitivement.",
+                    liens: [
+                        {
+                            label: "CAF.fr — Aide au logement étudiant",
+                            url: "https://www.caf.fr/allocataires/droits-et-prestations/s-informer-sur-les-aides/logement-et-cadre-de-vie/l-aide-au-logement",
+                        },
+                        {
+                            label: "Service-public.fr — APL, ALS, ALF pour étudiant",
+                            url: "https://www.service-public.fr/particuliers/vosdroits/F1563",
+                        },
+                        {
+                            label: "trouvermonlogement.etudiant.gouv.fr — Résidences CROUS",
+                            url: "https://trouvermonlogement.etudiant.gouv.fr",
+                        },
+                    ],
                 },
                 {
                     titre: "Aides régionales",
@@ -133,6 +215,16 @@ export function getStaticPaths() {
                     ],
                     conseils:
                         "Consulte le site de ta région et de ton établissement : beaucoup d'aides régionales sont méconnues et peu demandées, ce qui augmente tes chances de les obtenir.",
+                    liens: [
+                        {
+                            label: "Service-public.fr — Bourses et aides pour étudiant",
+                            url: "https://www.service-public.fr/particuliers/vosdroits/N20398",
+                        },
+                        {
+                            label: "1jeune1solution.gouv.fr — Toutes les aides",
+                            url: "https://www.1jeune1solution.gouv.fr/aides-et-formations",
+                        },
+                    ],
                 },
                 {
                     titre: "Aides spécifiques selon ta situation",
@@ -144,6 +236,16 @@ export function getStaticPaths() {
                     ],
                     conseils:
                         "Si tu te retrouves en difficulté financière en cours d'année, contacte le service social du CROUS. Des aides d'urgence existent et peuvent être débloquées rapidement.",
+                    liens: [
+                        {
+                            label: "Service-public.fr — Aide d'urgence CROUS",
+                            url: "https://www.service-public.fr/particuliers/vosdroits/F1024",
+                        },
+                        {
+                            label: "Service-public.fr — Étudiant en situation de handicap",
+                            url: "https://www.service-public.fr/particuliers/vosdroits/F20559",
+                        },
+                    ],
                 },
             ],
         },
@@ -212,6 +314,53 @@ const { page } = Astro.props as { page: PageData };
                                 </ul>
                             )}
                             <BoutonConseil conseils={s.conseils} />
+                            {s.liens && s.liens.length > 0 && (
+                                <div class="card-liens">
+                                    <p class="card-liens-titre">
+                                        Sources officielles
+                                    </p>
+                                    <ul class="card-liens-liste">
+                                        {s.liens.map((lien) => (
+                                            <li>
+                                                <a
+                                                    href={lien.url}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    class="card-lien"
+                                                >
+                                                    <svg
+                                                        viewBox="0 0 16 16"
+                                                        fill="none"
+                                                        aria-hidden="true"
+                                                        class="lien-icon"
+                                                    >
+                                                        <path
+                                                            d="M6 3H3a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1v-3"
+                                                            stroke="currentColor"
+                                                            stroke-width="1.5"
+                                                            stroke-linecap="round"
+                                                        />
+                                                        <path
+                                                            d="M9 2h5v5"
+                                                            stroke="currentColor"
+                                                            stroke-width="1.5"
+                                                            stroke-linecap="round"
+                                                            stroke-linejoin="round"
+                                                        />
+                                                        <path
+                                                            d="M14 2 8 8"
+                                                            stroke="currentColor"
+                                                            stroke-width="1.5"
+                                                            stroke-linecap="round"
+                                                        />
+                                                    </svg>
+                                                    {lien.label}
+                                                </a>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            )}
                         </div>
                     ))
                 }
@@ -356,6 +505,54 @@ const { page } = Astro.props as { page: PageData };
             line-height: 1.5;
             word-break: break-word;
             overflow-wrap: break-word;
+        }
+
+        /* LIENS OFFICIELS */
+        .card-liens {
+            border-top: 1px solid rgba(255, 255, 255, 0.12);
+            padding-top: var(--space-m);
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-s);
+        }
+        .card-liens-titre {
+            font-family: var(--font-body);
+            font-size: var(--text-xs);
+            font-weight: var(--weight-bold);
+            color: rgba(255, 255, 255, 0.5);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin: 0;
+        }
+        .card-liens-liste {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-xs);
+        }
+        .card-lien {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-xs);
+            font-family: var(--font-body);
+            font-size: var(--text-sm);
+            color: var(--color-yellow);
+            text-decoration: none;
+            font-weight: var(--weight-medium);
+            transition: opacity 0.15s;
+            word-break: break-word;
+        }
+        .card-lien:hover {
+            opacity: 0.75;
+            text-decoration: underline;
+        }
+        .lien-icon {
+            width: 13px;
+            height: 13px;
+            flex-shrink: 0;
+            opacity: 0.8;
         }
 
         @media (min-width: 640px) {
