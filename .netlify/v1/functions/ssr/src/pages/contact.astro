@@ -1,0 +1,529 @@
+---
+import Layout from "../layouts/Layout.astro";
+import mailIcone from "../assets/Oriento_img/mail_icone.svg";
+import telephoneIcone from "../assets/Oriento_img/telephone_icone.svg";
+import localisationIcone from "../assets/Oriento_img/localisation_icone.svg";
+import logoCompletBlanc from "../assets/Oriento_img/logo_complet_blanc.avif";
+import Img1 from "../assets/Oriento_img/contact_img.avif";
+
+const coordonnees = [
+    {
+        icone: mailIcone.src,
+        alt: "Email",
+        label: "Email",
+        valeur: "oriento@gmail.com",
+    },
+    {
+        icone: telephoneIcone.src,
+        alt: "Téléphone",
+        label: "Téléphone",
+        valeur: "06 54 87 54 87",
+    },
+    {
+        icone: localisationIcone.src,
+        alt: "Adresse",
+        label: "Adresse",
+        valeur: "Paris, France",
+    },
+];
+---
+
+<Layout title="Contact — Oriento" heroSection={true}>
+    <div class="page-wrapper">
+        <section class="hero-section" aria-label="Présentation">
+            <div class="hero-inner">
+                <div class="hero-logo-wrap">
+                    <img
+                        src={logoCompletBlanc.src}
+                        alt="Oriento"
+                        width="800"
+                        height="250"
+                        class="hero-logo-img"
+                        loading="eager"
+                        fetchpriority="high"
+                    />
+                </div>
+                <div class="hero-texte">
+                    <p>Contact</p>
+                    <div class="hero-img-wrap">
+                        <img
+                            src={Img1.src}
+                            alt="Contact Oriento"
+                            width="900"
+                            height="600"
+                            class="hero-img"
+                            loading="eager"
+                            fetchpriority="high"
+                        />
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="contact-page" aria-label="Contact">
+            <section class="coordonnees-section" aria-label="Nos coordonnées">
+                <div class="coordonnees-inner">
+                    <h1 class="coordonnees-titre">Nos coordonnées</h1>
+                    <ul class="coordonnees-liste" role="list">
+                        {
+                            coordonnees.map((item) => (
+                                <li class="coordonnee-item">
+                                    <img
+                                        src={item.icone}
+                                        alt={item.alt}
+                                        width="44"
+                                        height="44"
+                                        class="coordonnee-icon"
+                                        loading="lazy"
+                                    />
+                                    <div class="coordonnee-texte">
+                                        <span class="coordonnee-label">
+                                            {item.label}
+                                        </span>
+                                        <span class="coordonnee-valeur">
+                                            {item.valeur}
+                                        </span>
+                                    </div>
+                                </li>
+                            ))
+                        }
+                    </ul>
+                </div>
+            </section>
+
+            <section
+                class="formulaire-section"
+                aria-label="Formulaire de contact"
+            >
+                <div class="formulaire-card">
+                    <h2 class="formulaire-titre">Formulaire de contact</h2>
+                    <form class="formulaire" id="contact-form" novalidate>
+                        <div class="form-group">
+                            <label class="form-label" for="nom">
+                                Nom complet
+                            </label>
+                            <input
+                                class="form-input"
+                                type="text"
+                                id="nom"
+                                name="nom"
+                                placeholder="Votre nom"
+                                autocomplete="name"
+                                required
+                            />
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="email">Email</label>
+                            <input
+                                class="form-input"
+                                type="email"
+                                id="email"
+                                name="email"
+                                placeholder="Votre mail"
+                                autocomplete="email"
+                                required
+                            />
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="sujet">Sujet</label>
+                            <input
+                                class="form-input"
+                                type="text"
+                                id="sujet"
+                                name="sujet"
+                                placeholder=""
+                                required
+                            />
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="message">
+                                Message
+                            </label>
+                            <textarea
+                                class="form-textarea"
+                                id="message"
+                                name="message"
+                                placeholder="Votre message"
+                                rows="5"
+                                required></textarea>
+                        </div>
+                        <div class="form-submit-wrap">
+                            <button
+                                class="form-btn"
+                                type="submit"
+                                id="form-btn"
+                            >
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="18"
+                                    height="18"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    aria-hidden="true"
+                                >
+                                    <path d="M22 2 11 13"></path>
+                                    <path d="m22 2-7 20-4-9-9-4 20-7z"></path>
+                                </svg>
+                                Envoyer
+                            </button>
+                        </div>
+                        <p
+                            class="form-statut"
+                            id="form-statut"
+                            aria-live="polite"
+                        >
+                        </p>
+                    </form>
+                </div>
+            </section>
+        </section>
+    </div>
+
+    <style>
+        .page-wrapper {
+            background: var(--color-blue-light);
+        }
+
+        /* HERO */
+        .hero-section {
+            background: var(--color-yellow);
+            display: flex;
+            align-items: stretch;
+        }
+        .hero-inner {
+            width: 100%;
+            max-width: 1152px;
+            margin: 0 auto;
+            padding: var(--space-l) var(--space-sm);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            gap: var(--space-sm);
+        }
+        .hero-logo-wrap {
+            width: 100%;
+            display: flex;
+            justify-content: flex-start;
+        }
+        .hero-logo-img {
+            height: clamp(6rem, 28vw, 9rem);
+            width: auto;
+        }
+        .hero-img-wrap {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+        }
+        .hero-img {
+            width: 100%;
+            max-width: 480px;
+            height: auto;
+            object-fit: contain;
+            object-position: bottom;
+        }
+        .hero-texte {
+            width: 100%;
+            padding: var(--space-m) 0;
+        }
+        .hero-texte p {
+            font-family: var(--font-body);
+            font-size: var(--text-5xl);
+            font-weight: var(--weight-bold);
+            color: var(--color-dark);
+            line-height: 1.1;
+        }
+
+        /* CONTACT */
+        .contact-page {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: var(--space-2xl) var(--space-sm);
+            gap: var(--space-xl);
+        }
+
+        /* COORDONNÉES */
+        .coordonnees-section {
+            width: 100%;
+            max-width: 480px;
+        }
+        .coordonnees-inner {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-l);
+        }
+        .coordonnees-titre {
+            font-family: var(--font-body);
+            font-size: clamp(var(--text-3xl), 8vw, var(--text-5xl));
+            font-weight: var(--weight-black);
+            color: var(--color-white);
+            line-height: 1.05;
+            -webkit-font-smoothing: auto;
+        }
+        .coordonnees-liste {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-m);
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .coordonnee-item {
+            background: var(--color-white);
+            border-radius: var(--radius-m);
+            padding: var(--space-m) var(--space-l);
+            display: flex;
+            align-items: center;
+            gap: var(--space-m);
+        }
+        .coordonnee-icon {
+            flex-shrink: 0;
+            width: 44px;
+            height: 44px;
+            object-fit: contain;
+        }
+        .coordonnee-texte {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+        .coordonnee-label {
+            font-family: var(--font-body);
+            font-size: var(--text-sm);
+            font-weight: var(--weight-bold);
+            color: var(--color-dark);
+        }
+        .coordonnee-valeur {
+            font-family: var(--font-body);
+            font-size: var(--text-sm);
+            color: var(--color-dark);
+        }
+
+        /* FORMULAIRE */
+        .formulaire-section {
+            width: 100%;
+            max-width: 480px;
+        }
+        .formulaire-card {
+            background: var(--color-blue);
+            border-radius: var(--radius-l);
+            padding: var(--space-xl) var(--space-l);
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-l);
+        }
+        .formulaire-titre {
+            font-family: var(--font-body);
+            font-size: var(--text-xl);
+            font-weight: var(--weight-bold);
+            color: var(--color-white);
+            -webkit-font-smoothing: auto;
+        }
+        .formulaire {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-m);
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-xs);
+        }
+        .form-label {
+            font-family: var(--font-body);
+            font-size: var(--text-sm);
+            font-weight: var(--weight-medium);
+            color: var(--color-white);
+        }
+        .form-input,
+        .form-textarea {
+            width: 100%;
+            background: var(--color-white);
+            border: none;
+            border-radius: var(--radius-m);
+            padding: var(--space-m) var(--space-m);
+            font-family: var(--font-body);
+            font-size: var(--text-sm);
+            color: var(--color-dark);
+            outline: none;
+            transition: box-shadow 0.2s;
+        }
+        .form-input::placeholder,
+        .form-textarea::placeholder {
+            color: #b0b0b0;
+        }
+        .form-input:focus,
+        .form-textarea:focus {
+            box-shadow: 0 0 0 2px var(--color-yellow);
+        }
+        .form-textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+        .form-submit-wrap {
+            display: flex;
+            justify-content: center;
+            padding-top: var(--space-s);
+        }
+        .form-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-s);
+            background: var(--color-white);
+            color: #6b6b6b;
+            font-family: var(--font-body);
+            font-size: var(--text-sm);
+            font-weight: var(--weight-semibold);
+            border: none;
+            border-radius: var(--radius-full);
+            padding: var(--space-m) var(--space-xl);
+            cursor: pointer;
+            transition:
+                background 0.2s,
+                color 0.2s,
+                transform 0.15s;
+        }
+        .form-btn:hover {
+            background: var(--color-yellow);
+            color: var(--color-dark);
+            transform: translateY(-1px);
+        }
+        .form-btn:active {
+            transform: translateY(0);
+        }
+        .form-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .form-statut {
+            font-family: var(--font-body);
+            font-size: var(--text-xs);
+            text-align: center;
+            min-height: 1.2em;
+        }
+        .form-statut.succes {
+            color: #bbf7d0;
+        }
+        .form-statut.erreur {
+            color: #fca5a5;
+        }
+
+        /* RESPONSIVE */
+        @media (min-width: 768px) {
+            .hero-logo-wrap {
+                justify-content: center;
+            }
+            .hero-logo-img {
+                height: clamp(5rem, 12vw, 9rem);
+            }
+            .hero-img {
+                max-width: 100%;
+            }
+            .hero-texte p {
+                font-size: 7rem;
+            }
+            .contact-page {
+                flex-direction: row;
+                align-items: flex-start;
+                justify-content: center;
+                gap: var(--space-2xl);
+                padding: var(--space-3xl) var(--space-l);
+            }
+            .coordonnees-section,
+            .formulaire-section {
+                max-width: 420px;
+                flex: 1;
+            }
+        }
+    </style>
+</Layout>
+
+<script>
+    import PocketBase from "pocketbase";
+    const pb = new PocketBase("http://127.0.0.1:8090");
+
+    const form = document.getElementById("contact-form") as HTMLFormElement;
+    const btn = document.getElementById("form-btn") as HTMLButtonElement;
+    const statut = document.getElementById("form-statut")!;
+
+    const SVG_ENVOYER = `
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+            viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            aria-hidden="true">
+            <path d="M22 2 11 13"></path>
+            <path d="m22 2-7 20-4-9-9-4 20-7z"></path>
+        </svg>
+        Envoyer
+    `;
+
+    function setStatut(msg: string, type: "succes" | "erreur" | "") {
+        statut.textContent = msg;
+        statut.className = "form-statut" + (type ? ` ${type}` : "");
+    }
+
+    form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        setStatut("", "");
+
+        const nom = (
+            form.querySelector("#nom") as HTMLInputElement
+        ).value.trim();
+        const email = (
+            form.querySelector("#email") as HTMLInputElement
+        ).value.trim();
+        const sujet = (
+            form.querySelector("#sujet") as HTMLInputElement
+        ).value.trim();
+        const message = (
+            form.querySelector("#message") as HTMLTextAreaElement
+        ).value.trim();
+
+        // Validation
+        if (!nom || !email || !message) {
+            setStatut("Remplis tous les champs obligatoires.", "erreur");
+            return;
+        }
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            setStatut("Adresse email invalide.", "erreur");
+            return;
+        }
+
+        btn.disabled = true;
+        btn.textContent = "Envoi en cours...";
+
+        try {
+            await pb.collection("contact").create({
+                nom,
+                email,
+                sujet: sujet || "",
+                message,
+                lu: false,
+            });
+
+            setStatut(
+                "✓ Message envoyé ! Nous te répondrons rapidement.",
+                "succes",
+            );
+            form.reset();
+        } catch (err: any) {
+            console.error(err);
+            setStatut(
+                err?.data?.message ?? "Erreur lors de l'envoi. Réessaie.",
+                "erreur",
+            );
+        } finally {
+            btn.disabled = false;
+            btn.innerHTML = SVG_ENVOYER;
+        }
+    });
+</script>

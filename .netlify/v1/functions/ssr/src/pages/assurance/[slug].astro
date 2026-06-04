@@ -1,0 +1,593 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import BoutonConseil from "../../components/BoutonConseil.astro";
+import logoCompletBlanc from "../../assets/Oriento_img/logo_complet_blanc.avif";
+import Img1 from "../../assets/Oriento_img/assu_assu_img.avif";
+
+type Lien = {
+    label: string;
+    url: string;
+};
+
+type PageData = {
+    titre: string;
+    intro: string;
+    sections: {
+        titre: string;
+        texte?: string;
+        bullets?: string[];
+        conseils: string;
+        liens?: Lien[];
+    }[];
+};
+
+const pages: Record<string, PageData> = {
+    comprendre: {
+        titre: "Comprendre les assurances essentielles",
+        intro: "Être étudiant implique souvent de vivre de manière autonome et de gérer certaines responsabilités. Avoir les bonnes assurances te protège dans ta vie quotidienne et en cas d'imprévu.",
+        sections: [
+            {
+                titre: "L'assurance responsabilité civile",
+                texte: "La responsabilité civile est l'assurance de base que tout étudiant devrait avoir. Elle couvre les dommages que tu pourrais causer à quelqu'un d'autre ou à ses biens, que ce soit accidentel ou involontaire.",
+                bullets: [
+                    "Elle est parfois incluse dans le contrat scolaire ou dans certaines assurances habitation",
+                ],
+                conseils:
+                    "Vérifie si tes parents t'ont déjà couvert via leur contrat multirisque habitation. Beaucoup d'étudiants sont encore inclus dedans sans le savoir.",
+                liens: [
+                    {
+                        label: "Service-public.fr — Responsabilité civile",
+                        url: "https://www.service-public.fr/particuliers/vosdroits/F2123",
+                    },
+                    {
+                        label: "economie.gouv.fr — Les assurances obligatoires",
+                        url: "https://www.economie.gouv.fr/particuliers/assurances-obligatoires",
+                    },
+                ],
+            },
+            {
+                titre: "L'assurance habitation",
+                texte: "Même si tu loues un studio ou que tu vis en résidence universitaire, l'assurance habitation est souvent obligatoire :",
+                bullets: [
+                    "Elle couvre les dégâts causés à ton logement ou à celui d'un voisin",
+                    "Elle peut inclure la responsabilité civile",
+                    "Certains contrats étudiants sont très abordables (moins de 5 € par mois)",
+                ],
+                conseils:
+                    "Compare les offres en ligne avant de souscrire. Des assureurs comme Luko, Lovys ou la MAIF proposent des formules spécialement adaptées aux étudiants.",
+                liens: [
+                    {
+                        label: "Service-public.fr — Assurance habitation locataire",
+                        url: "https://www.service-public.fr/particuliers/vosdroits/F1353",
+                    },
+                    {
+                        label: "ANIL — Assurance et location",
+                        url: "https://www.anil.org/votre-projet/vous-etes-locataire/entree-dans-les-lieux/assurance-habitation/",
+                    },
+                ],
+            },
+            {
+                titre: "L'assurance santé complémentaire (mutuelle étudiante)",
+                texte: "La sécurité sociale rembourse une partie des frais médicaux, mais pas tout. Une mutuelle est utile pour couvrir le reste :",
+                bullets: [
+                    "Consultations médicales et soins dentaires et optiques",
+                    "Certains médicaments non remboursés par la sécurité sociale",
+                ],
+                conseils:
+                    "Si tu as moins de 25 ans, tu peux rester sur la mutuelle de tes parents. Vérifie d'abord avant de souscrire une nouvelle complémentaire santé.",
+                liens: [
+                    {
+                        label: "Ameli.fr — Droits à l'assurance maladie étudiant",
+                        url: "https://www.ameli.fr/assure/droits-demarches/etudes-emploi-retraite/vous-etes-etudiant/votre-couverture-maladie",
+                    },
+                    {
+                        label: "1jeune1solution — Santé étudiante",
+                        url: "https://www.1jeune1solution.gouv.fr/sante",
+                    },
+                ],
+            },
+            {
+                titre: "L'assurance des biens personnels",
+                texte: "Si tu possèdes du matériel informatique, un vélo ou d'autres objets de valeur, certaines assurances permettent de protéger tes biens :",
+                bullets: [
+                    "Le casse accidentelle",
+                    "Les dommages liés à un incendie ou des dégâts des eaux",
+                ],
+                conseils:
+                    "Garde toujours les factures de tes appareils électroniques. En cas de sinistre, elles sont indispensables pour être remboursé correctement.",
+                liens: [
+                    {
+                        label: "Service-public.fr — Déclaration de sinistre",
+                        url: "https://www.service-public.fr/particuliers/vosdroits/F2149",
+                    },
+                ],
+            },
+        ],
+    },
+    choisir: {
+        titre: "Choisir la bonne assurance",
+        intro: "Face à la multitude d'offres sur le marché, choisir une assurance adaptée à ton profil d'étudiant peut sembler compliqué. Voici les critères essentiels pour faire le bon choix sans te faire avoir.",
+        sections: [
+            {
+                titre: "Analyser ses besoins réels",
+                texte: "Avant de comparer des offres, commence par faire le point sur ta situation :",
+                bullets: [
+                    "Tu vis seul ou en colocation ? Les garanties ne sont pas les mêmes",
+                    "Tu as du matériel coûteux (ordinateur, vélo, instrument) à protéger ?",
+                    "Tu es encore rattaché à la mutuelle ou l'habitation de tes parents ?",
+                ],
+                conseils:
+                    "Ne souscris pas une assurance par défaut. Prends 10 minutes pour lister ce que tu possèdes et ce que tu risques réellement de perdre ou d'abîmer.",
+                liens: [
+                    {
+                        label: "Service-public.fr — Guide des assurances",
+                        url: "https://www.service-public.fr/particuliers/vosdroits/N44",
+                    },
+                ],
+            },
+            {
+                titre: "Comparer les offres",
+                texte: "Tous les contrats ne se valent pas. Voici comment les comparer efficacement :",
+                bullets: [
+                    "Utilise des comparateurs en ligne comme LeLynx ou AssurLand",
+                    "Vérifie les plafonds de remboursement et les exclusions de garanties",
+                    "Lis les avis clients pour évaluer la réactivité en cas de sinistre",
+                ],
+                conseils:
+                    "Le prix ne fait pas tout. Un contrat moins cher avec de nombreuses exclusions peut te coûter bien plus cher en cas de pépin.",
+                liens: [
+                    {
+                        label: "LeLynx — Comparateur assurance habitation",
+                        url: "https://www.lelynx.fr/assurance-habitation/",
+                    },
+                    {
+                        label: "Assurland — Comparateur assurance",
+                        url: "https://www.assurland.com",
+                    },
+                ],
+            },
+            {
+                titre: "Les labels et certifications",
+                texte: "Certains critères te permettent de vérifier la fiabilité d'un assureur :",
+                bullets: [
+                    "Vérifier que l'assureur est agréé par l'ACPR (Autorité de Contrôle Prudentiel et de Résolution)",
+                    "Chercher des avis sur des plateformes indépendantes (Trustpilot, Google)",
+                    "Préférer les assureurs spécialisés dans les offres étudiantes",
+                ],
+                conseils:
+                    "Les mutuelles étudiantes historiques (LMDE, SMEREP) ont une bonne connaissance du profil étudiant. N'hésite pas à les contacter directement pour un devis personnalisé.",
+                liens: [
+                    {
+                        label: "ACPR — Vérifier un assureur agréé",
+                        url: "https://www.acpr.banque-france.fr/lagrement-et-la-surveillance/les-recherches-dans-les-fichiers-de-lautorite/registre-des-agents-financiers",
+                    },
+                    {
+                        label: "LMDE — Mutuelle étudiante",
+                        url: "https://www.lmde.fr",
+                    },
+                ],
+            },
+            {
+                titre: "Attention aux pièges courants",
+                texte: "Certaines erreurs reviennent fréquemment chez les étudiants :",
+                bullets: [
+                    "Souscrire une assurance déjà couverte par celle des parents",
+                    "Oublier de déclarer une colocation, ce qui peut annuler le contrat",
+                    "Ne pas lire les conditions de résiliation (souvent annuelle avec préavis)",
+                ],
+                conseils:
+                    "Note la date d'échéance de ton contrat dans ton téléphone dès la souscription. Sans résiliation à temps, le contrat se renouvelle automatiquement pour un an.",
+                liens: [
+                    {
+                        label: "Service-public.fr — Résiliation d'assurance (loi Hamon)",
+                        url: "https://www.service-public.fr/particuliers/vosdroits/F19083",
+                    },
+                ],
+            },
+        ],
+    },
+    souscrire: {
+        titre: "Souscrire une assurance étudiant",
+        intro: "Une fois que tu as identifié l'assurance qu'il te faut, il est temps de passer à la souscription. Les démarches sont simples et se font souvent entièrement en ligne en quelques minutes.",
+        sections: [
+            {
+                titre: "Les documents nécessaires",
+                texte: "Pour souscrire une assurance, tu auras généralement besoin de :",
+                bullets: [
+                    "Une pièce d'identité valide (carte nationale d'identité ou passeport)",
+                    "Un justificatif de domicile ou le bail de ton logement",
+                    "Ton numéro de sécurité sociale pour une mutuelle santé",
+                    "Un RIB pour la mise en place du prélèvement automatique",
+                ],
+                conseils:
+                    "Scanne tous ces documents à l'avance et garde-les dans un dossier numérique. La plupart des souscriptions en ligne les demandent en format PDF ou JPEG.",
+                liens: [
+                    {
+                        label: "Service-public.fr — Pièces justificatives courantes",
+                        url: "https://www.service-public.fr/particuliers/vosdroits/F1168",
+                    },
+                ],
+            },
+            {
+                titre: "Les étapes de souscription",
+                texte: "La souscription en ligne se déroule généralement en quelques étapes simples :",
+                bullets: [
+                    "Remplir le formulaire avec tes informations personnelles et la description de ton logement ou de ta situation",
+                    "Choisir tes garanties et personnaliser ton contrat selon tes besoins",
+                    "Signer électroniquement le contrat et régler la première cotisation",
+                ],
+                conseils:
+                    "Lis bien les conditions générales avant de signer, même en diagonale. Repère notamment les délais de carence et les exclusions principales.",
+                liens: [
+                    {
+                        label: "economie.gouv.fr — Signature électronique",
+                        url: "https://www.economie.gouv.fr/entreprises/signature-electronique",
+                    },
+                ],
+            },
+            {
+                titre: "La date d'effet du contrat",
+                texte: "La couverture ne démarre pas toujours immédiatement :",
+                bullets: [
+                    "Pour une assurance habitation, la prise d'effet est souvent immédiate ou le lendemain",
+                    "Pour une mutuelle santé, un délai de carence de 1 à 3 mois peut s'appliquer",
+                    "Certains sinistres survenus avant la date d'effet ne sont pas couverts",
+                ],
+                conseils:
+                    "Souscris ton assurance habitation avant même d'emménager. En cas de dégât des eaux le jour de ton arrivée, tu seras couvert dès le départ.",
+                liens: [
+                    {
+                        label: "Service-public.fr — Assurance habitation et location",
+                        url: "https://www.service-public.fr/particuliers/vosdroits/F1353",
+                    },
+                    {
+                        label: "Ameli.fr — Délai de carence mutuelle",
+                        url: "https://www.ameli.fr/assure/remboursements/rembourse/complement-mutuelle/choisir-mutuelle",
+                    },
+                ],
+            },
+            {
+                titre: "Gérer et modifier son contrat",
+                texte: "Après la souscription, tu peux gérer ton contrat facilement :",
+                bullets: [
+                    "Modifier tes garanties en cours d'année si ta situation change (déménagement, nouveau matériel)",
+                    "Déclarer un sinistre via l'espace client en ligne ou l'application mobile",
+                    "Résilier le contrat à l'échéance annuelle ou en cas de changement de situation (loi Hamon)",
+                ],
+                conseils:
+                    "Télécharge l'application de ton assureur sur ton téléphone. En cas de sinistre, tu pourras déclarer et suivre ton dossier directement depuis ton smartphone.",
+                liens: [
+                    {
+                        label: "Service-public.fr — Résiliation loi Hamon",
+                        url: "https://www.service-public.fr/particuliers/vosdroits/F19083",
+                    },
+                    {
+                        label: "Service-public.fr — Déclarer un sinistre",
+                        url: "https://www.service-public.fr/particuliers/vosdroits/F2149",
+                    },
+                ],
+            },
+        ],
+    },
+};
+
+const slug = Astro.params.slug;
+const page = pages[slug as keyof typeof pages];
+---
+
+<Layout title={`${page.titre} — Oriento`} heroSection={true}>
+    <div class="page-wrapper">
+        <section class="hero-section" aria-label="Présentation">
+            <div class="hero-inner">
+                <div class="hero-logo-wrap">
+                    <img
+                        src={logoCompletBlanc.src}
+                        alt="Oriento"
+                        width="800"
+                        height="250"
+                        class="hero-logo-img"
+                        loading="eager"
+                        fetchpriority="high"
+                    />
+                </div>
+                <div class="hero-texte">
+                    <p>Les assurances</p>
+                    <div class="hero-img-wrap">
+                        <img
+                            src={Img1.src}
+                            alt="Illustration les assurances"
+                            width="900"
+                            height="600"
+                            class="hero-img"
+                            loading="eager"
+                            fetchpriority="high"
+                        />
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="intro-section" aria-label="Introduction">
+            <div class="intro-inner">
+                <h1 class="intro-h1">{page.titre}</h1>
+                <p class="intro-texte">{page.intro}</p>
+            </div>
+        </section>
+
+        <section class="cards-section" aria-label="Contenu">
+            <div class="cards-grid">
+                {
+                    page.sections.map((s) => (
+                        <div class="card">
+                            <h3 class="card-titre">{s.titre}</h3>
+                            {s.texte && <p class="card-texte">{s.texte}</p>}
+                            {s.bullets && s.bullets.length > 0 && (
+                                <ul class="card-bullets">
+                                    {s.bullets.map((b) => (
+                                        <li>{b}</li>
+                                    ))}
+                                </ul>
+                            )}
+                            <BoutonConseil conseils={s.conseils} />
+                            {s.liens && s.liens.length > 0 && (
+                                <div class="card-liens">
+                                    <p class="card-liens-titre">
+                                        Sources officielles
+                                    </p>
+                                    <ul class="card-liens-liste">
+                                        {s.liens.map((lien) => (
+                                            <li>
+                                                <a
+                                                    href={lien.url}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    class="card-lien"
+                                                >
+                                                    <svg
+                                                        viewBox="0 0 16 16"
+                                                        fill="none"
+                                                        aria-hidden="true"
+                                                        class="lien-icon"
+                                                    >
+                                                        <path
+                                                            d="M6 3H3a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1v-3"
+                                                            stroke="currentColor"
+                                                            stroke-width="1.5"
+                                                            stroke-linecap="round"
+                                                        />
+                                                        <path
+                                                            d="M9 2h5v5"
+                                                            stroke="currentColor"
+                                                            stroke-width="1.5"
+                                                            stroke-linecap="round"
+                                                            stroke-linejoin="round"
+                                                        />
+                                                        <path
+                                                            d="M14 2 8 8"
+                                                            stroke="currentColor"
+                                                            stroke-width="1.5"
+                                                            stroke-linecap="round"
+                                                        />
+                                                    </svg>
+                                                    {lien.label}
+                                                </a>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            )}
+                        </div>
+                    ))
+                }
+            </div>
+        </section>
+    </div>
+
+    <style>
+        .page-wrapper {
+            background: var(--color-blue-light);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* HERO */
+        .hero-section {
+            background: var(--color-yellow);
+            display: flex;
+            align-items: stretch;
+        }
+        .hero-inner {
+            width: 100%;
+            max-width: 1152px;
+            margin: 0 auto;
+            padding: var(--space-l) var(--space-sm);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            gap: var(--space-sm);
+        }
+        .hero-logo-wrap {
+            width: 100%;
+            display: flex;
+            justify-content: flex-start;
+        }
+        .hero-logo-img {
+            height: clamp(6rem, 28vw, 9rem);
+            width: auto;
+        }
+        .hero-img-wrap {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+        }
+        .hero-img {
+            width: 100%;
+            max-width: 480px;
+            height: auto;
+            object-fit: contain;
+            object-position: bottom;
+        }
+        .hero-texte {
+            width: 100%;
+            padding: var(--space-m) 0;
+        }
+        .hero-texte p {
+            font-family: var(--font-body);
+            font-size: var(--text-5xl);
+            font-weight: var(--weight-bold);
+            color: var(--color-dark);
+            line-height: 1.1;
+        }
+
+        /* INTRO */
+        .intro-section {
+            padding: var(--space-2xl) var(--space-sm) var(--space-l);
+        }
+        .intro-inner {
+            max-width: 960px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-m);
+        }
+        .intro-h1 {
+            font-family: var(--font-body);
+            font-size: clamp(var(--text-2xl), 6vw, var(--text-4xl));
+            font-weight: var(--weight-black);
+            color: var(--color-white);
+            line-height: 1.1;
+            -webkit-font-smoothing: auto;
+        }
+        .intro-texte {
+            font-family: var(--font-body);
+            font-size: clamp(var(--text-sm), 2.5vw, var(--text-m));
+            color: rgba(255, 255, 255, 0.85);
+            line-height: 1.7;
+        }
+
+        /* CARDS GRID */
+        .cards-section {
+            padding: var(--space-l) var(--space-sm) var(--space-3xl);
+        }
+        .cards-grid {
+            max-width: 960px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: var(--space-m);
+            width: 100%;
+        }
+        .card {
+            background: var(--color-dark-blue);
+            border-radius: var(--radius-m);
+            padding: var(--space-l);
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-m);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+            min-width: 0;
+            overflow: hidden;
+        }
+        .card-titre {
+            font-family: var(--font-body);
+            font-size: var(--text-m);
+            font-weight: var(--weight-bold);
+            color: var(--color-white);
+            -webkit-font-smoothing: auto;
+        }
+        .card-texte {
+            font-family: var(--font-body);
+            font-size: var(--text-sm);
+            font-weight: var(--weight-bold);
+            color: var(--color-white);
+            line-height: 1.6;
+        }
+        .card-bullets {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-xs);
+            padding-left: var(--space-m);
+            margin: 0;
+        }
+        .card-bullets li {
+            font-family: var(--font-body);
+            font-size: var(--text-sm);
+            font-weight: var(--weight-regular, 400);
+            color: var(--color-white);
+            line-height: 1.5;
+            word-break: break-word;
+            overflow-wrap: break-word;
+        }
+
+        /* LIENS OFFICIELS */
+        .card-liens {
+            border-top: 1px solid rgba(255, 255, 255, 0.12);
+            padding-top: var(--space-m);
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-s);
+        }
+        .card-liens-titre {
+            font-family: var(--font-body);
+            font-size: var(--text-xs);
+            font-weight: var(--weight-bold);
+            color: rgba(255, 255, 255, 0.5);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin: 0;
+        }
+        .card-liens-liste {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-xs);
+        }
+        .card-lien {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-xs);
+            font-family: var(--font-body);
+            font-size: var(--text-sm);
+            color: var(--color-yellow);
+            text-decoration: none;
+            font-weight: var(--weight-medium);
+            transition: opacity 0.15s;
+            word-break: break-word;
+        }
+        .card-lien:hover {
+            opacity: 0.75;
+            text-decoration: underline;
+        }
+        .lien-icon {
+            width: 13px;
+            height: 13px;
+            flex-shrink: 0;
+            opacity: 0.8;
+        }
+
+        @media (min-width: 640px) {
+            .cards-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (min-width: 768px) {
+            .hero-logo-wrap {
+                justify-content: center;
+            }
+            .hero-logo-img {
+                height: clamp(5rem, 12vw, 9rem);
+            }
+            .hero-img {
+                max-width: 100%;
+            }
+            .hero-texte p {
+                font-size: 7rem;
+            }
+        }
+    </style>
+</Layout>

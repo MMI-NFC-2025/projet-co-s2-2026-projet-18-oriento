@@ -1,0 +1,144 @@
+---
+import Layout from "../layouts/Layout-landingpage.astro";
+import titouanPhoto from "../assets/Oriento_img/titouanPhoto.avif";
+import virgilePhoto from "../assets/Oriento_img/virgilePhoto.avif";
+import evanPhoto from "../assets/Oriento_img/evanPhoto.avif";
+---
+
+<Layout title="Notre équipe — Oriento">
+    <div class="page-wrapper">
+        <section class="equipe-hero">
+            <h1 class="titre">Notre équipe</h1>
+            <div class="texte-bloc">
+                <p>
+                    Oriento est développé par une équipe de étudiants en BUT MMI
+                    qui souhaite simplifier les démarches administratives des
+                    étudiants.
+                </p>
+                <p>
+                    Nous avons créé cette application pour aider les étudiants à
+                    trouver rapidement les bonnes informations et à gérer plus
+                    facilement leur logement, leurs études, leurs impôts et
+                    leurs assurances.
+                </p>
+                <p>
+                    Notre objectif est simple : rendre les démarches étudiantes
+                    plus claires, accessibles et rapides.
+                </p>
+            </div>
+        </section>
+
+        <section class="membres">
+            <div class="membres-grid">
+                <div class="membre-card">
+                    <img
+                        src={titouanPhoto.src}
+                        alt="Titouan Perros"
+                        class="membre-avatar"
+                    />
+                    <span class="membre-nom">Titouan Perros</span>
+                    <span class="membre-role"
+                        >Étudiant en première année MMI</span
+                    >
+                </div>
+                <div class="membre-card">
+                    <img
+                        src={virgilePhoto.src}
+                        alt="Virgile Esnaux"
+                        class="membre-avatar"
+                    />
+                    <span class="membre-nom">Virgile Esnaux</span>
+                    <span class="membre-role"
+                        >Étudiant en première année MMI</span
+                    >
+                </div>
+                <div class="membre-card">
+                    <img
+                        src={evanPhoto.src}
+                        alt="Evan Gichtenaere"
+                        class="membre-avatar"
+                    />
+                    <span class="membre-nom">Evan Gichtenaere</span>
+                    <span class="membre-role"
+                        >Étudiant en première année MMI</span
+                    >
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <style>
+        .page-wrapper {
+            background: var(--color-white);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: var(--space-3xl) var(--space-2xl);
+            gap: var(--space-3xl);
+        }
+
+        .equipe-hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--space-xl);
+            text-align: center;
+            max-width: 900px;
+        }
+        .titre {
+            font-size: clamp(var(--text-3xl), 6vw, 5rem);
+            font-weight: var(--weight-black);
+            color: var(--color-dark);
+            line-height: 1.1;
+        }
+        .texte-bloc {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-m);
+        }
+        .texte-bloc p {
+            font-size: clamp(var(--text-m), 2vw, var(--text-xl));
+            color: var(--color-dark);
+            line-height: 1.7;
+            opacity: 0.8;
+        }
+
+        .membres {
+            display: flex;
+            justify-content: center;
+        }
+        .membres-grid {
+            display: flex;
+            gap: var(--space-2xl);
+            border-radius: var(--radius-m);
+            box-shadow: 0 4px 32px rgba(0, 0, 0, 0.08);
+            padding: var(--space-2xl) var(--space-3xl);
+        }
+        .membre-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--space-m);
+            text-align: center;
+        }
+        .membre-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        .membre-nom {
+            font-size: var(--text-l);
+            font-weight: var(--weight-bold);
+            color: var(--color-dark);
+        }
+        .membre-role {
+            font-size: var(--text-m);
+            color: var(--color-dark);
+            opacity: 0.6;
+            line-height: 1.4;
+        }
+    </style>
+</Layout>
