@@ -6,7 +6,7 @@
 - [ ] Nom du projet : Oriento
 - [ ] URL de la landing page : https://oriento.virgile-esnaux.fr
 - [ ] URL de l'application finale : https://oriento.virgile-esnaux.fr/landing-page
-- [ ] URL de connexion au back office :https://oriento.virgile-esnaux.fr/_/
+- [ ] URL de connexion au back office :https://pboriento.virgile-esnaux.fr/
 - [ ] Identifiant de connexion au backoffice : virgile.esnaux@edu.univ-fcomte.fr
 - [ ] Mot de passe de connexion au backoffice : ProjetCo2026+
 - [ ] URL de la maquette FIGMA : https://www.figma.com/design/om3CbyFA7iFVyHNl18nNN6/Oriento?node-id=0-1&t=oheZrTh2NCFRA8X8-1
