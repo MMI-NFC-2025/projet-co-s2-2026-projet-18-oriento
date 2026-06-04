@@ -22,3 +22,9 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# Additional ignores requested
+textnode_modules/
+pb_data/
+pocketbase
+pocketbase.exe
