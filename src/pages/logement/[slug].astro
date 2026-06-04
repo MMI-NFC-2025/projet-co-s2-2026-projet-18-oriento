@@ -21,280 +21,274 @@ type PageData = {
     }[];
 };
 
-export function getStaticPaths() {
-    const pages: Record<string, PageData> = {
-        preparer: {
-            titre: "Préparer son dossier de location",
-            intro: "Pour louer un logement, vous devrez généralement fournir plusieurs documents au propriétaire ou à l'agence. Préparer votre dossier à l'avance vous permettra de répondre rapidement aux annonces et d'augmenter vos chances d'obtenir le logement.",
-            sections: [
-                {
-                    titre: "Pièce d'identité",
-                    texte: "Carte d'identité, passeport ou titre de séjour valide.",
-                    conseils:
-                        "Scanne ta pièce d'identité en haute résolution et garde-la toujours prête en PDF. Certaines agences refusent les photos floues ou recadrées.",
-                    liens: [
-                        {
-                            label: "Service-public.fr — Documents autorisés pour la location",
-                            url: "https://www.service-public.fr/particuliers/vosdroits/F1169",
-                        },
-                    ],
-                },
-                {
-                    titre: "Justificatif étudiant",
-                    texte: "Carte étudiante, certificat de scolarité ou attestation d'inscription dans votre établissement.",
-                    conseils:
-                        "Télécharge ton certificat de scolarité depuis ton ENT dès la rentrée. Il est souvent disponible en quelques clics et accepté par tous les bailleurs.",
-                    liens: [
-                        {
-                            label: "messervices.etudiant.gouv.fr — Certificat de scolarité",
-                            url: "https://www.messervices.etudiant.gouv.fr",
-                        },
-                    ],
-                },
-                {
-                    titre: "Justificatif de revenus",
-                    texte: "Bulletins de salaire, contrat d'alternance, attestation de bourse ou tout document prouvant vos ressources.",
-                    conseils:
-                        "Si tu n'as pas de revenus propres, une attestation de bourse ou une lettre de tes parents indiquant qu'ils prennent en charge ton loyer peut suffire.",
-                    liens: [
-                        {
-                            label: "Service-public.fr — Pièces justificatives demandées par le bailleur",
-                            url: "https://www.service-public.fr/particuliers/vosdroits/F1169",
-                        },
-                    ],
-                },
-                {
-                    titre: "Garant (si demandé)",
-                    texte: "Un garant peut être demandé pour assurer le paiement du loyer. Il devra fournir :",
-                    bullets: [
-                        "une pièce d'identité",
-                        "un justificatif de revenus",
-                        "un avis d'imposition",
-                    ],
-                    conseils:
-                        "Si tu n'as pas de garant physique, tu peux utiliser le dispositif Visale (gratuit, proposé par Action Logement) qui se porte garant à ta place auprès du propriétaire.",
-                    liens: [
-                        {
-                            label: "visale.fr — Garantie locative gratuite Visale",
-                            url: "https://www.visale.fr",
-                        },
-                        {
-                            label: "Service-public.fr — Se porter garant pour un locataire",
-                            url: "https://www.service-public.fr/particuliers/vosdroits/F31267",
-                        },
-                    ],
-                },
-                {
-                    titre: "Conseils pratiques",
-                    bullets: [
-                        "Préparez des copies numériques de vos documents",
-                        "Regroupez-les dans un seul fichier PDF",
-                        "Vérifiez que les documents sont lisibles et à jour",
-                    ],
-                    conseils:
-                        "Crée un dossier de location sur DossierFacile.fr, le service gratuit de l'État. Il certifie ton dossier et rassure les propriétaires, ce qui peut faire la différence face à d'autres candidats.",
-                    liens: [
-                        {
-                            label: "DossierFacile.fr — Dossier de location certifié par l'État",
-                            url: "https://www.dossierfacile.logement.gouv.fr",
-                        },
-                    ],
-                },
-            ],
-        },
-        bail: {
-            titre: "Comprendre son bail de location",
-            intro: "Le bail est le contrat qui encadre ta relation avec ton propriétaire. Le lire attentivement avant de signer te protège des mauvaises surprises et te permet de connaître tes droits et obligations.",
-            sections: [
-                {
-                    titre: "Les types de bail",
-                    texte: "Il existe plusieurs types de contrats de location selon le logement :",
-                    bullets: [
-                        "Bail nu (vide) : durée de 3 ans minimum, renouvelable automatiquement",
-                        "Bail meublé : durée de 1 an minimum (9 mois pour les étudiants)",
-                        "Bail mobilité : entre 1 et 10 mois, non renouvelable, idéal pour les stages ou alternances",
-                    ],
-                    conseils:
-                        "Pour un logement étudiant, préfère un bail meublé ou mobilité. Ils sont plus courts et plus flexibles si tu changes de ville ou de formation.",
-                    liens: [
-                        {
-                            label: "Service-public.fr — Bail meublé étudiant (9 mois)",
-                            url: "https://www.service-public.fr/particuliers/vosdroits/F31723",
-                        },
-                        {
-                            label: "Service-public.fr — Bail mobilité",
-                            url: "https://www.service-public.fr/particuliers/vosdroits/F34038",
-                        },
-                    ],
-                },
-                {
-                    titre: "Les clauses importantes",
-                    texte: "Certaines mentions dans le bail méritent une attention particulière :",
-                    bullets: [
-                        "Le montant du loyer et des charges (détail des charges incluses ou non)",
-                        "Le montant du dépôt de garantie (1 mois pour un meublé, 2 mois pour un bail nu)",
-                        "Les conditions de résiliation et le préavis (1 mois en meublé, 3 mois en nu)",
-                    ],
-                    conseils:
-                        "Tout ce qui n'est pas écrit dans le bail n'a pas de valeur légale. Si ton propriétaire te promet quelque chose verbalement, demande-lui de l'écrire dans le contrat ou dans un avenant.",
-                    liens: [
-                        {
-                            label: "Service-public.fr — Contenu obligatoire du bail",
-                            url: "https://www.service-public.fr/particuliers/vosdroits/F920",
-                        },
-                        {
-                            label: "ANIL — Dépôt de garantie : règles et restitution",
-                            url: "https://www.anil.org/votre-projet/vous-etes-locataire/entree-dans-les-lieux/depot-de-garantie/",
-                        },
-                    ],
-                },
-                {
-                    titre: "L'état des lieux",
-                    texte: "L'état des lieux est un document obligatoire qui décrit l'état du logement à ton entrée et à ta sortie :",
-                    bullets: [
-                        "Il doit être fait contradictoirement (en présence du locataire et du propriétaire)",
-                        "Note tous les défauts existants, même mineurs, avec des photos datées",
-                        "Un état des lieux incomplet peut te coûter des retenues injustifiées sur ta caution",
-                    ],
-                    conseils:
-                        "Prends des photos de chaque pièce le jour de l'état des lieux d'entrée et envoie-les par e-mail à ton propriétaire. Elles serviront de preuve en cas de litige à la sortie.",
-                    liens: [
-                        {
-                            label: "Service-public.fr — État des lieux d'entrée",
-                            url: "https://www.service-public.fr/particuliers/vosdroits/F31269",
-                        },
-                        {
-                            label: "Service-public.fr — État des lieux de sortie",
-                            url: "https://www.service-public.fr/particuliers/vosdroits/F31270",
-                        },
-                    ],
-                },
-                {
-                    titre: "Tes droits en tant que locataire",
-                    texte: "La loi te protège en tant que locataire :",
-                    bullets: [
-                        "Le propriétaire ne peut pas entrer dans ton logement sans ton accord",
-                        "Il ne peut pas augmenter le loyer en cours de bail sans raison légale",
-                        "Tu as droit à un logement décent : chauffage, eau chaude, absence d'humidité excessive",
-                    ],
-                    conseils:
-                        "En cas de litige avec ton propriétaire, contacte l'ADIL (Agence Départementale d'Information sur le Logement) de ta ville. La consultation est gratuite et les conseils sont juridiquement fiables.",
-                    liens: [
-                        {
-                            label: "Service-public.fr — Droits et obligations du locataire",
-                            url: "https://www.service-public.fr/particuliers/vosdroits/F1699",
-                        },
-                        {
-                            label: "ANIL — Trouver l'ADIL de votre département",
-                            url: "https://www.anil.org/lanil-et-les-adil/votre-adil/",
-                        },
-                    ],
-                },
-            ],
-        },
-        aides: {
-            titre: "Les aides au logement étudiant",
-            intro: "Se loger est souvent le poste de dépense le plus important pour un étudiant. Heureusement, plusieurs aides existent pour alléger cette charge financière. Voici tout ce qu'il faut savoir pour en bénéficier.",
-            sections: [
-                {
-                    titre: "L'APL (Aide Personnalisée au Logement)",
-                    texte: "L'APL est l'aide la plus connue et la plus répandue pour les étudiants :",
-                    bullets: [
-                        "Versée directement par la CAF, souvent déduite automatiquement de ton loyer",
-                        "Son montant dépend de tes revenus, de ton loyer et de ta localisation",
-                        "Elle est accessible dès ton entrée dans le logement, sans condition d'âge",
-                    ],
-                    conseils:
-                        "Fais ta demande d'APL sur caf.fr dès que tu signes ton bail. Chaque mois de retard est une aide perdue définitivement.",
-                    liens: [
-                        {
-                            label: "CAF.fr — Faire une demande d'aide au logement",
-                            url: "https://www.caf.fr/allocataires/droits-et-prestations/s-informer-sur-les-aides/logement-et-cadre-de-vie/l-aide-au-logement",
-                        },
-                        {
-                            label: "Service-public.fr — APL, ALS, ALF : aide au logement étudiant",
-                            url: "https://www.service-public.fr/particuliers/vosdroits/F1563",
-                        },
-                    ],
-                },
-                {
-                    titre: "Les résidences CROUS",
-                    texte: "Les résidences universitaires gérées par le CROUS sont une alternative très abordable :",
-                    bullets: [
-                        "Loyers bien inférieurs au marché privé (entre 150 € et 400 € selon la ville et le type de chambre)",
-                        "La demande se fait sur trouvermonlogement.etudiant.gouv.fr dès le mois d'avril",
-                        "Les boursiers sont prioritaires dans l'attribution des logements",
-                    ],
-                    conseils:
-                        "Ne compte pas uniquement sur une place en CROUS. Les demandes sont nombreuses et les places limitées. Prépare un plan B avec des logements privés en parallèle.",
-                    liens: [
-                        {
-                            label: "trouvermonlogement.etudiant.gouv.fr — Demander un logement CROUS",
-                            url: "https://trouvermonlogement.etudiant.gouv.fr",
-                        },
-                        {
-                            label: "messervices.etudiant.gouv.fr — Dossier Social Étudiant (logement)",
-                            url: "https://www.messervices.etudiant.gouv.fr",
-                        },
-                    ],
-                },
-                {
-                    titre: "Le dispositif Visale",
-                    texte: "Visale est une garantie locative gratuite proposée par Action Logement :",
-                    bullets: [
-                        "Il se porte garant à ta place auprès du propriétaire",
-                        "Accessible aux étudiants de moins de 30 ans sans condition de revenus",
-                        "La demande se fait en ligne sur visale.fr en quelques minutes",
-                    ],
-                    conseils:
-                        "Obtiens ton visa Visale avant même de commencer à chercher un logement. Certains propriétaires l'acceptent plus facilement qu'un garant physique.",
-                    liens: [
-                        {
-                            label: "visale.fr — Obtenir sa garantie Visale",
-                            url: "https://www.visale.fr",
-                        },
-                        {
-                            label: "Service-public.fr — Visale, caution locative étudiante",
-                            url: "https://www.service-public.fr/particuliers/vosdroits/F34002",
-                        },
-                    ],
-                },
-                {
-                    titre: "Autres aides disponibles",
-                    texte: "D'autres dispositifs peuvent compléter tes ressources :",
-                    bullets: [
-                        "La caution Locapass d'Action Logement pour financer ton dépôt de garantie",
-                        "Les aides régionales au logement étudiant selon ta région",
-                        "Les aides d'urgence du CROUS en cas de difficultés financières imprévues",
-                    ],
-                    conseils:
-                        "Consulte le site de ta région et de ton CROUS local. Beaucoup d'aides sont peu connues et donc peu demandées, ce qui augmente tes chances de les obtenir.",
-                    liens: [
-                        {
-                            label: "actionlogement.fr — Locapass et aides au logement",
-                            url: "https://www.actionlogement.fr/le-locapass",
-                        },
-                        {
-                            label: "Service-public.fr — Aides d'urgence CROUS",
-                            url: "https://www.service-public.fr/particuliers/vosdroits/F1024",
-                        },
-                        {
-                            label: "1jeune1solution.gouv.fr — Aides logement jeunes",
-                            url: "https://www.1jeune1solution.gouv.fr/logement",
-                        },
-                    ],
-                },
-            ],
-        },
-    };
+const pages: Record<string, PageData> = {
+    preparer: {
+        titre: "Préparer son dossier de location",
+        intro: "Pour louer un logement, vous devrez généralement fournir plusieurs documents au propriétaire ou à l'agence. Préparer votre dossier à l'avance vous permettra de répondre rapidement aux annonces et d'augmenter vos chances d'obtenir le logement.",
+        sections: [
+            {
+                titre: "Pièce d'identité",
+                texte: "Carte d'identité, passeport ou titre de séjour valide.",
+                conseils:
+                    "Scanne ta pièce d'identité en haute résolution et garde-la toujours prête en PDF. Certaines agences refusent les photos floues ou recadrées.",
+                liens: [
+                    {
+                        label: "Service-public.fr — Documents autorisés pour la location",
+                        url: "https://www.service-public.fr/particuliers/vosdroits/F1169",
+                    },
+                ],
+            },
+            {
+                titre: "Justificatif étudiant",
+                texte: "Carte étudiante, certificat de scolarité ou attestation d'inscription dans votre établissement.",
+                conseils:
+                    "Télécharge ton certificat de scolarité depuis ton ENT dès la rentrée. Il est souvent disponible en quelques clics et accepté par tous les bailleurs.",
+                liens: [
+                    {
+                        label: "messervices.etudiant.gouv.fr — Certificat de scolarité",
+                        url: "https://www.messervices.etudiant.gouv.fr",
+                    },
+                ],
+            },
+            {
+                titre: "Justificatif de revenus",
+                texte: "Bulletins de salaire, contrat d'alternance, attestation de bourse ou tout document prouvant vos ressources.",
+                conseils:
+                    "Si tu n'as pas de revenus propres, une attestation de bourse ou une lettre de tes parents indiquant qu'ils prennent en charge ton loyer peut suffire.",
+                liens: [
+                    {
+                        label: "Service-public.fr — Pièces justificatives demandées par le bailleur",
+                        url: "https://www.service-public.fr/particuliers/vosdroits/F1169",
+                    },
+                ],
+            },
+            {
+                titre: "Garant (si demandé)",
+                texte: "Un garant peut être demandé pour assurer le paiement du loyer. Il devra fournir :",
+                bullets: [
+                    "une pièce d'identité",
+                    "un justificatif de revenus",
+                    "un avis d'imposition",
+                ],
+                conseils:
+                    "Si tu n'as pas de garant physique, tu peux utiliser le dispositif Visale (gratuit, proposé par Action Logement) qui se porte garant à ta place auprès du propriétaire.",
+                liens: [
+                    {
+                        label: "visale.fr — Garantie locative gratuite Visale",
+                        url: "https://www.visale.fr",
+                    },
+                    {
+                        label: "Service-public.fr — Se porter garant pour un locataire",
+                        url: "https://www.service-public.fr/particuliers/vosdroits/F31267",
+                    },
+                ],
+            },
+            {
+                titre: "Conseils pratiques",
+                bullets: [
+                    "Préparez des copies numériques de vos documents",
+                    "Regroupez-les dans un seul fichier PDF",
+                    "Vérifiez que les documents sont lisibles et à jour",
+                ],
+                conseils:
+                    "Crée un dossier de location sur DossierFacile.fr, le service gratuit de l'État. Il certifie ton dossier et rassure les propriétaires, ce qui peut faire la différence face à d'autres candidats.",
+                liens: [
+                    {
+                        label: "DossierFacile.fr — Dossier de location certifié par l'État",
+                        url: "https://www.dossierfacile.logement.gouv.fr",
+                    },
+                ],
+            },
+        ],
+    },
+    bail: {
+        titre: "Comprendre son bail de location",
+        intro: "Le bail est le contrat qui encadre ta relation avec ton propriétaire. Le lire attentivement avant de signer te protège des mauvaises surprises et te permet de connaître tes droits et obligations.",
+        sections: [
+            {
+                titre: "Les types de bail",
+                texte: "Il existe plusieurs types de contrats de location selon le logement :",
+                bullets: [
+                    "Bail nu (vide) : durée de 3 ans minimum, renouvelable automatiquement",
+                    "Bail meublé : durée de 1 an minimum (9 mois pour les étudiants)",
+                    "Bail mobilité : entre 1 et 10 mois, non renouvelable, idéal pour les stages ou alternances",
+                ],
+                conseils:
+                    "Pour un logement étudiant, préfère un bail meublé ou mobilité. Ils sont plus courts et plus flexibles si tu changes de ville ou de formation.",
+                liens: [
+                    {
+                        label: "Service-public.fr — Bail meublé étudiant (9 mois)",
+                        url: "https://www.service-public.fr/particuliers/vosdroits/F31723",
+                    },
+                    {
+                        label: "Service-public.fr — Bail mobilité",
+                        url: "https://www.service-public.fr/particuliers/vosdroits/F34038",
+                    },
+                ],
+            },
+            {
+                titre: "Les clauses importantes",
+                texte: "Certaines mentions dans le bail méritent une attention particulière :",
+                bullets: [
+                    "Le montant du loyer et des charges (détail des charges incluses ou non)",
+                    "Le montant du dépôt de garantie (1 mois pour un meublé, 2 mois pour un bail nu)",
+                    "Les conditions de résiliation et le préavis (1 mois en meublé, 3 mois en nu)",
+                ],
+                conseils:
+                    "Tout ce qui n'est pas écrit dans le bail n'a pas de valeur légale. Si ton propriétaire te promet quelque chose verbalement, demande-lui de l'écrire dans le contrat ou dans un avenant.",
+                liens: [
+                    {
+                        label: "Service-public.fr — Contenu obligatoire du bail",
+                        url: "https://www.service-public.fr/particuliers/vosdroits/F920",
+                    },
+                    {
+                        label: "ANIL — Dépôt de garantie : règles et restitution",
+                        url: "https://www.anil.org/votre-projet/vous-etes-locataire/entree-dans-les-lieux/depot-de-garantie/",
+                    },
+                ],
+            },
+            {
+                titre: "L'état des lieux",
+                texte: "L'état des lieux est un document obligatoire qui décrit l'état du logement à ton entrée et à ta sortie :",
+                bullets: [
+                    "Il doit être fait contradictoirement (en présence du locataire et du propriétaire)",
+                    "Note tous les défauts existants, même mineurs, avec des photos datées",
+                    "Un état des lieux incomplet peut te coûter des retenues injustifiées sur ta caution",
+                ],
+                conseils:
+                    "Prends des photos de chaque pièce le jour de l'état des lieux d'entrée et envoie-les par e-mail à ton propriétaire. Elles serviront de preuve en cas de litige à la sortie.",
+                liens: [
+                    {
+                        label: "Service-public.fr — État des lieux d'entrée",
+                        url: "https://www.service-public.fr/particuliers/vosdroits/F31269",
+                    },
+                    {
+                        label: "Service-public.fr — État des lieux de sortie",
+                        url: "https://www.service-public.fr/particuliers/vosdroits/F31270",
+                    },
+                ],
+            },
+            {
+                titre: "Tes droits en tant que locataire",
+                texte: "La loi te protège en tant que locataire :",
+                bullets: [
+                    "Le propriétaire ne peut pas entrer dans ton logement sans ton accord",
+                    "Il ne peut pas augmenter le loyer en cours de bail sans raison légale",
+                    "Tu as droit à un logement décent : chauffage, eau chaude, absence d'humidité excessive",
+                ],
+                conseils:
+                    "En cas de litige avec ton propriétaire, contacte l'ADIL (Agence Départementale d'Information sur le Logement) de ta ville. La consultation est gratuite et les conseils sont juridiquement fiables.",
+                liens: [
+                    {
+                        label: "Service-public.fr — Droits et obligations du locataire",
+                        url: "https://www.service-public.fr/particuliers/vosdroits/F1699",
+                    },
+                    {
+                        label: "ANIL — Trouver l'ADIL de votre département",
+                        url: "https://www.anil.org/lanil-et-les-adil/votre-adil/",
+                    },
+                ],
+            },
+        ],
+    },
+    aides: {
+        titre: "Les aides au logement étudiant",
+        intro: "Se loger est souvent le poste de dépense le plus important pour un étudiant. Heureusement, plusieurs aides existent pour alléger cette charge financière. Voici tout ce qu'il faut savoir pour en bénéficier.",
+        sections: [
+            {
+                titre: "L'APL (Aide Personnalisée au Logement)",
+                texte: "L'APL est l'aide la plus connue et la plus répandue pour les étudiants :",
+                bullets: [
+                    "Versée directement par la CAF, souvent déduite automatiquement de ton loyer",
+                    "Son montant dépend de tes revenus, de ton loyer et de ta localisation",
+                    "Elle est accessible dès ton entrée dans le logement, sans condition d'âge",
+                ],
+                conseils:
+                    "Fais ta demande d'APL sur caf.fr dès que tu signes ton bail. Chaque mois de retard est une aide perdue définitivement.",
+                liens: [
+                    {
+                        label: "CAF.fr — Faire une demande d'aide au logement",
+                        url: "https://www.caf.fr/allocataires/droits-et-prestations/s-informer-sur-les-aides/logement-et-cadre-de-vie/l-aide-au-logement",
+                    },
+                    {
+                        label: "Service-public.fr — APL, ALS, ALF : aide au logement étudiant",
+                        url: "https://www.service-public.fr/particuliers/vosdroits/F1563",
+                    },
+                ],
+            },
+            {
+                titre: "Les résidences CROUS",
+                texte: "Les résidences universitaires gérées par le CROUS sont une alternative très abordable :",
+                bullets: [
+                    "Loyers bien inférieurs au marché privé (entre 150 € et 400 € selon la ville et le type de chambre)",
+                    "La demande se fait sur trouvermonlogement.etudiant.gouv.fr dès le mois d'avril",
+                    "Les boursiers sont prioritaires dans l'attribution des logements",
+                ],
+                conseils:
+                    "Ne compte pas uniquement sur une place en CROUS. Les demandes sont nombreuses et les places limitées. Prépare un plan B avec des logements privés en parallèle.",
+                liens: [
+                    {
+                        label: "trouvermonlogement.etudiant.gouv.fr — Demander un logement CROUS",
+                        url: "https://trouvermonlogement.etudiant.gouv.fr",
+                    },
+                    {
+                        label: "messervices.etudiant.gouv.fr — Dossier Social Étudiant (logement)",
+                        url: "https://www.messervices.etudiant.gouv.fr",
+                    },
+                ],
+            },
+            {
+                titre: "Le dispositif Visale",
+                texte: "Visale est une garantie locative gratuite proposée par Action Logement :",
+                bullets: [
+                    "Il se porte garant à ta place auprès du propriétaire",
+                    "Accessible aux étudiants de moins de 30 ans sans condition de revenus",
+                    "La demande se fait en ligne sur visale.fr en quelques minutes",
+                ],
+                conseils:
+                    "Obtiens ton visa Visale avant même de commencer à chercher un logement. Certains propriétaires l'acceptent plus facilement qu'un garant physique.",
+                liens: [
+                    {
+                        label: "visale.fr — Obtenir sa garantie Visale",
+                        url: "https://www.visale.fr",
+                    },
+                    {
+                        label: "Service-public.fr — Visale, caution locative étudiante",
+                        url: "https://www.service-public.fr/particuliers/vosdroits/F34002",
+                    },
+                ],
+            },
+            {
+                titre: "Autres aides disponibles",
+                texte: "D'autres dispositifs peuvent compléter tes ressources :",
+                bullets: [
+                    "La caution Locapass d'Action Logement pour financer ton dépôt de garantie",
+                    "Les aides régionales au logement étudiant selon ta région",
+                    "Les aides d'urgence du CROUS en cas de difficultés financières imprévues",
+                ],
+                conseils:
+                    "Consulte le site de ta région et de ton CROUS local. Beaucoup d'aides sont peu connues et donc peu demandées, ce qui augmente tes chances de les obtenir.",
+                liens: [
+                    {
+                        label: "actionlogement.fr — Locapass et aides au logement",
+                        url: "https://www.actionlogement.fr/le-locapass",
+                    },
+                    {
+                        label: "Service-public.fr — Aides d'urgence CROUS",
+                        url: "https://www.service-public.fr/particuliers/vosdroits/F1024",
+                    },
+                    {
+                        label: "1jeune1solution.gouv.fr — Aides logement jeunes",
+                        url: "https://www.1jeune1solution.gouv.fr/logement",
+                    },
+                ],
+            },
+        ],
+    },
+};
 
-    return Object.entries(pages).map(([slug, data]) => ({
-        params: { slug },
-        props: { page: data },
-    }));
-}
-
-const { page } = Astro.props as { page: PageData };
+const slug = Astro.params.slug;
+const page = pages[slug as keyof typeof pages];
 ---
 
 <Layout title={`${page.titre} — Oriento`} heroSection={true}>

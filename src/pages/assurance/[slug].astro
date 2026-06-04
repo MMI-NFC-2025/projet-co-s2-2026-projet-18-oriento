@@ -21,264 +21,258 @@ type PageData = {
     }[];
 };
 
-export function getStaticPaths() {
-    const pages: Record<string, PageData> = {
-        comprendre: {
-            titre: "Comprendre les assurances essentielles",
-            intro: "Être étudiant implique souvent de vivre de manière autonome et de gérer certaines responsabilités. Avoir les bonnes assurances te protège dans ta vie quotidienne et en cas d'imprévu.",
-            sections: [
-                {
-                    titre: "L'assurance responsabilité civile",
-                    texte: "La responsabilité civile est l'assurance de base que tout étudiant devrait avoir. Elle couvre les dommages que tu pourrais causer à quelqu'un d'autre ou à ses biens, que ce soit accidentel ou involontaire.",
-                    bullets: [
-                        "Elle est parfois incluse dans le contrat scolaire ou dans certaines assurances habitation",
-                    ],
-                    conseils:
-                        "Vérifie si tes parents t'ont déjà couvert via leur contrat multirisque habitation. Beaucoup d'étudiants sont encore inclus dedans sans le savoir.",
-                    liens: [
-                        {
-                            label: "Service-public.fr — Responsabilité civile",
-                            url: "https://www.service-public.fr/particuliers/vosdroits/F2123",
-                        },
-                        {
-                            label: "economie.gouv.fr — Les assurances obligatoires",
-                            url: "https://www.economie.gouv.fr/particuliers/assurances-obligatoires",
-                        },
-                    ],
-                },
-                {
-                    titre: "L'assurance habitation",
-                    texte: "Même si tu loues un studio ou que tu vis en résidence universitaire, l'assurance habitation est souvent obligatoire :",
-                    bullets: [
-                        "Elle couvre les dégâts causés à ton logement ou à celui d'un voisin",
-                        "Elle peut inclure la responsabilité civile",
-                        "Certains contrats étudiants sont très abordables (moins de 5 € par mois)",
-                    ],
-                    conseils:
-                        "Compare les offres en ligne avant de souscrire. Des assureurs comme Luko, Lovys ou la MAIF proposent des formules spécialement adaptées aux étudiants.",
-                    liens: [
-                        {
-                            label: "Service-public.fr — Assurance habitation locataire",
-                            url: "https://www.service-public.fr/particuliers/vosdroits/F1353",
-                        },
-                        {
-                            label: "ANIL — Assurance et location",
-                            url: "https://www.anil.org/votre-projet/vous-etes-locataire/entree-dans-les-lieux/assurance-habitation/",
-                        },
-                    ],
-                },
-                {
-                    titre: "L'assurance santé complémentaire (mutuelle étudiante)",
-                    texte: "La sécurité sociale rembourse une partie des frais médicaux, mais pas tout. Une mutuelle est utile pour couvrir le reste :",
-                    bullets: [
-                        "Consultations médicales et soins dentaires et optiques",
-                        "Certains médicaments non remboursés par la sécurité sociale",
-                    ],
-                    conseils:
-                        "Si tu as moins de 25 ans, tu peux rester sur la mutuelle de tes parents. Vérifie d'abord avant de souscrire une nouvelle complémentaire santé.",
-                    liens: [
-                        {
-                            label: "Ameli.fr — Droits à l'assurance maladie étudiant",
-                            url: "https://www.ameli.fr/assure/droits-demarches/etudes-emploi-retraite/vous-etes-etudiant/votre-couverture-maladie",
-                        },
-                        {
-                            label: "1jeune1solution — Santé étudiante",
-                            url: "https://www.1jeune1solution.gouv.fr/sante",
-                        },
-                    ],
-                },
-                {
-                    titre: "L'assurance des biens personnels",
-                    texte: "Si tu possèdes du matériel informatique, un vélo ou d'autres objets de valeur, certaines assurances permettent de protéger tes biens :",
-                    bullets: [
-                        "Le casse accidentelle",
-                        "Les dommages liés à un incendie ou des dégâts des eaux",
-                    ],
-                    conseils:
-                        "Garde toujours les factures de tes appareils électroniques. En cas de sinistre, elles sont indispensables pour être remboursé correctement.",
-                    liens: [
-                        {
-                            label: "Service-public.fr — Déclaration de sinistre",
-                            url: "https://www.service-public.fr/particuliers/vosdroits/F2149",
-                        },
-                    ],
-                },
-            ],
-        },
-        choisir: {
-            titre: "Choisir la bonne assurance",
-            intro: "Face à la multitude d'offres sur le marché, choisir une assurance adaptée à ton profil d'étudiant peut sembler compliqué. Voici les critères essentiels pour faire le bon choix sans te faire avoir.",
-            sections: [
-                {
-                    titre: "Analyser ses besoins réels",
-                    texte: "Avant de comparer des offres, commence par faire le point sur ta situation :",
-                    bullets: [
-                        "Tu vis seul ou en colocation ? Les garanties ne sont pas les mêmes",
-                        "Tu as du matériel coûteux (ordinateur, vélo, instrument) à protéger ?",
-                        "Tu es encore rattaché à la mutuelle ou l'habitation de tes parents ?",
-                    ],
-                    conseils:
-                        "Ne souscris pas une assurance par défaut. Prends 10 minutes pour lister ce que tu possèdes et ce que tu risques réellement de perdre ou d'abîmer.",
-                    liens: [
-                        {
-                            label: "Service-public.fr — Guide des assurances",
-                            url: "https://www.service-public.fr/particuliers/vosdroits/N44",
-                        },
-                    ],
-                },
-                {
-                    titre: "Comparer les offres",
-                    texte: "Tous les contrats ne se valent pas. Voici comment les comparer efficacement :",
-                    bullets: [
-                        "Utilise des comparateurs en ligne comme LeLynx ou AssurLand",
-                        "Vérifie les plafonds de remboursement et les exclusions de garanties",
-                        "Lis les avis clients pour évaluer la réactivité en cas de sinistre",
-                    ],
-                    conseils:
-                        "Le prix ne fait pas tout. Un contrat moins cher avec de nombreuses exclusions peut te coûter bien plus cher en cas de pépin.",
-                    liens: [
-                        {
-                            label: "LeLynx — Comparateur assurance habitation",
-                            url: "https://www.lelynx.fr/assurance-habitation/",
-                        },
-                        {
-                            label: "Assurland — Comparateur assurance",
-                            url: "https://www.assurland.com",
-                        },
-                    ],
-                },
-                {
-                    titre: "Les labels et certifications",
-                    texte: "Certains critères te permettent de vérifier la fiabilité d'un assureur :",
-                    bullets: [
-                        "Vérifier que l'assureur est agréé par l'ACPR (Autorité de Contrôle Prudentiel et de Résolution)",
-                        "Chercher des avis sur des plateformes indépendantes (Trustpilot, Google)",
-                        "Préférer les assureurs spécialisés dans les offres étudiantes",
-                    ],
-                    conseils:
-                        "Les mutuelles étudiantes historiques (LMDE, SMEREP) ont une bonne connaissance du profil étudiant. N'hésite pas à les contacter directement pour un devis personnalisé.",
-                    liens: [
-                        {
-                            label: "ACPR — Vérifier un assureur agréé",
-                            url: "https://www.acpr.banque-france.fr/lagrement-et-la-surveillance/les-recherches-dans-les-fichiers-de-lautorite/registre-des-agents-financiers",
-                        },
-                        {
-                            label: "LMDE — Mutuelle étudiante",
-                            url: "https://www.lmde.fr",
-                        },
-                    ],
-                },
-                {
-                    titre: "Attention aux pièges courants",
-                    texte: "Certaines erreurs reviennent fréquemment chez les étudiants :",
-                    bullets: [
-                        "Souscrire une assurance déjà couverte par celle des parents",
-                        "Oublier de déclarer une colocation, ce qui peut annuler le contrat",
-                        "Ne pas lire les conditions de résiliation (souvent annuelle avec préavis)",
-                    ],
-                    conseils:
-                        "Note la date d'échéance de ton contrat dans ton téléphone dès la souscription. Sans résiliation à temps, le contrat se renouvelle automatiquement pour un an.",
-                    liens: [
-                        {
-                            label: "Service-public.fr — Résiliation d'assurance (loi Hamon)",
-                            url: "https://www.service-public.fr/particuliers/vosdroits/F19083",
-                        },
-                    ],
-                },
-            ],
-        },
-        souscrire: {
-            titre: "Souscrire une assurance étudiant",
-            intro: "Une fois que tu as identifié l'assurance qu'il te faut, il est temps de passer à la souscription. Les démarches sont simples et se font souvent entièrement en ligne en quelques minutes.",
-            sections: [
-                {
-                    titre: "Les documents nécessaires",
-                    texte: "Pour souscrire une assurance, tu auras généralement besoin de :",
-                    bullets: [
-                        "Une pièce d'identité valide (carte nationale d'identité ou passeport)",
-                        "Un justificatif de domicile ou le bail de ton logement",
-                        "Ton numéro de sécurité sociale pour une mutuelle santé",
-                        "Un RIB pour la mise en place du prélèvement automatique",
-                    ],
-                    conseils:
-                        "Scanne tous ces documents à l'avance et garde-les dans un dossier numérique. La plupart des souscriptions en ligne les demandent en format PDF ou JPEG.",
-                    liens: [
-                        {
-                            label: "Service-public.fr — Pièces justificatives courantes",
-                            url: "https://www.service-public.fr/particuliers/vosdroits/F1168",
-                        },
-                    ],
-                },
-                {
-                    titre: "Les étapes de souscription",
-                    texte: "La souscription en ligne se déroule généralement en quelques étapes simples :",
-                    bullets: [
-                        "Remplir le formulaire avec tes informations personnelles et la description de ton logement ou de ta situation",
-                        "Choisir tes garanties et personnaliser ton contrat selon tes besoins",
-                        "Signer électroniquement le contrat et régler la première cotisation",
-                    ],
-                    conseils:
-                        "Lis bien les conditions générales avant de signer, même en diagonale. Repère notamment les délais de carence et les exclusions principales.",
-                    liens: [
-                        {
-                            label: "economie.gouv.fr — Signature électronique",
-                            url: "https://www.economie.gouv.fr/entreprises/signature-electronique",
-                        },
-                    ],
-                },
-                {
-                    titre: "La date d'effet du contrat",
-                    texte: "La couverture ne démarre pas toujours immédiatement :",
-                    bullets: [
-                        "Pour une assurance habitation, la prise d'effet est souvent immédiate ou le lendemain",
-                        "Pour une mutuelle santé, un délai de carence de 1 à 3 mois peut s'appliquer",
-                        "Certains sinistres survenus avant la date d'effet ne sont pas couverts",
-                    ],
-                    conseils:
-                        "Souscris ton assurance habitation avant même d'emménager. En cas de dégât des eaux le jour de ton arrivée, tu seras couvert dès le départ.",
-                    liens: [
-                        {
-                            label: "Service-public.fr — Assurance habitation et location",
-                            url: "https://www.service-public.fr/particuliers/vosdroits/F1353",
-                        },
-                        {
-                            label: "Ameli.fr — Délai de carence mutuelle",
-                            url: "https://www.ameli.fr/assure/remboursements/rembourse/complement-mutuelle/choisir-mutuelle",
-                        },
-                    ],
-                },
-                {
-                    titre: "Gérer et modifier son contrat",
-                    texte: "Après la souscription, tu peux gérer ton contrat facilement :",
-                    bullets: [
-                        "Modifier tes garanties en cours d'année si ta situation change (déménagement, nouveau matériel)",
-                        "Déclarer un sinistre via l'espace client en ligne ou l'application mobile",
-                        "Résilier le contrat à l'échéance annuelle ou en cas de changement de situation (loi Hamon)",
-                    ],
-                    conseils:
-                        "Télécharge l'application de ton assureur sur ton téléphone. En cas de sinistre, tu pourras déclarer et suivre ton dossier directement depuis ton smartphone.",
-                    liens: [
-                        {
-                            label: "Service-public.fr — Résiliation loi Hamon",
-                            url: "https://www.service-public.fr/particuliers/vosdroits/F19083",
-                        },
-                        {
-                            label: "Service-public.fr — Déclarer un sinistre",
-                            url: "https://www.service-public.fr/particuliers/vosdroits/F2149",
-                        },
-                    ],
-                },
-            ],
-        },
-    };
+const pages: Record<string, PageData> = {
+    comprendre: {
+        titre: "Comprendre les assurances essentielles",
+        intro: "Être étudiant implique souvent de vivre de manière autonome et de gérer certaines responsabilités. Avoir les bonnes assurances te protège dans ta vie quotidienne et en cas d'imprévu.",
+        sections: [
+            {
+                titre: "L'assurance responsabilité civile",
+                texte: "La responsabilité civile est l'assurance de base que tout étudiant devrait avoir. Elle couvre les dommages que tu pourrais causer à quelqu'un d'autre ou à ses biens, que ce soit accidentel ou involontaire.",
+                bullets: [
+                    "Elle est parfois incluse dans le contrat scolaire ou dans certaines assurances habitation",
+                ],
+                conseils:
+                    "Vérifie si tes parents t'ont déjà couvert via leur contrat multirisque habitation. Beaucoup d'étudiants sont encore inclus dedans sans le savoir.",
+                liens: [
+                    {
+                        label: "Service-public.fr — Responsabilité civile",
+                        url: "https://www.service-public.fr/particuliers/vosdroits/F2123",
+                    },
+                    {
+                        label: "economie.gouv.fr — Les assurances obligatoires",
+                        url: "https://www.economie.gouv.fr/particuliers/assurances-obligatoires",
+                    },
+                ],
+            },
+            {
+                titre: "L'assurance habitation",
+                texte: "Même si tu loues un studio ou que tu vis en résidence universitaire, l'assurance habitation est souvent obligatoire :",
+                bullets: [
+                    "Elle couvre les dégâts causés à ton logement ou à celui d'un voisin",
+                    "Elle peut inclure la responsabilité civile",
+                    "Certains contrats étudiants sont très abordables (moins de 5 € par mois)",
+                ],
+                conseils:
+                    "Compare les offres en ligne avant de souscrire. Des assureurs comme Luko, Lovys ou la MAIF proposent des formules spécialement adaptées aux étudiants.",
+                liens: [
+                    {
+                        label: "Service-public.fr — Assurance habitation locataire",
+                        url: "https://www.service-public.fr/particuliers/vosdroits/F1353",
+                    },
+                    {
+                        label: "ANIL — Assurance et location",
+                        url: "https://www.anil.org/votre-projet/vous-etes-locataire/entree-dans-les-lieux/assurance-habitation/",
+                    },
+                ],
+            },
+            {
+                titre: "L'assurance santé complémentaire (mutuelle étudiante)",
+                texte: "La sécurité sociale rembourse une partie des frais médicaux, mais pas tout. Une mutuelle est utile pour couvrir le reste :",
+                bullets: [
+                    "Consultations médicales et soins dentaires et optiques",
+                    "Certains médicaments non remboursés par la sécurité sociale",
+                ],
+                conseils:
+                    "Si tu as moins de 25 ans, tu peux rester sur la mutuelle de tes parents. Vérifie d'abord avant de souscrire une nouvelle complémentaire santé.",
+                liens: [
+                    {
+                        label: "Ameli.fr — Droits à l'assurance maladie étudiant",
+                        url: "https://www.ameli.fr/assure/droits-demarches/etudes-emploi-retraite/vous-etes-etudiant/votre-couverture-maladie",
+                    },
+                    {
+                        label: "1jeune1solution — Santé étudiante",
+                        url: "https://www.1jeune1solution.gouv.fr/sante",
+                    },
+                ],
+            },
+            {
+                titre: "L'assurance des biens personnels",
+                texte: "Si tu possèdes du matériel informatique, un vélo ou d'autres objets de valeur, certaines assurances permettent de protéger tes biens :",
+                bullets: [
+                    "Le casse accidentelle",
+                    "Les dommages liés à un incendie ou des dégâts des eaux",
+                ],
+                conseils:
+                    "Garde toujours les factures de tes appareils électroniques. En cas de sinistre, elles sont indispensables pour être remboursé correctement.",
+                liens: [
+                    {
+                        label: "Service-public.fr — Déclaration de sinistre",
+                        url: "https://www.service-public.fr/particuliers/vosdroits/F2149",
+                    },
+                ],
+            },
+        ],
+    },
+    choisir: {
+        titre: "Choisir la bonne assurance",
+        intro: "Face à la multitude d'offres sur le marché, choisir une assurance adaptée à ton profil d'étudiant peut sembler compliqué. Voici les critères essentiels pour faire le bon choix sans te faire avoir.",
+        sections: [
+            {
+                titre: "Analyser ses besoins réels",
+                texte: "Avant de comparer des offres, commence par faire le point sur ta situation :",
+                bullets: [
+                    "Tu vis seul ou en colocation ? Les garanties ne sont pas les mêmes",
+                    "Tu as du matériel coûteux (ordinateur, vélo, instrument) à protéger ?",
+                    "Tu es encore rattaché à la mutuelle ou l'habitation de tes parents ?",
+                ],
+                conseils:
+                    "Ne souscris pas une assurance par défaut. Prends 10 minutes pour lister ce que tu possèdes et ce que tu risques réellement de perdre ou d'abîmer.",
+                liens: [
+                    {
+                        label: "Service-public.fr — Guide des assurances",
+                        url: "https://www.service-public.fr/particuliers/vosdroits/N44",
+                    },
+                ],
+            },
+            {
+                titre: "Comparer les offres",
+                texte: "Tous les contrats ne se valent pas. Voici comment les comparer efficacement :",
+                bullets: [
+                    "Utilise des comparateurs en ligne comme LeLynx ou AssurLand",
+                    "Vérifie les plafonds de remboursement et les exclusions de garanties",
+                    "Lis les avis clients pour évaluer la réactivité en cas de sinistre",
+                ],
+                conseils:
+                    "Le prix ne fait pas tout. Un contrat moins cher avec de nombreuses exclusions peut te coûter bien plus cher en cas de pépin.",
+                liens: [
+                    {
+                        label: "LeLynx — Comparateur assurance habitation",
+                        url: "https://www.lelynx.fr/assurance-habitation/",
+                    },
+                    {
+                        label: "Assurland — Comparateur assurance",
+                        url: "https://www.assurland.com",
+                    },
+                ],
+            },
+            {
+                titre: "Les labels et certifications",
+                texte: "Certains critères te permettent de vérifier la fiabilité d'un assureur :",
+                bullets: [
+                    "Vérifier que l'assureur est agréé par l'ACPR (Autorité de Contrôle Prudentiel et de Résolution)",
+                    "Chercher des avis sur des plateformes indépendantes (Trustpilot, Google)",
+                    "Préférer les assureurs spécialisés dans les offres étudiantes",
+                ],
+                conseils:
+                    "Les mutuelles étudiantes historiques (LMDE, SMEREP) ont une bonne connaissance du profil étudiant. N'hésite pas à les contacter directement pour un devis personnalisé.",
+                liens: [
+                    {
+                        label: "ACPR — Vérifier un assureur agréé",
+                        url: "https://www.acpr.banque-france.fr/lagrement-et-la-surveillance/les-recherches-dans-les-fichiers-de-lautorite/registre-des-agents-financiers",
+                    },
+                    {
+                        label: "LMDE — Mutuelle étudiante",
+                        url: "https://www.lmde.fr",
+                    },
+                ],
+            },
+            {
+                titre: "Attention aux pièges courants",
+                texte: "Certaines erreurs reviennent fréquemment chez les étudiants :",
+                bullets: [
+                    "Souscrire une assurance déjà couverte par celle des parents",
+                    "Oublier de déclarer une colocation, ce qui peut annuler le contrat",
+                    "Ne pas lire les conditions de résiliation (souvent annuelle avec préavis)",
+                ],
+                conseils:
+                    "Note la date d'échéance de ton contrat dans ton téléphone dès la souscription. Sans résiliation à temps, le contrat se renouvelle automatiquement pour un an.",
+                liens: [
+                    {
+                        label: "Service-public.fr — Résiliation d'assurance (loi Hamon)",
+                        url: "https://www.service-public.fr/particuliers/vosdroits/F19083",
+                    },
+                ],
+            },
+        ],
+    },
+    souscrire: {
+        titre: "Souscrire une assurance étudiant",
+        intro: "Une fois que tu as identifié l'assurance qu'il te faut, il est temps de passer à la souscription. Les démarches sont simples et se font souvent entièrement en ligne en quelques minutes.",
+        sections: [
+            {
+                titre: "Les documents nécessaires",
+                texte: "Pour souscrire une assurance, tu auras généralement besoin de :",
+                bullets: [
+                    "Une pièce d'identité valide (carte nationale d'identité ou passeport)",
+                    "Un justificatif de domicile ou le bail de ton logement",
+                    "Ton numéro de sécurité sociale pour une mutuelle santé",
+                    "Un RIB pour la mise en place du prélèvement automatique",
+                ],
+                conseils:
+                    "Scanne tous ces documents à l'avance et garde-les dans un dossier numérique. La plupart des souscriptions en ligne les demandent en format PDF ou JPEG.",
+                liens: [
+                    {
+                        label: "Service-public.fr — Pièces justificatives courantes",
+                        url: "https://www.service-public.fr/particuliers/vosdroits/F1168",
+                    },
+                ],
+            },
+            {
+                titre: "Les étapes de souscription",
+                texte: "La souscription en ligne se déroule généralement en quelques étapes simples :",
+                bullets: [
+                    "Remplir le formulaire avec tes informations personnelles et la description de ton logement ou de ta situation",
+                    "Choisir tes garanties et personnaliser ton contrat selon tes besoins",
+                    "Signer électroniquement le contrat et régler la première cotisation",
+                ],
+                conseils:
+                    "Lis bien les conditions générales avant de signer, même en diagonale. Repère notamment les délais de carence et les exclusions principales.",
+                liens: [
+                    {
+                        label: "economie.gouv.fr — Signature électronique",
+                        url: "https://www.economie.gouv.fr/entreprises/signature-electronique",
+                    },
+                ],
+            },
+            {
+                titre: "La date d'effet du contrat",
+                texte: "La couverture ne démarre pas toujours immédiatement :",
+                bullets: [
+                    "Pour une assurance habitation, la prise d'effet est souvent immédiate ou le lendemain",
+                    "Pour une mutuelle santé, un délai de carence de 1 à 3 mois peut s'appliquer",
+                    "Certains sinistres survenus avant la date d'effet ne sont pas couverts",
+                ],
+                conseils:
+                    "Souscris ton assurance habitation avant même d'emménager. En cas de dégât des eaux le jour de ton arrivée, tu seras couvert dès le départ.",
+                liens: [
+                    {
+                        label: "Service-public.fr — Assurance habitation et location",
+                        url: "https://www.service-public.fr/particuliers/vosdroits/F1353",
+                    },
+                    {
+                        label: "Ameli.fr — Délai de carence mutuelle",
+                        url: "https://www.ameli.fr/assure/remboursements/rembourse/complement-mutuelle/choisir-mutuelle",
+                    },
+                ],
+            },
+            {
+                titre: "Gérer et modifier son contrat",
+                texte: "Après la souscription, tu peux gérer ton contrat facilement :",
+                bullets: [
+                    "Modifier tes garanties en cours d'année si ta situation change (déménagement, nouveau matériel)",
+                    "Déclarer un sinistre via l'espace client en ligne ou l'application mobile",
+                    "Résilier le contrat à l'échéance annuelle ou en cas de changement de situation (loi Hamon)",
+                ],
+                conseils:
+                    "Télécharge l'application de ton assureur sur ton téléphone. En cas de sinistre, tu pourras déclarer et suivre ton dossier directement depuis ton smartphone.",
+                liens: [
+                    {
+                        label: "Service-public.fr — Résiliation loi Hamon",
+                        url: "https://www.service-public.fr/particuliers/vosdroits/F19083",
+                    },
+                    {
+                        label: "Service-public.fr — Déclarer un sinistre",
+                        url: "https://www.service-public.fr/particuliers/vosdroits/F2149",
+                    },
+                ],
+            },
+        ],
+    },
+};
 
-    return Object.entries(pages).map(([slug, data]) => ({
-        params: { slug },
-        props: { page: data },
-    }));
-}
-
-const { page } = Astro.props as { page: PageData };
+const slug = Astro.params.slug;
+const page = pages[slug as keyof typeof pages];
 ---
 
 <Layout title={`${page.titre} — Oriento`} heroSection={true}>

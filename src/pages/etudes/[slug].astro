@@ -21,243 +21,237 @@ type PageData = {
     }[];
 };
 
-export function getStaticPaths() {
-    const pages: Record<string, PageData> = {
-        inscription: {
-            titre: "S'inscrire dans un établissement",
-            intro: "Une fois que tu as choisi ta formation, il faut finaliser ton inscription. Cela implique plusieurs étapes administratives importantes pour pouvoir commencer tes études dans de bonnes conditions.",
-            sections: [
-                {
-                    titre: "Démarches administratives",
-                    texte: "Chaque établissement peut avoir ses propres procédures, mais voici les principales étapes :",
-                    bullets: [
-                        "Remplir le dossier d'inscription formulaire en ligne ou papier, avec toutes les informations personnelles et académiques",
-                        "Fournir les documents requis : pièce d'identité, diplôme ou relevé de notes, certificat de scolarité précédent, etc.",
-                        "Valider ton inscription : l'établissement confirme que ton dossier est complet et accepté",
-                    ],
-                    conseils:
-                        "Prépare une copie numérique de tous tes documents et garde-les dans un dossier cloud accessible partout.",
-                    liens: [
-                        {
-                            label: "Service-public.fr — S'inscrire dans l'enseignement supérieur",
-                            url: "https://www.service-public.fr/particuliers/vosdroits/F2865",
-                        },
-                        {
-                            label: "Service-public.fr — Pièces justificatives courantes",
-                            url: "https://www.service-public.fr/particuliers/vosdroits/F1168",
-                        },
-                    ],
-                },
-                {
-                    titre: "Paiement des frais de scolarité",
-                    texte: "Les frais de scolarité varient selon l'établissement :",
-                    bullets: [
-                        "Certaines écoles proposent des facilités de paiement ou des bourses",
-                        "Le paiement peut se faire en ligne ou via virement bancaire",
-                        "Certains établissements proposent un accompagnement pour les situations financières difficiles",
-                    ],
-                    conseils:
-                        "Renseigne-toi sur les bourses disponibles (CROUS, bourses régionales) avant de payer. Beaucoup d'étudiants y ont droit sans le savoir.",
-                    liens: [
-                        {
-                            label: "Service-public.fr — Frais d'inscription dans le supérieur",
-                            url: "https://www.service-public.fr/particuliers/vosdroits/F2865",
-                        },
-                        {
-                            label: "messervices.etudiant.gouv.fr — Demander une bourse (DSE)",
-                            url: "https://www.messervices.etudiant.gouv.fr",
-                        },
-                    ],
-                },
-                {
-                    titre: "Création du compte étudiant",
-                    texte: "Ton compte étudiant te permettra d'accéder à :",
-                    bullets: [
-                        "La plateforme de cours et ressources en ligne",
-                        "L'emploi du temps",
-                        "La messagerie interne de l'établissement",
-                        "Les informations administratives et financières",
-                    ],
-                    conseils:
-                        "Active les notifications pour ne manquer aucune information importante de ton établissement.",
-                    liens: [
-                        {
-                            label: "messervices.etudiant.gouv.fr — Espace étudiant",
-                            url: "https://www.messervices.etudiant.gouv.fr",
-                        },
-                    ],
-                },
-                {
-                    titre: "Carte étudiante",
-                    texte: "La carte étudiante est utile pour :",
-                    bullets: [
-                        "Accéder aux bibliothèques, laboratoires et salles informatiques",
-                        "Bénéficier des tarifs réduits dans les transports ou pour des activités culturelles",
-                        "Justifier ton statut d'étudiant auprès d'organismes et administrations",
-                    ],
-                    conseils:
-                        "Ta carte étudiante te donne souvent accès à des réductions dans de nombreux commerces et services. N'oublie pas de la présenter !",
-                    liens: [
-                        {
-                            label: "Service-public.fr — Carte d'étudiant des métiers",
-                            url: "https://www.service-public.fr/particuliers/vosdroits/F15984",
-                        },
-                    ],
-                },
-            ],
-        },
-        orientation: {
-            titre: "Choisir son orientation",
-            intro: "Choisir sa formation est une étape clé. Il existe de nombreuses ressources pour t'aider à trouver la voie qui te correspond.",
-            sections: [
-                {
-                    titre: "Parcoursup",
-                    texte: "Parcoursup est la plateforme nationale d'admission dans l'enseignement supérieur :",
-                    bullets: [
-                        "Consulter les formations disponibles et leurs critères",
-                        "Constituer et envoyer ton dossier",
-                        "Suivre tes candidatures et répondre aux offres",
-                    ],
-                    conseils:
-                        "Candidate à des formations variées (niveau, type) pour maximiser tes chances. Ne mets pas tous tes œufs dans le même panier.",
-                    liens: [
-                        {
-                            label: "Parcoursup — Plateforme officielle",
-                            url: "https://www.parcoursup.gouv.fr",
-                        },
-                        {
-                            label: "Service-public.fr — Parcoursup, comment ça marche",
-                            url: "https://www.service-public.fr/particuliers/vosdroits/F23476",
-                        },
-                    ],
-                },
-                {
-                    titre: "Les types de formations",
-                    texte: "Il existe plusieurs types de formations après le bac :",
-                    bullets: [
-                        "Université (licence, master, doctorat)",
-                        "BTS et BUT (formations professionnalisantes courtes)",
-                        "Classes préparatoires (CPGE)",
-                        "Écoles spécialisées (commerce, ingénierie, art...)",
-                    ],
-                    conseils:
-                        "Les BTS et BUT offrent une insertion professionnelle rapide. L'université offre plus de flexibilité pour se réorienter.",
-                    liens: [
-                        {
-                            label: "Onisep — Explorer les formations",
-                            url: "https://www.onisep.fr/formation",
-                        },
-                        {
-                            label: "orientation.gouv.fr — Choisir son orientation",
-                            url: "https://www.orientation.gouv.fr",
-                        },
-                    ],
-                },
-            ],
-        },
-        aidesetudiantes: {
-            titre: "Demander les aides étudiantes",
-            intro: "En tant qu'étudiant, tu peux bénéficier de nombreuses aides financières pour t'aider à financer tes études, ton logement ou ta vie quotidienne. Voici tout ce qu'il faut savoir pour en profiter.",
-            sections: [
-                {
-                    titre: "Bourses étudiantes",
-                    texte: "La bourse sur critères sociaux est l'aide la plus connue :",
-                    bullets: [
-                        "Attribuée par le CROUS selon les revenus de la famille et la situation personnelle",
-                        "Plusieurs échelons existent, de 0bis à 7 — plus l'échelon est élevé, plus le montant est important",
-                        "La demande se fait via le Dossier Social Étudiant (DSE) sur messervices.etudiant.gouv.fr",
-                    ],
-                    conseils:
-                        "Fais ta demande de bourse dès le mois d'avril, même si tu n'es pas encore inscrit dans une formation. Il vaut mieux anticiper : les délais peuvent être longs.",
-                    liens: [
-                        {
-                            label: "messervices.etudiant.gouv.fr — Constituer son DSE",
-                            url: "https://www.messervices.etudiant.gouv.fr",
-                        },
-                        {
-                            label: "Service-public.fr — Bourse sur critères sociaux",
-                            url: "https://www.service-public.fr/particuliers/vosdroits/F12216",
-                        },
-                    ],
-                },
-                {
-                    titre: "Aides au logement",
-                    texte: "Se loger est souvent le poste de dépense le plus lourd pour un étudiant :",
-                    bullets: [
-                        "L'APL (Aide Personnalisée au Logement) est versée par la CAF directement sur ton loyer",
-                        "Les résidences CROUS proposent des logements à tarifs réduits à demander sur trouvermonlogement.etudiant.gouv.fr",
-                        "Certaines régions proposent des aides complémentaires au logement étudiant",
-                    ],
-                    conseils:
-                        "Fais ta demande d'APL dès ton entrée dans le logement. Chaque mois sans demande est un mois d'aide perdu définitivement.",
-                    liens: [
-                        {
-                            label: "CAF.fr — Aide au logement étudiant",
-                            url: "https://www.caf.fr/allocataires/droits-et-prestations/s-informer-sur-les-aides/logement-et-cadre-de-vie/l-aide-au-logement",
-                        },
-                        {
-                            label: "Service-public.fr — APL, ALS, ALF pour étudiant",
-                            url: "https://www.service-public.fr/particuliers/vosdroits/F1563",
-                        },
-                        {
-                            label: "trouvermonlogement.etudiant.gouv.fr — Résidences CROUS",
-                            url: "https://trouvermonlogement.etudiant.gouv.fr",
-                        },
-                    ],
-                },
-                {
-                    titre: "Aides régionales",
-                    texte: "En dehors des aides nationales, ta région peut proposer des dispositifs spécifiques :",
-                    bullets: [
-                        "Bourses régionales pour les formations non couvertes par le CROUS",
-                        "Aides à la mobilité internationale pour les séjours à l'étranger",
-                        "Aides au permis de conduire ou aux transports selon les régions",
-                    ],
-                    conseils:
-                        "Consulte le site de ta région et de ton établissement : beaucoup d'aides régionales sont méconnues et peu demandées, ce qui augmente tes chances de les obtenir.",
-                    liens: [
-                        {
-                            label: "Service-public.fr — Bourses et aides pour étudiant",
-                            url: "https://www.service-public.fr/particuliers/vosdroits/N20398",
-                        },
-                        {
-                            label: "1jeune1solution.gouv.fr — Toutes les aides",
-                            url: "https://www.1jeune1solution.gouv.fr/aides-et-formations",
-                        },
-                    ],
-                },
-                {
-                    titre: "Aides spécifiques selon ta situation",
-                    texte: "Certaines situations ouvrent droit à des aides supplémentaires :",
-                    bullets: [
-                        "Étudiant en situation de handicap : AEEH, aménagements pédagogiques, aides de la MDPH",
-                        "Étudiant isolé ou en rupture familiale : aide d'urgence du CROUS, CVEC réduite",
-                        "Étudiant salarié ou alternant : droits spécifiques à la formation et aides à l'équipement",
-                    ],
-                    conseils:
-                        "Si tu te retrouves en difficulté financière en cours d'année, contacte le service social du CROUS. Des aides d'urgence existent et peuvent être débloquées rapidement.",
-                    liens: [
-                        {
-                            label: "Service-public.fr — Aide d'urgence CROUS",
-                            url: "https://www.service-public.fr/particuliers/vosdroits/F1024",
-                        },
-                        {
-                            label: "Service-public.fr — Étudiant en situation de handicap",
-                            url: "https://www.service-public.fr/particuliers/vosdroits/F20559",
-                        },
-                    ],
-                },
-            ],
-        },
-    };
+const pages: Record<string, PageData> = {
+    inscription: {
+        titre: "S'inscrire dans un établissement",
+        intro: "Une fois que tu as choisi ta formation, il faut finaliser ton inscription. Cela implique plusieurs étapes administratives importantes pour pouvoir commencer tes études dans de bonnes conditions.",
+        sections: [
+            {
+                titre: "Démarches administratives",
+                texte: "Chaque établissement peut avoir ses propres procédures, mais voici les principales étapes :",
+                bullets: [
+                    "Remplir le dossier d'inscription formulaire en ligne ou papier, avec toutes les informations personnelles et académiques",
+                    "Fournir les documents requis : pièce d'identité, diplôme ou relevé de notes, certificat de scolarité précédent, etc.",
+                    "Valider ton inscription : l'établissement confirme que ton dossier est complet et accepté",
+                ],
+                conseils:
+                    "Prépare une copie numérique de tous tes documents et garde-les dans un dossier cloud accessible partout.",
+                liens: [
+                    {
+                        label: "Service-public.fr — S'inscrire dans l'enseignement supérieur",
+                        url: "https://www.service-public.fr/particuliers/vosdroits/F2865",
+                    },
+                    {
+                        label: "Service-public.fr — Pièces justificatives courantes",
+                        url: "https://www.service-public.fr/particuliers/vosdroits/F1168",
+                    },
+                ],
+            },
+            {
+                titre: "Paiement des frais de scolarité",
+                texte: "Les frais de scolarité varient selon l'établissement :",
+                bullets: [
+                    "Certaines écoles proposent des facilités de paiement ou des bourses",
+                    "Le paiement peut se faire en ligne ou via virement bancaire",
+                    "Certains établissements proposent un accompagnement pour les situations financières difficiles",
+                ],
+                conseils:
+                    "Renseigne-toi sur les bourses disponibles (CROUS, bourses régionales) avant de payer. Beaucoup d'étudiants y ont droit sans le savoir.",
+                liens: [
+                    {
+                        label: "Service-public.fr — Frais d'inscription dans le supérieur",
+                        url: "https://www.service-public.fr/particuliers/vosdroits/F2865",
+                    },
+                    {
+                        label: "messervices.etudiant.gouv.fr — Demander une bourse (DSE)",
+                        url: "https://www.messervices.etudiant.gouv.fr",
+                    },
+                ],
+            },
+            {
+                titre: "Création du compte étudiant",
+                texte: "Ton compte étudiant te permettra d'accéder à :",
+                bullets: [
+                    "La plateforme de cours et ressources en ligne",
+                    "L'emploi du temps",
+                    "La messagerie interne de l'établissement",
+                    "Les informations administratives et financières",
+                ],
+                conseils:
+                    "Active les notifications pour ne manquer aucune information importante de ton établissement.",
+                liens: [
+                    {
+                        label: "messervices.etudiant.gouv.fr — Espace étudiant",
+                        url: "https://www.messervices.etudiant.gouv.fr",
+                    },
+                ],
+            },
+            {
+                titre: "Carte étudiante",
+                texte: "La carte étudiante est utile pour :",
+                bullets: [
+                    "Accéder aux bibliothèques, laboratoires et salles informatiques",
+                    "Bénéficier des tarifs réduits dans les transports ou pour des activités culturelles",
+                    "Justifier ton statut d'étudiant auprès d'organismes et administrations",
+                ],
+                conseils:
+                    "Ta carte étudiante te donne souvent accès à des réductions dans de nombreux commerces et services. N'oublie pas de la présenter !",
+                liens: [
+                    {
+                        label: "Service-public.fr — Carte d'étudiant des métiers",
+                        url: "https://www.service-public.fr/particuliers/vosdroits/F15984",
+                    },
+                ],
+            },
+        ],
+    },
+    orientation: {
+        titre: "Choisir son orientation",
+        intro: "Choisir sa formation est une étape clé. Il existe de nombreuses ressources pour t'aider à trouver la voie qui te correspond.",
+        sections: [
+            {
+                titre: "Parcoursup",
+                texte: "Parcoursup est la plateforme nationale d'admission dans l'enseignement supérieur :",
+                bullets: [
+                    "Consulter les formations disponibles et leurs critères",
+                    "Constituer et envoyer ton dossier",
+                    "Suivre tes candidatures et répondre aux offres",
+                ],
+                conseils:
+                    "Candidate à des formations variées (niveau, type) pour maximiser tes chances. Ne mets pas tous tes œufs dans le même panier.",
+                liens: [
+                    {
+                        label: "Parcoursup — Plateforme officielle",
+                        url: "https://www.parcoursup.gouv.fr",
+                    },
+                    {
+                        label: "Service-public.fr — Parcoursup, comment ça marche",
+                        url: "https://www.service-public.fr/particuliers/vosdroits/F23476",
+                    },
+                ],
+            },
+            {
+                titre: "Les types de formations",
+                texte: "Il existe plusieurs types de formations après le bac :",
+                bullets: [
+                    "Université (licence, master, doctorat)",
+                    "BTS et BUT (formations professionnalisantes courtes)",
+                    "Classes préparatoires (CPGE)",
+                    "Écoles spécialisées (commerce, ingénierie, art...)",
+                ],
+                conseils:
+                    "Les BTS et BUT offrent une insertion professionnelle rapide. L'université offre plus de flexibilité pour se réorienter.",
+                liens: [
+                    {
+                        label: "Onisep — Explorer les formations",
+                        url: "https://www.onisep.fr/formation",
+                    },
+                    {
+                        label: "orientation.gouv.fr — Choisir son orientation",
+                        url: "https://www.orientation.gouv.fr",
+                    },
+                ],
+            },
+        ],
+    },
+    aidesetudiantes: {
+        titre: "Demander les aides étudiantes",
+        intro: "En tant qu'étudiant, tu peux bénéficier de nombreuses aides financières pour t'aider à financer tes études, ton logement ou ta vie quotidienne. Voici tout ce qu'il faut savoir pour en profiter.",
+        sections: [
+            {
+                titre: "Bourses étudiantes",
+                texte: "La bourse sur critères sociaux est l'aide la plus connue :",
+                bullets: [
+                    "Attribuée par le CROUS selon les revenus de la famille et la situation personnelle",
+                    "Plusieurs échelons existent, de 0bis à 7 — plus l'échelon est élevé, plus le montant est important",
+                    "La demande se fait via le Dossier Social Étudiant (DSE) sur messervices.etudiant.gouv.fr",
+                ],
+                conseils:
+                    "Fais ta demande de bourse dès le mois d'avril, même si tu n'es pas encore inscrit dans une formation. Il vaut mieux anticiper : les délais peuvent être longs.",
+                liens: [
+                    {
+                        label: "messervices.etudiant.gouv.fr — Constituer son DSE",
+                        url: "https://www.messervices.etudiant.gouv.fr",
+                    },
+                    {
+                        label: "Service-public.fr — Bourse sur critères sociaux",
+                        url: "https://www.service-public.fr/particuliers/vosdroits/F12216",
+                    },
+                ],
+            },
+            {
+                titre: "Aides au logement",
+                texte: "Se loger est souvent le poste de dépense le plus lourd pour un étudiant :",
+                bullets: [
+                    "L'APL (Aide Personnalisée au Logement) est versée par la CAF directement sur ton loyer",
+                    "Les résidences CROUS proposent des logements à tarifs réduits à demander sur trouvermonlogement.etudiant.gouv.fr",
+                    "Certaines régions proposent des aides complémentaires au logement étudiant",
+                ],
+                conseils:
+                    "Fais ta demande d'APL dès ton entrée dans le logement. Chaque mois sans demande est un mois d'aide perdu définitivement.",
+                liens: [
+                    {
+                        label: "CAF.fr — Aide au logement étudiant",
+                        url: "https://www.caf.fr/allocataires/droits-et-prestations/s-informer-sur-les-aides/logement-et-cadre-de-vie/l-aide-au-logement",
+                    },
+                    {
+                        label: "Service-public.fr — APL, ALS, ALF pour étudiant",
+                        url: "https://www.service-public.fr/particuliers/vosdroits/F1563",
+                    },
+                    {
+                        label: "trouvermonlogement.etudiant.gouv.fr — Résidences CROUS",
+                        url: "https://trouvermonlogement.etudiant.gouv.fr",
+                    },
+                ],
+            },
+            {
+                titre: "Aides régionales",
+                texte: "En dehors des aides nationales, ta région peut proposer des dispositifs spécifiques :",
+                bullets: [
+                    "Bourses régionales pour les formations non couvertes par le CROUS",
+                    "Aides à la mobilité internationale pour les séjours à l'étranger",
+                    "Aides au permis de conduire ou aux transports selon les régions",
+                ],
+                conseils:
+                    "Consulte le site de ta région et de ton établissement : beaucoup d'aides régionales sont méconnues et peu demandées, ce qui augmente tes chances de les obtenir.",
+                liens: [
+                    {
+                        label: "Service-public.fr — Bourses et aides pour étudiant",
+                        url: "https://www.service-public.fr/particuliers/vosdroits/N20398",
+                    },
+                    {
+                        label: "1jeune1solution.gouv.fr — Toutes les aides",
+                        url: "https://www.1jeune1solution.gouv.fr/aides-et-formations",
+                    },
+                ],
+            },
+            {
+                titre: "Aides spécifiques selon ta situation",
+                texte: "Certaines situations ouvrent droit à des aides supplémentaires :",
+                bullets: [
+                    "Étudiant en situation de handicap : AEEH, aménagements pédagogiques, aides de la MDPH",
+                    "Étudiant isolé ou en rupture familiale : aide d'urgence du CROUS, CVEC réduite",
+                    "Étudiant salarié ou alternant : droits spécifiques à la formation et aides à l'équipement",
+                ],
+                conseils:
+                    "Si tu te retrouves en difficulté financière en cours d'année, contacte le service social du CROUS. Des aides d'urgence existent et peuvent être débloquées rapidement.",
+                liens: [
+                    {
+                        label: "Service-public.fr — Aide d'urgence CROUS",
+                        url: "https://www.service-public.fr/particuliers/vosdroits/F1024",
+                    },
+                    {
+                        label: "Service-public.fr — Étudiant en situation de handicap",
+                        url: "https://www.service-public.fr/particuliers/vosdroits/F20559",
+                    },
+                ],
+            },
+        ],
+    },
+};
 
-    return Object.entries(pages).map(([slug, data]) => ({
-        params: { slug },
-        props: { page: data },
-    }));
-}
-
-const { page } = Astro.props as { page: PageData };
+const slug = Astro.params.slug;
+const page = pages[slug as keyof typeof pages];
 ---
 
 <Layout title={`${page.titre} — Oriento`} heroSection={true}>

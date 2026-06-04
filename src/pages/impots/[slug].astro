@@ -21,272 +21,266 @@ type PageData = {
     }[];
 };
 
-export function getStaticPaths() {
-    const pages: Record<string, PageData> = {
-        comprendre: {
-            titre: "Comprendre les impôts en tant qu'étudiant",
-            intro: "Les impôts peuvent sembler compliqués quand on commence à être autonome. Pourtant, en comprendre les bases te permettra d'éviter les mauvaises surprises et de gérer ta situation fiscale sereinement.",
-            sections: [
-                {
-                    titre: "C'est quoi l'impôt sur le revenu ?",
-                    texte: "L'impôt sur le revenu est prélevé par l'État sur les sommes que tu gagnes :",
-                    bullets: [
-                        "Il est calculé selon un barème progressif : plus tu gagnes, plus tu paies",
-                        "En dessous d'un certain seuil de revenus, tu n'es pas imposable",
-                        "Il concerne tous les résidents fiscaux en France, y compris les étudiants qui travaillent",
-                    ],
-                    conseils:
-                        "En tant qu'étudiant avec de petits revenus, tu seras souvent non imposable. Mais déclarer reste obligatoire dès que tu as des revenus, même faibles.",
-                    liens: [
-                        {
-                            label: "impots.gouv.fr — Comment fonctionne l'impôt sur le revenu",
-                            url: "https://www.impots.gouv.fr/particulier/questions/comment-est-calcule-limpot-sur-le-revenu",
-                        },
-                        {
-                            label: "Service-public.fr — Impôt sur le revenu : principes",
-                            url: "https://www.service-public.fr/particuliers/vosdroits/F1419",
-                        },
-                    ],
-                },
-                {
-                    titre: "Le foyer fiscal",
-                    texte: "Le foyer fiscal désigne l'ensemble des personnes prises en compte pour le calcul de l'impôt :",
-                    bullets: [
-                        "Tant que tu es rattaché au foyer fiscal de tes parents, ce sont eux qui déclarent tes revenus",
-                        "Si tu deviens fiscalement indépendant, tu dois faire ta propre déclaration",
-                        "Le rattachement au foyer des parents peut être avantageux jusqu'à 25 ans",
-                    ],
-                    conseils:
-                        "Compare les deux situations avec un simulateur sur impots.gouv.fr. Parfois, se détacher du foyer parental est plus avantageux pour bénéficier de certaines aides.",
-                    liens: [
-                        {
-                            label: "Service-public.fr — Rattachement d'un enfant majeur au foyer fiscal",
-                            url: "https://www.service-public.fr/particuliers/vosdroits/F2(3)",
-                        },
-                        {
-                            label: "impots.gouv.fr — Simulateur de calcul d'impôt",
-                            url: "https://www.impots.gouv.fr/simulateur/calcul-impot",
-                        },
-                    ],
-                },
-                {
-                    titre: "Le prélèvement à la source",
-                    texte: "Depuis 2019, l'impôt est prélevé directement sur ton salaire chaque mois :",
-                    bullets: [
-                        "Si tu as un job étudiant, l'impôt est déduit automatiquement de ta fiche de paie",
-                        "Ton taux de prélèvement est calculé par l'administration fiscale",
-                        "Tu peux demander un taux neutre si tu ne veux pas communiquer ta situation à ton employeur",
-                    ],
-                    conseils:
-                        "Si ton taux de prélèvement te semble trop élevé, tu peux le modifier directement depuis ton espace personnel sur impots.gouv.fr.",
-                    liens: [
-                        {
-                            label: "impots.gouv.fr — Prélèvement à la source",
-                            url: "https://www.impots.gouv.fr/particulier/le-prelevement-a-la-source",
-                        },
-                        {
-                            label: "Service-public.fr — Taux neutre de prélèvement",
-                            url: "https://www.service-public.fr/particuliers/vosdroits/F34732",
-                        },
-                    ],
-                },
-                {
-                    titre: "Les revenus non imposables",
-                    texte: "Certaines sommes perçues ne sont pas soumises à l'impôt :",
-                    bullets: [
-                        "Les bourses sur critères sociaux (CROUS)",
-                        "Les allocations familiales et certaines aides de la CAF",
-                        "Les indemnités de stage inférieures au SMIC annuel",
-                    ],
-                    conseils:
-                        "Même si tes revenus sont exonérés, il peut être utile de les déclarer pour établir ton historique fiscal et accéder à certaines aides sociales.",
-                    liens: [
-                        {
-                            label: "Service-public.fr — Revenus exonérés d'impôt",
-                            url: "https://www.service-public.fr/particuliers/vosdroits/F2273",
-                        },
-                        {
-                            label: "impots.gouv.fr — Indemnités de stage et imposition",
-                            url: "https://www.impots.gouv.fr/particulier/questions/les-indemnites-de-stage-sont-elles-imposables",
-                        },
-                    ],
-                },
-            ],
-        },
-        espace: {
-            titre: "Créer et utiliser son espace fiscal",
-            intro: "Ton espace personnel sur impots.gouv.fr est ton tableau de bord fiscal. C'est là que tu déclares tes revenus, consultes tes avis d'imposition et gères ta situation. Voici comment le prendre en main.",
-            sections: [
-                {
-                    titre: "Créer son compte impots.gouv.fr",
-                    texte: "La création du compte est simple et se fait en quelques minutes :",
-                    bullets: [
-                        "Rends-toi sur impots.gouv.fr et clique sur « Votre espace particulier »",
-                        "Crée ton compte avec ton numéro fiscal (visible sur un avis d'imposition ou une déclaration de revenus)",
-                        "Si tu n'as jamais déclaré, tu peux obtenir ton numéro fiscal auprès du centre des impôts de ta commune",
-                    ],
-                    conseils:
-                        "Ton numéro fiscal est personnel et ne change jamais. Note-le dans un endroit sûr dès ta première connexion.",
-                    liens: [
-                        {
-                            label: "impots.gouv.fr — Créer son espace particulier",
-                            url: "https://www.impots.gouv.fr/accueil",
-                        },
-                        {
-                            label: "Service-public.fr — Numéro fiscal : comment l'obtenir",
-                            url: "https://www.service-public.fr/particuliers/vosdroits/F32457",
-                        },
-                    ],
-                },
-                {
-                    titre: "Les fonctionnalités principales",
-                    texte: "Depuis ton espace, tu peux :",
-                    bullets: [
-                        "Déclarer tes revenus chaque année (avril-juin)",
-                        "Consulter tes avis d'imposition et les télécharger",
-                        "Modifier ton taux de prélèvement à la source",
-                        "Signaler un changement de situation (déménagement, premier emploi...)",
-                    ],
-                    conseils:
-                        "L'avis d'imposition est un document officiel très souvent demandé pour les dossiers de location, les bourses ou les aides sociales. Télécharge-le et garde-le à portée de main.",
-                    liens: [
-                        {
-                            label: "impots.gouv.fr — Espace particulier",
-                            url: "https://www.impots.gouv.fr/particulier",
-                        },
-                    ],
-                },
-                {
-                    titre: "Déclarer en ligne facilement",
-                    texte: "La déclaration en ligne est guidée et pré-remplie :",
-                    bullets: [
-                        "Les revenus déclarés par ton employeur sont déjà pré-remplis automatiquement",
-                        "Tu n'as qu'à vérifier, corriger si besoin, et valider",
-                        "Tu reçois une confirmation immédiate et un récapitulatif par e-mail",
-                    ],
-                    conseils:
-                        "Ne saute pas l'étape de vérification des cases pré-remplies. Une erreur de l'administration peut passer inaperçue si tu valides sans lire.",
-                    liens: [
-                        {
-                            label: "impots.gouv.fr — Déclarer mes revenus en ligne",
-                            url: "https://www.impots.gouv.fr/particulier/declarer-mes-revenus",
-                        },
-                        {
-                            label: "Service-public.fr — Déclaration de revenus en ligne",
-                            url: "https://www.service-public.fr/particuliers/vosdroits/F357",
-                        },
-                    ],
-                },
-                {
-                    titre: "Les délais à respecter",
-                    texte: "La déclaration de revenus suit un calendrier annuel strict :",
-                    bullets: [
-                        "La campagne de déclaration ouvre généralement en avril",
-                        "La date limite varie selon ton département (entre mai et juin)",
-                        "Un retard de déclaration peut entraîner une majoration de 10 %",
-                    ],
-                    conseils:
-                        "Active les alertes e-mail sur impots.gouv.fr pour être notifié à l'ouverture de la campagne et ne jamais rater la date limite.",
-                    liens: [
-                        {
-                            label: "impots.gouv.fr — Calendrier fiscal",
-                            url: "https://www.impots.gouv.fr/particulier/calendrier",
-                        },
-                        {
-                            label: "Service-public.fr — Dates limites de déclaration",
-                            url: "https://www.service-public.fr/particuliers/actualites/A14745",
-                        },
-                    ],
-                },
-            ],
-        },
-        declarer: {
-            titre: "Dois-je déclarer mes revenus ?",
-            intro: "Même en étant étudiant, tu peux être concerné par la déclaration de revenus. Tout dépend de ta situation, de ton âge et des revenus que tu perçois.",
-            sections: [
-                {
-                    titre: "Êtes-vous rattaché au foyer fiscal de vos parents ?",
-                    texte: "Si tu as moins de 25 ans et que tu es étudiant, tu peux rester rattaché au foyer fiscal de tes parents. Dans ce cas, ce sont généralement eux qui déclarent tes revenus avec les leurs.",
-                    conseils:
-                        "Discute avec tes parents de la situation la plus avantageuse. Le rattachement leur permet de bénéficier d'une demi-part supplémentaire, ce qui peut réduire leur impôt.",
-                    liens: [
-                        {
-                            label: "Service-public.fr — Rattachement enfant majeur étudiant",
-                            url: "https://www.service-public.fr/particuliers/vosdroits/F2(3)",
-                        },
-                        {
-                            label: "impots.gouv.fr — Simulateur foyer fiscal",
-                            url: "https://www.impots.gouv.fr/simulateur/calcul-impot",
-                        },
-                    ],
-                },
-                {
-                    titre: "Si vous faites votre propre déclaration",
-                    texte: "Tu dois déclarer tes revenus si tu es indépendant fiscalement ou si tu as choisi de ne plus être rattaché au foyer de tes parents. Les revenus concernés peuvent être :",
-                    bullets: [
-                        "Salaire d'un job étudiant",
-                        "Rémunération de stage",
-                        "Revenus perçus pendant l'année",
-                    ],
-                    conseils:
-                        "Même si tu n'es pas imposable, faire ta déclaration te permet d'obtenir un avis de non-imposition, souvent indispensable pour les dossiers de bourse ou de logement.",
-                    liens: [
-                        {
-                            label: "impots.gouv.fr — Déclarer mes revenus",
-                            url: "https://www.impots.gouv.fr/particulier/declarer-mes-revenus",
-                        },
-                        {
-                            label: "Service-public.fr — Étudiant et déclaration de revenus",
-                            url: "https://www.service-public.fr/particuliers/vosdroits/F1564",
-                        },
-                    ],
-                },
-                {
-                    titre: "Les revenus étudiants sont parfois exonérés",
-                    texte: "Certains revenus étudiants peuvent être partiellement exonérés d'impôt, dans certaines limites. Cela concerne souvent les jobs étudiants exercés pendant les études.",
-                    bullets: [
-                        "Même si tu n'êtes pas imposable, une déclaration peut rester utile pour certaines aides ou démarches administratives",
-                    ],
-                    conseils:
-                        "Consulte le simulateur sur impots.gouv.fr pour savoir exactement si tu es imposable selon tes revenus. C'est gratuit, rapide et sans engagement.",
-                    liens: [
-                        {
-                            label: "impots.gouv.fr — Simulateur d'impôt sur le revenu",
-                            url: "https://www.impots.gouv.fr/simulateur/calcul-impot",
-                        },
-                        {
-                            label: "Service-public.fr — Exonération jobs étudiants",
-                            url: "https://www.service-public.fr/particuliers/vosdroits/F1563",
-                        },
-                    ],
-                },
-                {
-                    titre: "Conseil",
-                    texte: "Si tu as un doute, il est recommandé de faire une simulation ou de consulter les informations officielles pour connaître ta situation.",
-                    conseils:
-                        "N'hésite pas à contacter directement le centre des impôts de ta ville. Les agents fiscaux sont habitués aux questions des étudiants et peuvent t'orienter gratuitement.",
-                    liens: [
-                        {
-                            label: "impots.gouv.fr — Contacter les impôts",
-                            url: "https://www.impots.gouv.fr/contacts",
-                        },
-                        {
-                            label: "Service-public.fr — Trouver son centre des finances publiques",
-                            url: "https://www.service-public.fr/particuliers/vosdroits/R19755",
-                        },
-                    ],
-                },
-            ],
-        },
-    };
+const pages: Record<string, PageData> = {
+    comprendre: {
+        titre: "Comprendre les impôts en tant qu'étudiant",
+        intro: "Les impôts peuvent sembler compliqués quand on commence à être autonome. Pourtant, en comprendre les bases te permettra d'éviter les mauvaises surprises et de gérer ta situation fiscale sereinement.",
+        sections: [
+            {
+                titre: "C'est quoi l'impôt sur le revenu ?",
+                texte: "L'impôt sur le revenu est prélevé par l'État sur les sommes que tu gagnes :",
+                bullets: [
+                    "Il est calculé selon un barème progressif : plus tu gagnes, plus tu paies",
+                    "En dessous d'un certain seuil de revenus, tu n'es pas imposable",
+                    "Il concerne tous les résidents fiscaux en France, y compris les étudiants qui travaillent",
+                ],
+                conseils:
+                    "En tant qu'étudiant avec de petits revenus, tu seras souvent non imposable. Mais déclarer reste obligatoire dès que tu as des revenus, même faibles.",
+                liens: [
+                    {
+                        label: "impots.gouv.fr — Comment fonctionne l'impôt sur le revenu",
+                        url: "https://www.impots.gouv.fr/particulier/questions/comment-est-calcule-limpot-sur-le-revenu",
+                    },
+                    {
+                        label: "Service-public.fr — Impôt sur le revenu : principes",
+                        url: "https://www.service-public.fr/particuliers/vosdroits/F1419",
+                    },
+                ],
+            },
+            {
+                titre: "Le foyer fiscal",
+                texte: "Le foyer fiscal désigne l'ensemble des personnes prises en compte pour le calcul de l'impôt :",
+                bullets: [
+                    "Tant que tu es rattaché au foyer fiscal de tes parents, ce sont eux qui déclarent tes revenus",
+                    "Si tu deviens fiscalement indépendant, tu dois faire ta propre déclaration",
+                    "Le rattachement au foyer des parents peut être avantageux jusqu'à 25 ans",
+                ],
+                conseils:
+                    "Compare les deux situations avec un simulateur sur impots.gouv.fr. Parfois, se détacher du foyer parental est plus avantageux pour bénéficier de certaines aides.",
+                liens: [
+                    {
+                        label: "Service-public.fr — Rattachement d'un enfant majeur au foyer fiscal",
+                        url: "https://www.service-public.fr/particuliers/vosdroits/F2(3)",
+                    },
+                    {
+                        label: "impots.gouv.fr — Simulateur de calcul d'impôt",
+                        url: "https://www.impots.gouv.fr/simulateur/calcul-impot",
+                    },
+                ],
+            },
+            {
+                titre: "Le prélèvement à la source",
+                texte: "Depuis 2019, l'impôt est prélevé directement sur ton salaire chaque mois :",
+                bullets: [
+                    "Si tu as un job étudiant, l'impôt est déduit automatiquement de ta fiche de paie",
+                    "Ton taux de prélèvement est calculé par l'administration fiscale",
+                    "Tu peux demander un taux neutre si tu ne veux pas communiquer ta situation à ton employeur",
+                ],
+                conseils:
+                    "Si ton taux de prélèvement te semble trop élevé, tu peux le modifier directement depuis ton espace personnel sur impots.gouv.fr.",
+                liens: [
+                    {
+                        label: "impots.gouv.fr — Prélèvement à la source",
+                        url: "https://www.impots.gouv.fr/particulier/le-prelevement-a-la-source",
+                    },
+                    {
+                        label: "Service-public.fr — Taux neutre de prélèvement",
+                        url: "https://www.service-public.fr/particuliers/vosdroits/F34732",
+                    },
+                ],
+            },
+            {
+                titre: "Les revenus non imposables",
+                texte: "Certaines sommes perçues ne sont pas soumises à l'impôt :",
+                bullets: [
+                    "Les bourses sur critères sociaux (CROUS)",
+                    "Les allocations familiales et certaines aides de la CAF",
+                    "Les indemnités de stage inférieures au SMIC annuel",
+                ],
+                conseils:
+                    "Même si tes revenus sont exonérés, il peut être utile de les déclarer pour établir ton historique fiscal et accéder à certaines aides sociales.",
+                liens: [
+                    {
+                        label: "Service-public.fr — Revenus exonérés d'impôt",
+                        url: "https://www.service-public.fr/particuliers/vosdroits/F2273",
+                    },
+                    {
+                        label: "impots.gouv.fr — Indemnités de stage et imposition",
+                        url: "https://www.impots.gouv.fr/particulier/questions/les-indemnites-de-stage-sont-elles-imposables",
+                    },
+                ],
+            },
+        ],
+    },
+    espace: {
+        titre: "Créer et utiliser son espace fiscal",
+        intro: "Ton espace personnel sur impots.gouv.fr est ton tableau de bord fiscal. C'est là que tu déclares tes revenus, consultes tes avis d'imposition et gères ta situation. Voici comment le prendre en main.",
+        sections: [
+            {
+                titre: "Créer son compte impots.gouv.fr",
+                texte: "La création du compte est simple et se fait en quelques minutes :",
+                bullets: [
+                    "Rends-toi sur impots.gouv.fr et clique sur « Votre espace particulier »",
+                    "Crée ton compte avec ton numéro fiscal (visible sur un avis d'imposition ou une déclaration de revenus)",
+                    "Si tu n'as jamais déclaré, tu peux obtenir ton numéro fiscal auprès du centre des impôts de ta commune",
+                ],
+                conseils:
+                    "Ton numéro fiscal est personnel et ne change jamais. Note-le dans un endroit sûr dès ta première connexion.",
+                liens: [
+                    {
+                        label: "impots.gouv.fr — Créer son espace particulier",
+                        url: "https://www.impots.gouv.fr/accueil",
+                    },
+                    {
+                        label: "Service-public.fr — Numéro fiscal : comment l'obtenir",
+                        url: "https://www.service-public.fr/particuliers/vosdroits/F32457",
+                    },
+                ],
+            },
+            {
+                titre: "Les fonctionnalités principales",
+                texte: "Depuis ton espace, tu peux :",
+                bullets: [
+                    "Déclarer tes revenus chaque année (avril-juin)",
+                    "Consulter tes avis d'imposition et les télécharger",
+                    "Modifier ton taux de prélèvement à la source",
+                    "Signaler un changement de situation (déménagement, premier emploi...)",
+                ],
+                conseils:
+                    "L'avis d'imposition est un document officiel très souvent demandé pour les dossiers de location, les bourses ou les aides sociales. Télécharge-le et garde-le à portée de main.",
+                liens: [
+                    {
+                        label: "impots.gouv.fr — Espace particulier",
+                        url: "https://www.impots.gouv.fr/particulier",
+                    },
+                ],
+            },
+            {
+                titre: "Déclarer en ligne facilement",
+                texte: "La déclaration en ligne est guidée et pré-remplie :",
+                bullets: [
+                    "Les revenus déclarés par ton employeur sont déjà pré-remplis automatiquement",
+                    "Tu n'as qu'à vérifier, corriger si besoin, et valider",
+                    "Tu reçois une confirmation immédiate et un récapitulatif par e-mail",
+                ],
+                conseils:
+                    "Ne saute pas l'étape de vérification des cases pré-remplies. Une erreur de l'administration peut passer inaperçue si tu valides sans lire.",
+                liens: [
+                    {
+                        label: "impots.gouv.fr — Déclarer mes revenus en ligne",
+                        url: "https://www.impots.gouv.fr/particulier/declarer-mes-revenus",
+                    },
+                    {
+                        label: "Service-public.fr — Déclaration de revenus en ligne",
+                        url: "https://www.service-public.fr/particuliers/vosdroits/F357",
+                    },
+                ],
+            },
+            {
+                titre: "Les délais à respecter",
+                texte: "La déclaration de revenus suit un calendrier annuel strict :",
+                bullets: [
+                    "La campagne de déclaration ouvre généralement en avril",
+                    "La date limite varie selon ton département (entre mai et juin)",
+                    "Un retard de déclaration peut entraîner une majoration de 10 %",
+                ],
+                conseils:
+                    "Active les alertes e-mail sur impots.gouv.fr pour être notifié à l'ouverture de la campagne et ne jamais rater la date limite.",
+                liens: [
+                    {
+                        label: "impots.gouv.fr — Calendrier fiscal",
+                        url: "https://www.impots.gouv.fr/particulier/calendrier",
+                    },
+                    {
+                        label: "Service-public.fr — Dates limites de déclaration",
+                        url: "https://www.service-public.fr/particuliers/actualites/A14745",
+                    },
+                ],
+            },
+        ],
+    },
+    declarer: {
+        titre: "Dois-je déclarer mes revenus ?",
+        intro: "Même en étant étudiant, tu peux être concerné par la déclaration de revenus. Tout dépend de ta situation, de ton âge et des revenus que tu perçois.",
+        sections: [
+            {
+                titre: "Êtes-vous rattaché au foyer fiscal de vos parents ?",
+                texte: "Si tu as moins de 25 ans et que tu es étudiant, tu peux rester rattaché au foyer fiscal de tes parents. Dans ce cas, ce sont généralement eux qui déclarent tes revenus avec les leurs.",
+                conseils:
+                    "Discute avec tes parents de la situation la plus avantageuse. Le rattachement leur permet de bénéficier d'une demi-part supplémentaire, ce qui peut réduire leur impôt.",
+                liens: [
+                    {
+                        label: "Service-public.fr — Rattachement enfant majeur étudiant",
+                        url: "https://www.service-public.fr/particuliers/vosdroits/F2(3)",
+                    },
+                    {
+                        label: "impots.gouv.fr — Simulateur foyer fiscal",
+                        url: "https://www.impots.gouv.fr/simulateur/calcul-impot",
+                    },
+                ],
+            },
+            {
+                titre: "Si vous faites votre propre déclaration",
+                texte: "Tu dois déclarer tes revenus si tu es indépendant fiscalement ou si tu as choisi de ne plus être rattaché au foyer de tes parents. Les revenus concernés peuvent être :",
+                bullets: [
+                    "Salaire d'un job étudiant",
+                    "Rémunération de stage",
+                    "Revenus perçus pendant l'année",
+                ],
+                conseils:
+                    "Même si tu n'es pas imposable, faire ta déclaration te permet d'obtenir un avis de non-imposition, souvent indispensable pour les dossiers de bourse ou de logement.",
+                liens: [
+                    {
+                        label: "impots.gouv.fr — Déclarer mes revenus",
+                        url: "https://www.impots.gouv.fr/particulier/declarer-mes-revenus",
+                    },
+                    {
+                        label: "Service-public.fr — Étudiant et déclaration de revenus",
+                        url: "https://www.service-public.fr/particuliers/vosdroits/F1564",
+                    },
+                ],
+            },
+            {
+                titre: "Les revenus étudiants sont parfois exonérés",
+                texte: "Certains revenus étudiants peuvent être partiellement exonérés d'impôt, dans certaines limites. Cela concerne souvent les jobs étudiants exercés pendant les études.",
+                bullets: [
+                    "Même si tu n'êtes pas imposable, une déclaration peut rester utile pour certaines aides ou démarches administratives",
+                ],
+                conseils:
+                    "Consulte le simulateur sur impots.gouv.fr pour savoir exactement si tu es imposable selon tes revenus. C'est gratuit, rapide et sans engagement.",
+                liens: [
+                    {
+                        label: "impots.gouv.fr — Simulateur d'impôt sur le revenu",
+                        url: "https://www.impots.gouv.fr/simulateur/calcul-impot",
+                    },
+                    {
+                        label: "Service-public.fr — Exonération jobs étudiants",
+                        url: "https://www.service-public.fr/particuliers/vosdroits/F1563",
+                    },
+                ],
+            },
+            {
+                titre: "Conseil",
+                texte: "Si tu as un doute, il est recommandé de faire une simulation ou de consulter les informations officielles pour connaître ta situation.",
+                conseils:
+                    "N'hésite pas à contacter directement le centre des impôts de ta ville. Les agents fiscaux sont habitués aux questions des étudiants et peuvent t'orienter gratuitement.",
+                liens: [
+                    {
+                        label: "impots.gouv.fr — Contacter les impôts",
+                        url: "https://www.impots.gouv.fr/contacts",
+                    },
+                    {
+                        label: "Service-public.fr — Trouver son centre des finances publiques",
+                        url: "https://www.service-public.fr/particuliers/vosdroits/R19755",
+                    },
+                ],
+            },
+        ],
+    },
+};
 
-    return Object.entries(pages).map(([slug, data]) => ({
-        params: { slug },
-        props: { page: data },
-    }));
-}
-
-const { page } = Astro.props as { page: PageData };
+const slug = Astro.params.slug;
+const page = pages[slug as keyof typeof pages];
 ---
 
 <Layout title={`${page.titre} — Oriento`} heroSection={true}>
