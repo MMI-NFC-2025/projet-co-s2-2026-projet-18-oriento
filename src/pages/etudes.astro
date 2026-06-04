@@ -9,12 +9,14 @@ import logoCompletBlanc from "../assets/Oriento_img/logo_complet_blanc.avif";
 
 const parcours = [
     "Choisir sa formation",
-    "S’inscrire dans un établissement",
+    "S'inscrire dans un établissement",
     "Obtenir ses aides étudiantes",
 ];
+
+const CATEGORIE = "etudes";
 ---
 
-<Layout title="Se loger — Oriento" heroSection={true}>
+<Layout title="Études — Oriento" heroSection={true}>
     <div class="page-wrapper">
         <section class="hero-section" aria-label="Présentation">
             <div class="hero-inner">
@@ -53,9 +55,9 @@ const parcours = [
                 </h2>
                 <p class="intro-texte">
                     Les démarches administratives pour les études peuvent
-                    paraître complexes, surtout lorsqu’on découvre la vie
-                    étudiante. Cette page t’accompagne pour comprendre comment
-                    t’inscrire dans ton établissement, gérer ton financement, et
+                    paraître complexes, surtout lorsqu'on découvre la vie
+                    étudiante. Cette page t'accompagne pour comprendre comment
+                    t'inscrire dans ton établissement, gérer ton financement, et
                     accomplir les formalités essentielles pour ton parcours
                     académique.
                 </p>
@@ -78,6 +80,8 @@ const parcours = [
                 <p class="parcours-titre" id="parcours-label">
                     Ton parcours étudiant
                 </p>
+                <p class="parcours-sync" id="parcours-sync" aria-live="polite">
+                </p>
                 <ul
                     class="parcours-liste"
                     role="list"
@@ -92,6 +96,7 @@ const parcours = [
                                     aria-pressed="false"
                                     aria-label={`Marquer "${etape}" comme complété`}
                                     data-step={i}
+                                    data-etape={`etape_${i + 1}`}
                                 >
                                     <svg
                                         viewBox="0 0 12 12"
@@ -119,7 +124,7 @@ const parcours = [
             <div class="avance-grid">
                 <CardAvance
                     titre="Ressources utiles"
-                    texte="Accédez à des tutoriels vidéo, plateformes d’e-learning et bibliothèques en ligne pour compléter vos cours."
+                    texte="Accédez à des tutoriels vidéo, plateformes d'e-learning et bibliothèques en ligne pour compléter vos cours."
                     href="/logement/recherche"
                 />
                 <CardAvance
@@ -146,7 +151,7 @@ const parcours = [
                     side="right"
                 />
                 <CardSection
-                    titre="S’inscrire dans un établissement"
+                    titre="S'inscrire dans un établissement"
                     texte="Une fois ta formation choisie, finalise ton inscription :"
                     bullets={[
                         "démarches administratives",
@@ -155,12 +160,12 @@ const parcours = [
                         "carte étudiante",
                     ]}
                     href="/etudes/inscription"
-                    btnLabel="Comprendre l’inscription"
+                    btnLabel="Comprendre l'inscription"
                     side="left"
                 />
                 <CardSection
                     titre="Demander les aides étudiantes"
-                    texte="En tant qu’étudiant, tu peux bénéficier de plusieurs aides :"
+                    texte="En tant qu'étudiant, tu peux bénéficier de plusieurs aides :"
                     bullets={[
                         "bourses étudiantes",
                         "aides au logement",
@@ -175,16 +180,71 @@ const parcours = [
         </section>
 
         <DocumentsSection />
+
+        <!-- ── CARTE LIEUX DE FORMATION ── -->
+        <section class="carte-section" aria-label="Lieux de formation">
+            <div class="carte-header">
+                <h2 class="carte-titre">Trouver un lieu de formation</h2>
+                <p class="carte-sous-titre">
+                    Recherche des établissements près de chez toi
+                </p>
+                <div class="carte-recherche">
+                    <input
+                        type="text"
+                        id="carte-ville"
+                        class="carte-input"
+                        placeholder="Ex : Paris, Lyon, Bordeaux..."
+                        value="Paris"
+                    />
+                    <button id="carte-rechercher" class="carte-btn"
+                        >Rechercher</button
+                    >
+                </div>
+                <div
+                    class="carte-filtres"
+                    role="group"
+                    aria-label="Filtrer par type"
+                >
+                    <button class="filtre-btn actif" data-type="tous"
+                        >Tous</button
+                    >
+                    <button class="filtre-btn" data-type="Université"
+                        >Université</button
+                    >
+                    <button class="filtre-btn" data-type="BTS / BUT"
+                        >BTS / BUT</button
+                    >
+                    <button class="filtre-btn" data-type="Grande école"
+                        >Grande école</button
+                    >
+                </div>
+            </div>
+            <div
+                id="carte-map"
+                class="carte-map"
+                aria-label="Carte des lieux de formation"
+            >
+            </div>
+            <p id="carte-status" class="carte-status" aria-live="polite"></p>
+        </section>
+
         <QuestionsSection href="/a-propos" />
     </div>
 </Layout>
+
+<!-- Leaflet CSS -->
+<link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+/>
+<!-- Leaflet JS via CDN — is:inline pour éviter le traitement Vite -->
+<script is:inline src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+></script>
 
 <style>
     .page-wrapper {
         background: var(--color-blue-light);
     }
-
-    /* HERO */
     .hero-section {
         background: var(--color-yellow);
         min-height: calc(100svh - 5rem);
@@ -230,14 +290,11 @@ const parcours = [
         padding: var(--space-m) 0;
     }
     .hero-texte p {
-        font-family: var(--font-body);
         font-size: var(--text-5xl);
         font-weight: var(--weight-bold);
         color: var(--color-dark);
         line-height: 1.1;
     }
-
-    /* INTRO */
     .intro-section {
         padding: var(--space-2xl) var(--space-sm) var(--space-l);
     }
@@ -250,31 +307,24 @@ const parcours = [
         align-items: center;
     }
     .intro-h1 {
-        font-family: var(--font-body);
         font-size: var(--text-4xl);
         font-weight: var(--weight-black);
         color: var(--color-white);
         text-align: center;
         line-height: 1.05;
-        -webkit-font-smoothing: auto;
     }
     .intro-h2 {
-        font-family: var(--font-body);
         font-size: clamp(var(--text-xl), 4vw, var(--text-3xl));
         font-weight: var(--weight-black);
         color: var(--color-white);
         line-height: 1.15;
-        -webkit-font-smoothing: auto;
     }
     .intro-texte {
-        font-family: var(--font-body);
         font-size: clamp(var(--text-sm), 2.5vw, var(--text-m));
         color: rgba(255, 255, 255, 0.85);
         line-height: 1.7;
         max-width: 62ch;
     }
-
-    /* PARCOURS */
     .parcours-section {
         padding: 0 var(--space-sm) var(--space-2xl);
     }
@@ -306,11 +356,18 @@ const parcours = [
         background: var(--color-blue-light);
     }
     .parcours-titre {
-        font-family: var(--font-body);
         font-size: var(--text-m);
         font-weight: var(--weight-bold);
         color: var(--color-dark);
         padding: 0 var(--space-l);
+    }
+    .parcours-sync {
+        font-size: var(--text-xs);
+        color: var(--color-dark);
+        opacity: 0.45;
+        padding: 0 var(--space-l);
+        margin-top: calc(var(--space-m) * -1);
+        min-height: 1em;
     }
     .parcours-liste {
         display: flex;
@@ -358,7 +415,6 @@ const parcours = [
         opacity: 1;
     }
     .parcours-label {
-        font-family: var(--font-body);
         font-size: var(--text-m);
         color: var(--color-dark);
         transition: opacity 0.2s;
@@ -367,8 +423,6 @@ const parcours = [
         opacity: 0.4;
         text-decoration: line-through;
     }
-
-    /* CARDS AVANCÉES */
     .avance-section {
         padding: var(--space-xl) var(--space-sm);
     }
@@ -379,15 +433,11 @@ const parcours = [
         grid-template-columns: 1fr;
         gap: var(--space-m);
     }
-
-    /* CARDS RESSOURCES */
     .dynamique-titre {
-        font-family: var(--font-body);
         font-size: clamp(var(--text-2xl), 5vw, var(--text-4xl));
         font-weight: var(--weight-black);
         color: var(--color-white);
         text-align: center;
-        -webkit-font-smoothing: auto;
     }
     .dynamique-section {
         padding: var(--space-xl) 0 var(--space-2xl);
@@ -396,42 +446,108 @@ const parcours = [
         gap: var(--space-l);
         align-items: center;
     }
-
     .dynamique-grid {
         width: 100%;
         display: flex;
         flex-direction: column;
         gap: var(--space-l);
     }
-
-    /* BESOIN D'AIDE */
-    .aide-section {
-        padding: var(--space-2xl) var(--space-sm) 0;
+    .carte-section {
+        padding: var(--space-2xl) var(--space-sm);
         display: flex;
         flex-direction: column;
-        align-items: center;
         gap: var(--space-l);
+        align-items: center;
     }
-    .aide-titre {
-        font-family: var(--font-body);
-        font-size: clamp(var(--text-5xl), 18vw, var(--text-7xl));
+    .carte-header {
+        width: 100%;
+        max-width: 900px;
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-m);
+    }
+    .carte-titre {
+        font-size: clamp(var(--text-2xl), 5vw, var(--text-4xl));
         font-weight: var(--weight-black);
-        text-transform: uppercase;
         color: var(--color-white);
-        line-height: 0.95;
-        text-align: center;
-        width: 100%;
-        -webkit-font-smoothing: auto;
     }
-    .aide-img {
-        width: 100%;
-        max-width: 640px;
-        height: auto;
-        object-fit: cover;
-        border-radius: var(--radius-l) var(--radius-l) 0 0;
+    .carte-sous-titre {
+        font-size: var(--text-sm);
+        color: rgba(255, 255, 255, 0.75);
     }
-
-    /* RESPONSIVE */
+    .carte-recherche {
+        display: flex;
+        gap: var(--space-s);
+        flex-wrap: wrap;
+    }
+    .carte-input {
+        flex: 1;
+        min-width: 200px;
+        background: var(--color-white);
+        border: none;
+        border-radius: var(--radius-m);
+        padding: var(--space-m);
+        font-size: var(--text-sm);
+        color: var(--color-dark);
+        outline: none;
+        transition: box-shadow 0.2s;
+    }
+    .carte-input:focus {
+        box-shadow: 0 0 0 2px var(--color-yellow);
+    }
+    .carte-btn {
+        background: var(--color-yellow);
+        color: var(--color-dark);
+        border: none;
+        border-radius: var(--radius-m);
+        padding: var(--space-m) var(--space-l);
+        font-size: var(--text-sm);
+        font-weight: var(--weight-bold);
+        cursor: pointer;
+        transition:
+            opacity 0.2s,
+            transform 0.15s;
+        white-space: nowrap;
+    }
+    .carte-btn:hover {
+        opacity: 0.88;
+        transform: translateY(-1px);
+    }
+    .carte-filtres {
+        display: flex;
+        gap: var(--space-s);
+        flex-wrap: wrap;
+    }
+    .filtre-btn {
+        padding: var(--space-s) var(--space-m);
+        border-radius: 9999px;
+        border: 2px solid var(--color-white);
+        background: transparent;
+        color: var(--color-white);
+        font-size: var(--text-sm);
+        font-weight: var(--weight-medium);
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+    .filtre-btn.actif,
+    .filtre-btn:hover {
+        background: var(--color-white);
+        color: var(--color-dark);
+    }
+    .carte-map {
+        width: 100%;
+        max-width: 900px;
+        height: 460px;
+        border-radius: var(--radius-l);
+        overflow: hidden;
+        box-shadow: var(--shadow-m);
+        z-index: 0;
+    }
+    .carte-status {
+        font-size: var(--text-sm);
+        color: rgba(255, 255, 255, 0.7);
+        min-height: 1.2em;
+    }
     @media (min-width: 640px) {
         .avance-grid,
         .dynamique-grid {
@@ -455,12 +571,6 @@ const parcours = [
         .hero-texte p {
             font-size: 7rem;
         }
-        .aide-titre {
-            font-size: clamp(var(--text-5xl), 10vw, var(--text-7xl));
-        }
-        .aide-img {
-            max-width: 900px;
-        }
         .avance-grid {
             grid-template-columns: repeat(3, 1fr);
         }
@@ -468,6 +578,11 @@ const parcours = [
 </style>
 
 <script>
+    import PocketBase from "pocketbase";
+
+    // ══ PROGRESSION ═══════════════════════════════════════════
+    const CATEGORIE = "etudes";
+    const pb = new PocketBase("http://127.0.0.1:8090");
     const barres = Array.from(
         document.querySelectorAll<HTMLElement>(".parcours-barre"),
     );
@@ -477,8 +592,13 @@ const parcours = [
     const etapes = Array.from(
         document.querySelectorAll<HTMLElement>(".parcours-etape"),
     );
+    const syncEl = document.getElementById("parcours-sync");
     const total = barres.length;
     const etat: boolean[] = new Array(total).fill(false);
+
+    function setSync(msg: string) {
+        if (syncEl) syncEl.textContent = msg;
+    }
 
     function render() {
         let prog = 0;
@@ -495,16 +615,226 @@ const parcours = [
         etapes.forEach((li, i) => li.classList.toggle("done", etat[i]));
     }
 
+    async function chargerProgression() {
+        if (!pb.authStore.isValid) return;
+        try {
+            const userId = pb.authStore.model?.id;
+            const records = await pb.collection("progression").getFullList({
+                filter: `user = "${userId}" && categorie = "${CATEGORIE}"`,
+            });
+            records.forEach((r) => {
+                const match = r.etape.match(/etape_(\d+)/);
+                if (match) {
+                    const idx = parseInt(match[1]) - 1;
+                    if (idx >= 0 && idx < total) etat[idx] = r.completee;
+                }
+            });
+            render();
+            setSync("✓ Progression chargée");
+            setTimeout(() => setSync(""), 2000);
+        } catch (e) {
+            setSync("Impossible de charger la progression");
+        }
+    }
+
+    async function sauvegarderEtape(index: number, completee: boolean) {
+        if (!pb.authStore.isValid) return;
+        const userId = pb.authStore.model?.id;
+        const etapeKey = `etape_${index + 1}`;
+        try {
+            setSync("Sauvegarde...");
+            const existing = await pb
+                .collection("progression")
+                .getFirstListItem(
+                    `user = "${userId}" && categorie = "${CATEGORIE}" && etape = "${etapeKey}"`,
+                )
+                .catch(() => null);
+            if (existing) {
+                await pb
+                    .collection("progression")
+                    .update(existing.id, { completee });
+            } else {
+                await pb.collection("progression").create({
+                    user: userId,
+                    categorie: CATEGORIE,
+                    etape: etapeKey,
+                    completee,
+                });
+            }
+            setSync("✓ Sauvegardé");
+            setTimeout(() => setSync(""), 2000);
+        } catch (e) {
+            setSync("Erreur de sauvegarde");
+        }
+    }
+
     boutons.forEach((btn, i) => {
         btn.addEventListener("click", () => {
             if (!etat[i]) {
                 for (let j = 0; j <= i; j++) etat[j] = true;
+                for (let j = 0; j <= i; j++) sauvegarderEtape(j, true);
             } else {
                 for (let j = i; j < total; j++) etat[j] = false;
+                for (let j = i; j < total; j++) sauvegarderEtape(j, false);
             }
             render();
+            if (!pb.authStore.isValid)
+                setSync("Connecte-toi pour sauvegarder ta progression");
         });
     });
 
     render();
+    chargerProgression();
+
+    // ══ CARTE OPENSTREETMAP ════════════════════════════════════
+    // DOMContentLoaded garantit que #carte-map existe avant que Leaflet s'y accroche
+    document.addEventListener("DOMContentLoaded", () => {
+        const L = (window as any).L;
+
+        const statusEl = document.getElementById("carte-status");
+        const villeInput = document.getElementById(
+            "carte-ville",
+        ) as HTMLInputElement;
+        const recherchBtn = document.getElementById("carte-rechercher");
+
+        const couleurs: Record<string, string> = {
+            Université: "#3b82f6",
+            "BTS / BUT": "#f59e0b",
+            "Grande école": "#10b981",
+        };
+
+        const carte = L.map("carte-map").setView([46.6034, 1.8883], 6);
+        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+            attribution:
+                '© <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>',
+            maxZoom: 19,
+        }).addTo(carte);
+
+        let tousLesLieux: {
+            nom: string;
+            adresse: string;
+            lat: number;
+            lng: number;
+            type: string;
+            marqueur: any;
+        }[] = [];
+        let filtreActif = "tous";
+
+        function creerIcone(type: string) {
+            const couleur = couleurs[type] ?? "#6366f1";
+            return L.divIcon({
+                className: "",
+                html: `<div style="background:${couleur};width:12px;height:12px;border-radius:50%;border:3px solid white;box-shadow:0 2px 6px rgba(0,0,0,0.35)"></div>`,
+                iconSize: [12, 12],
+                iconAnchor: [6, 6],
+            });
+        }
+
+        function afficherFiltres() {
+            tousLesLieux.forEach(({ type, marqueur }) => {
+                if (filtreActif === "tous" || filtreActif === type) {
+                    marqueur.addTo(carte);
+                } else {
+                    marqueur.remove();
+                }
+            });
+        }
+
+        async function rechercherFormations(ville: string) {
+            if (statusEl) statusEl.textContent = "Recherche en cours...";
+            tousLesLieux.forEach(({ marqueur }) => marqueur.remove());
+            tousLesLieux = [];
+
+            const types = [
+                { label: "Université", query: "université" },
+                { label: "BTS / BUT", query: "IUT" },
+                { label: "Grande école", query: "école supérieure" },
+            ];
+
+            let count = 0;
+
+            for (const type of types) {
+                try {
+                    const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(type.query + " " + ville)}&format=json&limit=6&countrycodes=fr`;
+                    const res = await fetch(url, {
+                        headers: { "Accept-Language": "fr" },
+                    });
+                    const data = await res.json();
+
+                    data.forEach((lieu: any) => {
+                        const lat = parseFloat(lieu.lat);
+                        const lng = parseFloat(lieu.lon);
+                        const nom = lieu.display_name.split(",")[0];
+                        const adresse = lieu.display_name;
+
+                        const marqueur = L.marker([lat, lng], {
+                            icon: creerIcone(type.label),
+                        }).bindPopup(`
+                            <div style="font-family:sans-serif;min-width:180px">
+                                <strong style="font-size:13px">${nom}</strong><br>
+                                <span style="font-size:11px;color:#666;display:inline-block;margin:4px 0">${type.label}</span><br>
+                                <span style="font-size:11px;color:#999">${adresse.split(",").slice(0, 3).join(", ")}</span>
+                            </div>
+                        `);
+
+                        tousLesLieux.push({
+                            nom,
+                            adresse,
+                            lat,
+                            lng,
+                            type: type.label,
+                            marqueur,
+                        });
+                        count++;
+                    });
+
+                    await new Promise((r) => setTimeout(r, 1100));
+                } catch (e) {
+                    console.error(`Erreur pour ${type.label}:`, e);
+                }
+            }
+
+            afficherFiltres();
+
+            if (tousLesLieux.length > 0) {
+                const bounds = L.latLngBounds(
+                    tousLesLieux.map((l: any) => [l.lat, l.lng]),
+                );
+                carte.fitBounds(bounds, { padding: [40, 40] });
+            }
+
+            if (statusEl)
+                statusEl.textContent =
+                    count > 0
+                        ? `${count} établissements trouvés à ${ville}`
+                        : "Aucun résultat trouvé.";
+        }
+
+        recherchBtn?.addEventListener("click", () => {
+            const ville = villeInput?.value.trim();
+            if (ville) rechercherFormations(ville);
+        });
+
+        villeInput?.addEventListener("keydown", (e) => {
+            if (e.key === "Enter") {
+                const ville = villeInput.value.trim();
+                if (ville) rechercherFormations(ville);
+            }
+        });
+
+        document
+            .querySelectorAll<HTMLButtonElement>(".filtre-btn")
+            .forEach((btn) => {
+                btn.addEventListener("click", () => {
+                    document
+                        .querySelectorAll(".filtre-btn")
+                        .forEach((b) => b.classList.remove("actif"));
+                    btn.classList.add("actif");
+                    filtreActif = btn.dataset.type ?? "tous";
+                    afficherFiltres();
+                });
+            });
+
+        rechercherFormations("Paris");
+    });
 </script>
