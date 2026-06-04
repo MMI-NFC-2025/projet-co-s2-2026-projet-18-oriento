@@ -22,7 +22,12 @@ import Layout from "../layouts/Layout.astro";
 
         <div class="auth-body">
             <div class="auth-card">
-                <form class="auth-form" novalidate>
+                <p class="form-succes" id="form-succes" hidden>
+                    ✓ Inscription réussie ! Connecte-toi maintenant.
+                </p>
+                <p class="form-erreur" id="form-erreur" role="alert" hidden></p>
+
+                <form class="auth-form" id="connexion-form" novalidate>
                     <div class="form-group">
                         <label class="form-label" for="email">Email</label>
                         <input
@@ -36,9 +41,9 @@ import Layout from "../layouts/Layout.astro";
                         />
                     </div>
                     <div class="form-group">
-                        <label class="form-label" for="password"
-                            >Mot de passe</label
-                        >
+                        <label class="form-label" for="password">
+                            Mot de passe
+                        </label>
                         <input
                             class="form-input"
                             type="password"
@@ -49,7 +54,9 @@ import Layout from "../layouts/Layout.astro";
                             required
                         />
                     </div>
-                    <button class="auth-btn" type="submit">Se connecter</button>
+                    <button class="auth-btn" type="submit" id="auth-btn">
+                        Se connecter
+                    </button>
                 </form>
             </div>
             <p class="auth-switch">
@@ -65,8 +72,6 @@ import Layout from "../layouts/Layout.astro";
             display: flex;
             flex-direction: column;
         }
-
-        /* HERO */
         .auth-hero {
             background: var(--color-yellow);
             position: relative;
@@ -90,8 +95,6 @@ import Layout from "../layouts/Layout.astro";
             width: 100%;
             height: 60px;
         }
-
-        /* BODY */
         .auth-body {
             display: flex;
             flex-direction: column;
@@ -99,8 +102,6 @@ import Layout from "../layouts/Layout.astro";
             padding: var(--space-xl) var(--space-sm) var(--space-2xl);
             gap: var(--space-l);
         }
-
-        /* CARD */
         .auth-card {
             width: 100%;
             max-width: 360px;
@@ -166,8 +167,33 @@ import Layout from "../layouts/Layout.astro";
         .auth-btn:active {
             transform: translateY(0);
         }
-
-        /* SWITCH */
+        .auth-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .form-erreur {
+            font-size: var(--text-sm);
+            color: #e53e3e;
+            background: #fff5f5;
+            border-radius: var(--radius-s);
+            padding: var(--space-s) var(--space-m);
+            margin-bottom: var(--space-s);
+            text-align: center;
+        }
+        .form-succes {
+            font-size: var(--text-sm);
+            color: #276749;
+            background: #f0fff4;
+            border-radius: var(--radius-s);
+            padding: var(--space-s) var(--space-m);
+            margin-bottom: var(--space-s);
+            text-align: center;
+        }
+        .form-erreur[hidden],
+        .form-succes[hidden] {
+            display: none;
+        }
         .auth-switch {
             font-family: var(--font-body);
             font-size: var(--text-sm);
@@ -184,3 +210,64 @@ import Layout from "../layouts/Layout.astro";
         }
     </style>
 </Layout>
+
+<script>
+    import { connecterUtilisateur } from "../js/backend.js";
+
+    const form = document.getElementById("connexion-form") as HTMLFormElement;
+    const erreurEl = document.getElementById("form-erreur")!;
+    const succesEl = document.getElementById("form-succes")!;
+    const btn = document.getElementById("auth-btn") as HTMLButtonElement;
+
+    // Affiche le message de succès si on vient de s'inscrire
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("inscrit") === "1") {
+        succesEl.removeAttribute("hidden");
+    }
+
+    function afficherErreur(msg: string) {
+        erreurEl.textContent = msg;
+        erreurEl.removeAttribute("hidden");
+        succesEl.setAttribute("hidden", "");
+    }
+
+    function cacherErreur() {
+        erreurEl.setAttribute("hidden", "");
+        erreurEl.textContent = "";
+    }
+
+    form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        cacherErreur();
+
+        const email = (
+            form.querySelector("#email") as HTMLInputElement
+        ).value.trim();
+        const password = (form.querySelector("#password") as HTMLInputElement)
+            .value;
+
+        if (!email || !password) {
+            afficherErreur("Email et mot de passe sont obligatoires.");
+            return;
+        }
+
+        btn.disabled = true;
+        btn.textContent = "Connexion en cours...";
+
+        try {
+            await connecterUtilisateur({ email, password });
+            window.location.href = "/";
+        } catch (err: any) {
+            let msg = "Email ou mot de passe incorrect.";
+            if (err?.status === 400) {
+                msg = "Email ou mot de passe incorrect.";
+            } else if (err?.message) {
+                msg = err.message;
+            }
+            afficherErreur(msg);
+        } finally {
+            btn.disabled = false;
+            btn.textContent = "Se connecter";
+        }
+    });
+</script>

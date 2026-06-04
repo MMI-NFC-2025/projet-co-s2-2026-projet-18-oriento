@@ -4,9 +4,28 @@ const PB_URL = "http://127.0.0.1:8090";
 
 export const pb = new PocketBase(PB_URL);
 
-// ── INSCRIPTION ────────────────────────────────────────────
+// ── Persistance session ────────────────────────────────────
+function sauvegarderSession(token, model) {
+    sessionStorage.setItem("pb_token", token);
+    sessionStorage.setItem("pb_model", JSON.stringify(model));
+    pb.authStore.save(token, model);
+}
+
+function restaurerSession() {
+    const token = sessionStorage.getItem("pb_token");
+    const raw = sessionStorage.getItem("pb_model");
+    if (token && raw) {
+        try {
+            pb.authStore.save(token, JSON.parse(raw));
+        } catch (_) { }
+    }
+}
+
+restaurerSession();
+
+// ── Auth ───────────────────────────────────────────────────
 export async function inscrireUtilisateur({ nom, email, naissance, telephone, password }) {
-    const user = await pb.collection("users").create({
+    return await pb.collection("users").create({
         name: nom,
         email,
         emailVisibility: true,
@@ -15,56 +34,63 @@ export async function inscrireUtilisateur({ nom, email, naissance, telephone, pa
         date_naissance: naissance || null,
         numero_tel: telephone || null,
     });
-    return user;
 }
 
-// ── CONNEXION ──────────────────────────────────────────────
 export async function connecterUtilisateur({ email, password }) {
     if (!email || !password) throw new Error("Email et mot de passe requis.");
 
     const auth = await pb.collection("users").authWithPassword(email, password);
+    sauvegarderSession(auth.token, auth.record);
 
     return {
         token: auth.token,
         user: {
             id: auth.record.id,
-            nom: auth.record.name, // ← "name" pas "nom"
+            nom: auth.record.name,
             email: auth.record.email,
         },
     };
 }
 
-// ── DÉCONNEXION ────────────────────────────────────────────
 export function deconnecterUtilisateur() {
     pb.authStore.clear();
+    sessionStorage.removeItem("pb_token");
+    sessionStorage.removeItem("pb_model");
 }
 
-// ── UTILISATEUR CONNECTÉ ───────────────────────────────────
 export function getUtilisateurActuel() {
     if (!pb.authStore.isValid) return null;
-    return pb.authStore.model;
+    const store = pb.authStore;
+    return ("record" in store ? store.record : store.model) ?? null;
 }
 
-// ── CONTACT ───────────────────────────────────────────────
+export function getUserId() {
+    const user = getUtilisateurActuel();
+    return user?.id ?? null;
+}
+
+export function getToken() {
+    return sessionStorage.getItem("pb_token") ?? pb.authStore.token ?? null;
+}
+
+// ── Contact ────────────────────────────────────────────────
 export async function envoyerContact({ nom, email, sujet, message }) {
     if (!nom || !email || !message) throw new Error("Champs obligatoires manquants.");
 
-    const record = await pb.collection("contact").create({
+    return await pb.collection("contact").create({
         nom,
         email,
         sujet: sujet || "",
         message,
         lu: false,
     });
-    return record;
 }
 
-// ── PROGRESSION ───────────────────────────────────────────
+// ── Progression ────────────────────────────────────────────
 export async function getProgression(userId, categorie) {
-    const records = await pb.collection("progression").getFullList({
+    return await pb.collection("progression").getFullList({
         filter: `user = "${userId}" && categorie = "${categorie}"`,
     });
-    return records;
 }
 
 export async function toggleEtape(userId, categorie, etape, completee) {
@@ -87,7 +113,71 @@ export async function toggleEtape(userId, categorie, etape, completee) {
     });
 }
 
-// ── OPENSTREETMAP / NOMINATIM ──────────────────────────────
+// ── Documents ──────────────────────────────────────────────
+export async function ajouterDocument({ nom, categorie, fichier }) {
+    const userId = getUserId();
+    const token = getToken();
+
+    if (!userId || !token) throw new Error("Utilisateur non connecté.");
+    if (!fichier) throw new Error("Aucun fichier sélectionné.");
+
+    const fd = new FormData();
+    fd.append("user", userId);
+    fd.append("nom", nom);
+    fd.append("categorie", categorie);
+    fd.append("fichier", fichier, fichier.name);
+
+    // Appel fetch direct avec token dans le header — plus fiable que le SDK pour les fichiers
+    const res = await fetch(`${PB_URL}/api/collections/documents/records`, {
+        method: "POST",
+        headers: {
+            Authorization: token,
+        },
+        body: fd,
+    });
+
+    if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err?.message ?? `Erreur ${res.status}`);
+    }
+
+    return await res.json();
+}
+
+export async function supprimerDocument(id) {
+    const token = getToken();
+    if (!token) throw new Error("Utilisateur non connecté.");
+
+    const res = await fetch(`${PB_URL}/api/collections/documents/records/${id}`, {
+        method: "DELETE",
+        headers: { Authorization: token },
+    });
+
+    if (!res.ok) throw new Error(`Erreur suppression : ${res.status}`);
+}
+
+export async function getDocuments() {
+    const userId = getUserId();
+    const token = getToken();
+
+    if (!userId || !token) return [];
+
+    const res = await fetch(
+        `${PB_URL}/api/collections/documents/records?filter=${encodeURIComponent(`user="${userId}"`)}&sort=-created&perPage=200`,
+        { headers: { Authorization: token } }
+    );
+
+    if (!res.ok) return [];
+
+    const data = await res.json();
+    return data.items ?? [];
+}
+
+export function getFileUrl(doc) {
+    return `${PB_URL}/api/files/documents/${doc.id}/${doc.fichier}?token=${getToken()}`;
+}
+
+// ── OpenStreetMap ──────────────────────────────────────────
 export async function rechercherLieuxFormation(ville = "France") {
     const types = [
         { label: "Université", query: "université" },

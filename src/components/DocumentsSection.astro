@@ -443,24 +443,27 @@ const { categories = ["Logements", "Impôts", "Etudes", "Assurances"] } =
 </style>
 
 <script>
-    import PocketBase from "pocketbase";
-    const pb = new PocketBase("http://127.0.0.1:8090");
+    import { pb } from "../js/backend.js";
 
-    // ── Éléments ──────────────────────────────────────────────
-    const modal       = document.getElementById("docs-modal")!;
-    const btnOuvrir   = document.getElementById("docs-ouvrir-modal")!;
-    const btnFermer   = document.getElementById("docs-fermer-modal")!;
-    const form        = document.getElementById("docs-form") as HTMLFormElement;
-    const inputNom    = document.getElementById("doc-nom") as HTMLInputElement;
-    const inputCat    = document.getElementById("doc-categorie") as HTMLSelectElement;
-    const inputFile   = document.getElementById("doc-fichier") as HTMLInputElement;
-    const statut      = document.getElementById("modal-statut")!;
-    const submitBtn   = document.getElementById("modal-submit-btn") as HTMLButtonElement;
-    const dropzone    = document.getElementById("dropzone")!;
-    const dropTexte   = document.getElementById("dropzone-texte")!;
-    const dropSous    = document.getElementById("dropzone-sous")!;
+    const modal     = document.getElementById("docs-modal")!;
+    const btnOuvrir = document.getElementById("docs-ouvrir-modal")!;
+    const btnFermer = document.getElementById("docs-fermer-modal")!;
+    const form      = document.getElementById("docs-form") as HTMLFormElement;
+    const inputNom  = document.getElementById("doc-nom") as HTMLInputElement;
+    const inputCat  = document.getElementById("doc-categorie") as HTMLSelectElement;
+    const inputFile = document.getElementById("doc-fichier") as HTMLInputElement;
+    const statut    = document.getElementById("modal-statut")!;
+    const submitBtn = document.getElementById("modal-submit-btn") as HTMLButtonElement;
+    const dropzone  = document.getElementById("dropzone")!;
+    const dropTexte = document.getElementById("dropzone-texte")!;
+    const dropSous  = document.getElementById("dropzone-sous")!;
 
-    // ── Modale ────────────────────────────────────────────────
+    // Récupère l'ID utilisateur connecté de façon compatible toutes versions SDK
+    function getUserId(): string | null {
+        const u = (pb.authStore as any).record ?? (pb.authStore as any).model;
+        return u?.id ?? null;
+    }
+
     function ouvrirModal() {
         modal.removeAttribute("hidden");
         inputNom.focus();
@@ -475,14 +478,11 @@ const { categories = ["Logements", "Impôts", "Etudes", "Assurances"] } =
 
     btnOuvrir.addEventListener("click", ouvrirModal);
     btnFermer.addEventListener("click", fermerModal);
-    modal.addEventListener("click", (e) => {
-        if (e.target === modal) fermerModal();
-    });
+    modal.addEventListener("click", (e) => { if (e.target === modal) fermerModal(); });
     document.addEventListener("keydown", (e) => {
         if (e.key === "Escape" && !modal.hasAttribute("hidden")) fermerModal();
     });
 
-    // ── Dropzone drag & drop ──────────────────────────────────
     dropzone.addEventListener("dragover", (e) => {
         e.preventDefault();
         dropzone.classList.add("dragover");
@@ -491,7 +491,7 @@ const { categories = ["Logements", "Impôts", "Etudes", "Assurances"] } =
     dropzone.addEventListener("drop", (e) => {
         e.preventDefault();
         dropzone.classList.remove("dragover");
-        const files = e.dataTransfer?.files;
+        const files = (e as DragEvent).dataTransfer?.files;
         if (files?.length) {
             const dt = new DataTransfer();
             dt.items.add(files[0]);
@@ -508,72 +508,67 @@ const { categories = ["Logements", "Impôts", "Etudes", "Assurances"] } =
         dropSous.textContent  = "Fichier sélectionné ✓";
     }
 
-    // ── Statut ────────────────────────────────────────────────
     function setStatut(msg: string, type: "succes" | "erreur" | "") {
         statut.textContent = msg;
         statut.className   = "modal-statut" + (type ? ` ${type}` : "");
     }
 
-    // ── Upload PocketBase ─────────────────────────────────────
     form.addEventListener("submit", async (e) => {
         e.preventDefault();
 
-        if (!pb.authStore.isValid) {
+        const userId = getUserId();
+        if (!pb.authStore.isValid || !userId) {
             setStatut("Connecte-toi pour ajouter un document.", "erreur");
             return;
         }
 
         const fichier = inputFile.files?.[0];
-        if (!fichier) {
-            setStatut("Sélectionne un fichier.", "erreur");
-            return;
-        }
-        if (fichier.size > 10 * 1024 * 1024) {
-            setStatut("Fichier trop volumineux (max 10 Mo).", "erreur");
-            return;
-        }
+        if (!fichier) { setStatut("Sélectionne un fichier.", "erreur"); return; }
+        if (fichier.size > 10 * 1024 * 1024) { setStatut("Fichier trop volumineux (max 10 Mo).", "erreur"); return; }
 
-        submitBtn.disabled  = true;
+        const nomDoc = inputNom.value.trim();
+        if (!nomDoc) { setStatut("Donne un nom au document.", "erreur"); return; }
+
+        submitBtn.disabled    = true;
         submitBtn.textContent = "Envoi en cours...";
         setStatut("", "");
 
         try {
-            const formData = new FormData();
-            formData.append("user",       pb.authStore.model!.id);
-            formData.append("nom",        inputNom.value.trim());
-            formData.append("categorie",  inputCat.value);
-            formData.append("fichier",    fichier);
+            const fd = new FormData();
+            fd.append("user",      userId);
+            fd.append("nom",       nomDoc);
+            fd.append("categorie", inputCat.value);
+            fd.append("fichier",   fichier, fichier.name);
 
-            await pb.collection("documents").create(formData);
+            const record = await pb.collection("documents").create(fd);
+            console.log("Document créé :", record);
 
             setStatut("✓ Document ajouté avec succès !", "succes");
-            setTimeout(() => {
-                fermerModal();
-                chargerDocuments();
-            }, 1200);
+            setTimeout(() => { fermerModal(); chargerDocuments(); }, 1200);
         } catch (err: any) {
-            console.error(err);
-            setStatut(
-                err?.data?.message ?? "Erreur lors de l'envoi. Réessaie.",
-                "erreur",
-            );
+            console.error("Erreur complète :", JSON.stringify(err?.data, null, 2));
+            const detail = err?.data
+                ? Object.entries(err.data)
+                    .map(([k, v]: any) => `${k}: ${v?.message ?? JSON.stringify(v)}`)
+                    .join(" · ")
+                : err?.message ?? "Erreur lors de l'envoi.";
+            setStatut(detail, "erreur");
         } finally {
             submitBtn.disabled    = false;
             submitBtn.textContent = "Enregistrer";
         }
     });
 
-    // ── Charger & afficher les documents ──────────────────────
     async function chargerDocuments() {
-        if (!pb.authStore.isValid) return;
+        const userId = getUserId();
+        if (!pb.authStore.isValid || !userId) return;
 
         try {
             const records = await pb.collection("documents").getFullList({
-                filter: `user = "${pb.authStore.model!.id}"`,
+                filter: `user = "${userId}"`,
                 sort: "-created",
             });
 
-            // Reset compteurs
             document.querySelectorAll<HTMLElement>("[data-count]").forEach((el) => {
                 el.textContent = "0";
             });
@@ -582,50 +577,61 @@ const { categories = ["Logements", "Impôts", "Etudes", "Assurances"] } =
             });
 
             records.forEach((doc) => {
-                // Compteur
                 const countEl = document.querySelector<HTMLElement>(`[data-count="${doc.categorie}"]`);
                 if (countEl) countEl.textContent = String(Number(countEl.textContent) + 1);
 
-                // Sous-liste
                 const sousListe = document.querySelector<HTMLElement>(`[data-sous-liste="${doc.categorie}"]`);
-                if (sousListe) {
-                    const fileUrl = pb.files.getUrl(doc, doc.fichier as string);
-                    const li = document.createElement("li");
-                    li.className = "docs-fichier-item";
-                    li.innerHTML = `
-                        <span class="docs-fichier-nom" title="${doc.nom}">${doc.nom}</span>
-                        <div class="docs-fichier-actions">
-                            <a href="${fileUrl}" target="_blank" rel="noopener noreferrer" class="docs-fichier-btn" aria-label="Télécharger ${doc.nom}">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                                    <polyline points="7 10 12 15 17 10"/>
-                                    <line x1="12" y1="15" x2="12" y2="3"/>
-                                </svg>
-                            </a>
-                            <button class="docs-fichier-btn suppr" type="button" data-id="${doc.id}" aria-label="Supprimer ${doc.nom}">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                                    <polyline points="3 6 5 6 21 6"/>
-                                    <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
-                                    <path d="M10 11v6M14 11v6"/>
-                                </svg>
-                            </button>
-                        </div>
-                    `;
-                    // Bouton supprimer
-                    li.querySelector<HTMLButtonElement>(".suppr")?.addEventListener("click", async () => {
-                        if (!confirm(`Supprimer « ${doc.nom} » ?`)) return;
+                if (!sousListe) return;
+
+                // Compatible toutes versions SDK
+                const fileUrl = typeof pb.files.getURL === "function"
+                    ? pb.files.getURL(doc, doc.fichier as string)
+                    : (pb.files as any).getUrl(doc, doc.fichier as string);
+
+                const li = document.createElement("li");
+                li.className = "docs-fichier-item";
+                li.innerHTML = `
+                    <span class="docs-fichier-nom" title="${doc.nom}">${doc.nom}</span>
+                    <div class="docs-fichier-actions">
+                        <a href="${fileUrl}" target="_blank" rel="noopener noreferrer"
+                           class="docs-fichier-btn" aria-label="Télécharger ${doc.nom}">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                <polyline points="7 10 12 15 17 10"/>
+                                <line x1="12" y1="15" x2="12" y2="3"/>
+                            </svg>
+                        </a>
+                        <button class="docs-fichier-btn suppr" type="button"
+                                data-id="${doc.id}" aria-label="Supprimer ${doc.nom}">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <polyline points="3 6 5 6 21 6"/>
+                                <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
+                                <path d="M10 11v6M14 11v6"/>
+                            </svg>
+                        </button>
+                    </div>
+                `;
+
+                li.querySelector<HTMLButtonElement>(".suppr")?.addEventListener("click", async () => {
+                    if (!confirm(`Supprimer « ${doc.nom} » ?`)) return;
+                    try {
                         await pb.collection("documents").delete(doc.id);
                         chargerDocuments();
-                    });
-                    sousListe.appendChild(li);
-                }
+                    } catch (err) {
+                        console.error("Erreur suppression :", err);
+                        alert("Impossible de supprimer ce document.");
+                    }
+                });
+
+                sousListe.appendChild(li);
             });
         } catch (e) {
             console.error("Impossible de charger les documents :", e);
         }
     }
 
-    // ── Accordéon catégories ──────────────────────────────────
     document.querySelectorAll<HTMLElement>(".docs-item").forEach((item) => {
         const cat = item.dataset.categorie!;
         const sousListe = document.querySelector<HTMLElement>(`[data-sous-liste="${cat}"]`);
@@ -636,13 +642,9 @@ const { categories = ["Logements", "Impôts", "Etudes", "Assurances"] } =
             if (sousListe) sousListe.hidden = ouvert;
         });
         item.addEventListener("keydown", (e) => {
-            if (e.key === "Enter" || e.key === " ") {
-                e.preventDefault();
-                item.click();
-            }
+            if (e.key === "Enter" || e.key === " ") { e.preventDefault(); item.click(); }
         });
     });
 
-    // ── Init ──────────────────────────────────────────────────
     chargerDocuments();
 </script>

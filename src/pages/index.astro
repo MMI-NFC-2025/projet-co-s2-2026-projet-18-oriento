@@ -140,7 +140,15 @@ const services = [
 					<p class="exclu-media-titre">
 						Accès à du contenu explicatif
 					</p>
-					<div class="exclu-media-screen"></div>
+					<div class="exclu-media-screen">
+						<iframe
+							src="https://www.youtube.com/embed/9F5CjaIVOqY"
+							title="Short Oriento"
+							frameborder="0"
+							allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+							allowfullscreen
+							aria-label="Vidéo courte YouTube"></iframe>
+					</div>
 				</div>
 				<div class="exclu-body">
 					<span class="exclu-guillemet" aria-hidden="true">"</span>
@@ -365,7 +373,17 @@ const services = [
 		width: 100%;
 		aspect-ratio: 9/14;
 		border-radius: 1rem;
+		overflow: hidden;
+		display: flex;
+		align-items: center;
+		justify-content: center;
 		background: #e5e5e5;
+	}
+	.exclu-media-screen iframe {
+		width: 100%;
+		height: 100%;
+		border: 0;
+		display: block;
 	}
 	.exclu-body {
 		display: flex;
